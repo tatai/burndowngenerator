@@ -6,7 +6,8 @@ class Burndown {
 		$_days = null,
 		$_margins = null,
 		$_tick_size = null,
-		$_tick_steps = null
+		$_tick_steps = null,
+		$_title = null
 		;
 
 	public function __construct($pdf, $points, $days) {
@@ -57,6 +58,13 @@ class Burndown {
 		$this->_tick_size = 4;
 	}
 
+	public function setOptions($options) {
+		foreach($options AS $k => $v) {
+			$k = '_' . $k;
+			$this->$k = $v;
+		}
+	}
+
 	public function output() {
 		$this->_drawTitle();
 		$this->_drawXAxis();
@@ -68,6 +76,10 @@ class Burndown {
 
 	private function _drawTitle() {
 		$text = 'Burndown online generator';
+		if($this->_title) {
+			$text = $this->_title;
+		}
+
 		$size = 10;
 		$width = $this->_pdf->getTextWidth($size, $text);
 
