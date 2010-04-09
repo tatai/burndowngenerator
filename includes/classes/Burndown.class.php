@@ -260,29 +260,11 @@ class Burndown {
 		);
 
 		$this->_setLineThinContinuous();
-		$this->_pdf->line(
+		$this->_pdf->rectangle(
 			$this->_margins['left'] - $width - 1,
 			$this->_pdf->getPageHeight() - $this->_margins['top'] + 2,
 			$this->_margins['left'] + 1,
-			$this->_pdf->getPageHeight() - $this->_margins['top'] + 2
-		);
-		$this->_pdf->line(
-			$this->_margins['left'] + 1,
-			$this->_pdf->getPageHeight() - $this->_margins['top'] + 2,
-			$this->_margins['left'] + 1,
 			$this->_pdf->getPageHeight() - $this->_margins['top'] + 9
-		);
-		$this->_pdf->line(
-			$this->_margins['left'] + 1,
-			$this->_pdf->getPageHeight() - $this->_margins['top'] + 9,
-			$this->_margins['left'] - $width - 1,
-			$this->_pdf->getPageHeight() - $this->_margins['top'] + 9
-		);
-		$this->_pdf->line(
-			$this->_margins['left'] - $width - 1,
-			$this->_pdf->getPageHeight() - $this->_margins['top'] + 9,
-			$this->_margins['left'] - $width - 1,
-			$this->_pdf->getPageHeight() - $this->_margins['top'] + 2
 		);
 	}
 

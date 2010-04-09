@@ -29,4 +29,11 @@ class MetricsPdf extends Cezpdf {
 	public function getPageHeight() {
 		return round($this->ez['pageHeight'] / 72 * 2.54 * 10);
 	}
+
+	public function rectangle($x1, $y1, $x2, $y2) {
+		$this->line($x1, $y1, $x2, $y1);
+		$this->line($x2, $y1, $x2, $y2);
+		$this->line($x2, $y2, $x1, $y2);
+		$this->line($x1, $y2, $x1, $y1);
+	}
 }
