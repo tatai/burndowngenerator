@@ -20,17 +20,30 @@ class EntryData {
 		$this->_checkFor['days'] = array(
 			'name' => 'Days',
 			'validators' => array(
-				'ValidatorIntegerGreaterThanZero')
+				'ValidatorIntegerGreaterThanZero'
+				)
 			);
 		$this->_checkFor['points'] = array(
 			'name' => 'Points',
 			'validators' => array(
-				'ValidatorIntegerGreaterThanZero')
+				'ValidatorIntegerGreaterThanZero'
+				)
 			);
 		$this->_checkFor['title'] = array(
 			'name' => 'Title',
 			'validators' => array(
-				'ValidatorNonEmptyString')
+				'ValidatorNonEmptyString'
+				)
+			);
+		$this->_checkFor['hide_speed'] = array(
+			'name' => 'Hide speed',
+			'validators' => array(
+				)
+			);
+		$this->_checkFor['hide_grid'] = array(
+			'name' => 'Hide grid',
+			'validators' => array(
+				)
 			);
 	}
 

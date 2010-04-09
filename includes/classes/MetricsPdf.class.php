@@ -21,4 +21,12 @@ class MetricsPdf extends Cezpdf {
 	public function addTextWrap($x, $y, $width, $size, $text, $just = 'left', $angle = 0) {
 		return parent::addTextWrap($this->_convert($x), $this->_convert($y), $this->_convert($width), $this->_convert($size), $text, $just, $angle);
 	}
+
+	public function getPageWidth() {
+		return round($this->ez['pageWidth'] / 72 * 2.54 * 10);
+	}
+
+	public function getPageHeight() {
+		return round($this->ez['pageHeight'] / 72 * 2.54 * 10);
+	}
 }

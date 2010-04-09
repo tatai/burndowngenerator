@@ -7,7 +7,9 @@ class Burndown {
 		$_margins = null,
 		$_tick_size = null,
 		$_tick_steps = null,
-		$_title = null
+		$_title = null,
+		$_hide_speed = null,
+		$_hide_grid = null
 		;
 
 	public function __construct($pdf, $points, $days) {
@@ -56,6 +58,8 @@ class Burndown {
 		);
 
 		$this->_tick_size = 4;
+		$this->_hide_speed = false;
+		$this->_hide_grid = false;
 	}
 
 	public function setOptions($options) {
@@ -67,9 +71,15 @@ class Burndown {
 
 	public function output() {
 		$this->_drawTitle();
+
 		$this->_drawXAxis();
 		$this->_drawYAxis();
-		$this->_drawBurndown();
+
+		$this->_drawBurndownLine();
+
+		if(!$this->_hide_speed) {
+			$this->_drawSpeed();
+		}
 
 		$this->_pdf->ezStream();
 	}
@@ -84,8 +94,8 @@ class Burndown {
 		$width = $this->_pdf->getTextWidth($size, $text);
 
 		$this->_pdf->addTextWrap(
-			297 / 2 - $width / 2,
-			210 - $this->_margins['top'] + $size / 2,
+			$this->_pdf->getPageWidth() / 2 - $width / 2,
+			$this->_pdf->getPageHeight() - $this->_margins['top'] + $size / 2,
 			$width,
 			$size,
 			$text
@@ -93,17 +103,29 @@ class Burndown {
 	}
 
 	private function _drawXAxis() {
+		$this->_drawXAxisLine();
+
+		$xAxisSplit = $this->_calculateXAxisSplit();
+		$this->_drawXAxisTicks($xAxisSplit);
+		$this->_drawXAxisValues($xAxisSplit);
+	}
+
+	private function _drawXAxisLine() {
 		// Horizontal line
 		$this->_setLineThinContinuous();
 		$this->_pdf->line(
 			$this->_margins['left'],
 			$this->_margins['bottom'],
-			297 - $this->_margins['right'],
+			$this->_pdf->getPageWidth() - $this->_margins['right'],
 			$this->_margins['bottom']
 		);
+	}
 
-		// Ticks
-		$split = (297 - $this->_margins['right'] - $this->_margins['left']) / ($this->_days - 1);
+	private function _calculateXAxisSplit() {
+		return ($this->_pdf->getPageWidth() - $this->_margins['right'] - $this->_margins['left']) / ($this->_days - 1);
+	}
+
+	private function _drawXAxisTicks($split) {
 		for($i = 0; $i < $this->_points; $i++) {
 			$this->_setLineThinContinuous();
 			$this->_pdf->line(
@@ -119,10 +141,15 @@ class Burndown {
 					$this->_margins['left'] + $split * $i,
 					$this->_margins['bottom'] + ($this->_tick_size / 2),
 					$this->_margins['left'] + $split * $i,
-					210 - $this->_margins['top']
+					$this->_pdf->getPageHeight() - $this->_margins['top']
 				);
 			}
 
+		}
+	}
+	
+	private function _drawXAxisValues($split) {
+		for($i = 0; $i < $this->_points; $i++) {
 			$width = $this->_pdf->getTextWidth(4, $i);
 
 			$this->_pdf->addTextWrap(
@@ -134,30 +161,47 @@ class Burndown {
 			);
 		}
 	}
-	
+
 	private function _drawYAxis() {
+		$this->_drawYAxisLine();
+
+		list($yAxisSplit, $yPoints, $factor) = $this->_calculateYAxisProperties();
+		$this->_drawYAxisTicks($yAxisSplit, $yPoints);
+		$this->_drawYAxisValues($yAxisSplit, $yPoints, $factor);
+	}
+
+	private function _drawYAxisLine() {
 		// Vertical line
 		$this->_setLineThinContinuous();
 		$this->_pdf->line(
 			$this->_margins['left'],
 			$this->_margins['bottom'],
 			$this->_margins['left'],
-			210 - $this->_margins['top']
+			$this->_pdf->getPageHeight() - $this->_margins['top']
 		);
+	}
 
-		// Ticks
+	private function _calculateYAxisProperties() {
 		$resultingPoints = $this->_points;
 		do {
 			$factor = next($this->_tick_steps);
 
 			$resultingPoints = $this->_points / $factor + 1;
-			$split = (210 - $this->_margins['top'] - $this->_margins['bottom']) / ($resultingPoints - 1);
+			$split = ($this->_pdf->getPageHeight() - $this->_margins['top'] - $this->_margins['bottom']) / ($resultingPoints - 1);
 
 			// Floor result yo get an integer number of points
 			$resultingPoints = floor($resultingPoints);
 		} while($split < 5);
 
-		for($i = 0; $i < $resultingPoints; $i++) {
+		return array(
+			$split,
+			$resultingPoints,
+			$factor
+		);
+	}
+
+	private function _drawYAxisTicks($split, $points) {
+		for($i = 0; $i < $points; $i++) {
 			$this->_setLineThinContinuous();
 			$this->_pdf->line(
 				$this->_margins['left'] - ($this->_tick_size / 2),
@@ -171,11 +215,15 @@ class Burndown {
 				$this->_pdf->line(
 					$this->_margins['left'] + ($this->_tick_size / 2),
 					$this->_margins['bottom'] + $split * $i,
-					297 - $this->_margins['right'],
+					$this->_pdf->getPageWidth() - $this->_margins['right'],
 					$this->_margins['bottom'] + $split * $i
 				);
 			}
+		}
+	}
 
+	private function _drawYAxisValues($split, $points, $factor) {
+		for($i = 0; $i < $points; $i++) {
 			$width = $this->_pdf->getTextWidth(4, $factor * $i);
 
 			$this->_pdf->addTextWrap(
@@ -187,8 +235,6 @@ class Burndown {
 				'left'
 			);
 		}
-
-		$this->_drawSpeed();
 	}
 
 	private function _drawSpeed() {
@@ -196,7 +242,7 @@ class Burndown {
 
 		$this->_pdf->addTextWrap(
 			$this->_margins['left'] - $width,
-			210 - $this->_margins['top'] + 3,
+			$this->_pdf->getPageHeight() - $this->_margins['top'] + 3,
 			$width,
 			7,
 			$this->_points
@@ -205,36 +251,36 @@ class Burndown {
 		$this->_setLineThinContinuous();
 		$this->_pdf->line(
 			$this->_margins['left'] - $width - 1,
-			210 - $this->_margins['top'] + 2,
+			$this->_pdf->getPageHeight() - $this->_margins['top'] + 2,
 			$this->_margins['left'] + 1,
-			210 - $this->_margins['top'] + 2
+			$this->_pdf->getPageHeight() - $this->_margins['top'] + 2
 		);
 		$this->_pdf->line(
 			$this->_margins['left'] + 1,
-			210 - $this->_margins['top'] + 2,
+			$this->_pdf->getPageHeight() - $this->_margins['top'] + 2,
 			$this->_margins['left'] + 1,
-			210 - $this->_margins['top'] + 9
+			$this->_pdf->getPageHeight() - $this->_margins['top'] + 9
 		);
 		$this->_pdf->line(
 			$this->_margins['left'] + 1,
-			210 - $this->_margins['top'] + 9,
+			$this->_pdf->getPageHeight() - $this->_margins['top'] + 9,
 			$this->_margins['left'] - $width - 1,
-			210 - $this->_margins['top'] + 9
+			$this->_pdf->getPageHeight() - $this->_margins['top'] + 9
 		);
 		$this->_pdf->line(
 			$this->_margins['left'] - $width - 1,
-			210 - $this->_margins['top'] + 9,
+			$this->_pdf->getPageHeight() - $this->_margins['top'] + 9,
 			$this->_margins['left'] - $width - 1,
-			210 - $this->_margins['top'] + 2
+			$this->_pdf->getPageHeight() - $this->_margins['top'] + 2
 		);
 	}
 
-	private function _drawBurndown() {
+	private function _drawBurndownLine() {
 		$this->_setLineThickContinuous();
 		$this->_pdf->line(
 			$this->_margins['left'],
-			210 - $this->_margins['top'],
-			297 - $this->_margins['right'],
+			$this->_pdf->getPageHeight() - $this->_margins['top'],
+			$this->_pdf->getPageWidth() - $this->_margins['right'],
 			$this->_margins['bottom']
 		);
 	}

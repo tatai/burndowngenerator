@@ -4,12 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Documento sin t&iacute;tulo</title>
 <link rel="stylesheet" type="text/css" media="screen" href="/css/general.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/iphone-checkboxes.css" />
 
 <!--script type="text/javascript" src="/js/mootools-1.2.4-core.js"></script>
 <script type="text/javascript" src="/js/mootools-1.4-more.js"></script-->
 <script type="text/javascript" src="/js/mootools-1.2.4-core-nc.js"></script>
 <script type="text/javascript" src="/js/mootools-1.2.4.4-more-nc.js"></script>
 
+<script type="text/javascript" src="/js/iphone-checkboxes.js"></script>
 </head>
 <body>
 
@@ -19,6 +21,12 @@
 <label for="YABOG_days">Days: </label><input type="text" id="YABOG_days" name="YABOG[days]" />
 <label for="YABOG_points">Points: </label><input type="text" id="YABOG_points" name="YABOG[points]" />
 <label for="YABOG_title">Title: </label><input type="text" id="YABOG_title" name="YABOG[title]" />
+</fieldset>
+
+<fieldset>
+<legend>Configuration options</legend>
+<span><label for="YABOG_hide_speed">Hide speed: </label><input type="checkbox" id="YABOG_hide_speed" name="YABOG[hide_speed]" /></span>
+<span><label for="YABOG_hide_grid">Hide grid: </label><input type="checkbox" id="YABOG_hide_grid" name="YABOG[hide_grid]" /></span>
 </fieldset>
 
 <p><input type="submit" value="Create burndown chart!" /></p>
