@@ -108,6 +108,10 @@ class Burndown {
 		$xAxisSplit = $this->_calculateXAxisSplit();
 		$this->_drawXAxisTicks($xAxisSplit);
 		$this->_drawXAxisValues($xAxisSplit);
+
+		if(!$this->_hide_grid) {
+			$this->_drawXAxisGrid($xAxisSplit);
+		}
 	}
 
 	private function _drawXAxisLine() {
@@ -134,17 +138,18 @@ class Burndown {
 				$this->_margins['left'] + $split * $i,
 				$this->_margins['bottom'] + ($this->_tick_size / 2)
 			);
-
-			if($i > 0) {
-				$this->_setLineThinDashed();
-				$this->_pdf->line(
-					$this->_margins['left'] + $split * $i,
-					$this->_margins['bottom'] + ($this->_tick_size / 2),
-					$this->_margins['left'] + $split * $i,
-					$this->_pdf->getPageHeight() - $this->_margins['top']
-				);
-			}
-
+		}
+	}
+	
+	private function _drawXAxisGrid($split) {
+		for($i = 1; $i < $this->_points; $i++) {
+			$this->_setLineThinDashed();
+			$this->_pdf->line(
+				$this->_margins['left'] + $split * $i,
+				$this->_margins['bottom'] + ($this->_tick_size / 2),
+				$this->_margins['left'] + $split * $i,
+				$this->_pdf->getPageHeight() - $this->_margins['top']
+			);
 		}
 	}
 	
@@ -168,6 +173,10 @@ class Burndown {
 		list($yAxisSplit, $yPoints, $factor) = $this->_calculateYAxisProperties();
 		$this->_drawYAxisTicks($yAxisSplit, $yPoints);
 		$this->_drawYAxisValues($yAxisSplit, $yPoints, $factor);
+
+		if(!$this->_hide_grid) {
+			$this->_drawYAxisGrid($yAxisSplit, $yPoints);
+		}
 	}
 
 	private function _drawYAxisLine() {
@@ -209,16 +218,18 @@ class Burndown {
 				$this->_margins['left'] + ($this->_tick_size / 2),
 				$this->_margins['bottom'] + $split * $i
 			);
+		}
+	}
 
-			if($i > 0) {
-				$this->_setLineThinDashed();
-				$this->_pdf->line(
-					$this->_margins['left'] + ($this->_tick_size / 2),
-					$this->_margins['bottom'] + $split * $i,
-					$this->_pdf->getPageWidth() - $this->_margins['right'],
-					$this->_margins['bottom'] + $split * $i
-				);
-			}
+	private function _drawYAxisGrid($split, $points) {
+		for($i = 1; $i < $points; $i++) {
+			$this->_setLineThinDashed();
+			$this->_pdf->line(
+				$this->_margins['left'] + ($this->_tick_size / 2),
+				$this->_margins['bottom'] + $split * $i,
+				$this->_pdf->getPageWidth() - $this->_margins['right'],
+				$this->_margins['bottom'] + $split * $i
+			);
 		}
 	}
 
