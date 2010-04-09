@@ -81,6 +81,8 @@ class Burndown {
 			$this->_drawSpeed();
 		}
 
+		$this->_drawAds();
+
 		$this->_pdf->ezStream();
 	}
 
@@ -275,6 +277,20 @@ class Burndown {
 			$this->_pdf->getPageHeight() - $this->_margins['top'],
 			$this->_pdf->getPageWidth() - $this->_margins['right'],
 			$this->_margins['bottom']
+		);
+	}
+
+	private function _drawAds() {
+		$url = 'http://www.burndowngenerator.com';
+		$size = 3;
+		$width = $this->_pdf->getTextWidth(3, $url);
+
+		$this->_pdf->addTextWrap(
+			$this->_pdf->getPageWidth() - $this->_margins['right'] - $width,
+			10,
+			$width,
+			3,
+			$url
 		);
 	}
 
