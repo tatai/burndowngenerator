@@ -4,6 +4,9 @@ label {width:6em;float:left;}
 input,textarea {border:1px solid #aaa;background-color:#eee;}
 fieldset {border:1px solid #aaa;}
 
+.error {color: #f00;margin-left:1em;display:block;}
+.notice {color: #00f;}
+
 /* iPhone selectors */
 .iPhoneCheckContainer{ position:relative; width:85px; height:27px; cursor:pointer; overflow:hidden;  }
 .iPhoneCheckContainer input{ position:absolute; top:5px; left:30px;  }
