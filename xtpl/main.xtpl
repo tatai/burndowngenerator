@@ -2,19 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Documento sin t&iacute;tulo</title>
+<title>Yet another burndown online generator</title>
 <link rel="stylesheet" type="text/css" media="screen" href="/css/general.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/iphone-checkboxes.css" />
 
-<!--script type="text/javascript" src="/js/mootools-1.2.4-core.js"></script>
-<script type="text/javascript" src="/js/mootools-1.4-more.js"></script-->
+<!--script type="text/javascript" src="/js/mootools-1.2.4-core-yc.js"></script>
+<script type="text/javascript" src="/js/mootools-1.2.4.4-more.js"></script>
 <script type="text/javascript" src="/js/mootools-1.2.4-core-nc.js"></script>
-<script type="text/javascript" src="/js/mootools-1.2.4.4-more-nc.js"></script>
+<script type="text/javascript" src="/js/mootools-1.2.4.4-more-nc.js"></script-->
+<script type="text/javascript" src="/js/mootools-1.2.4.core-1.2.4.4-more.js"></script>
 
 <script type="text/javascript" src="/js/iphone-checkboxes.js"></script>
 <script type="text/javascript" src="/js/burndown.js"></script>
 </head>
 <body>
+
+<h1>Yet another burndown online generator</h1>
 
 <form action="burndown.php" method="post">
 <fieldset>
@@ -34,6 +36,16 @@
 </fieldset>
 
 <p><input type="submit" value="Create burndown chart!" /></p>
+</form>
+
+<form action="comments.php">
+<fieldset>
+<legend>Suggestions? Comments? (click to show/hide)</legend>
+<div class="fold close">
+<p>Please, let me know!<p>
+<p><textarea name="comment" cols="60" rows="8"></textarea></p>
+<p><input type="submit" value="Send!" /></p>
+</div>
 </form>
 </body>
 </html>
