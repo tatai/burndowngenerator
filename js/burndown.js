@@ -120,7 +120,7 @@ var Burndown = new Class({
 	},
 
 	removeSpinner : function(target) {
-		target_form.getElements('.spinner').each(function(el) {
+		target.getElements('.spinner').each(function(el) {
 			el.dispose();
 		});
 	},
