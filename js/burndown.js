@@ -1,6 +1,7 @@
 var Burndown = new Class({
 	initialize : function() {
 		this.doFolding();
+		this.addBurndownFormEvents();
 		this.addCommentFormEvents();
 		this.addLightbox();
 
@@ -35,8 +36,8 @@ var Burndown = new Class({
 		$('comment_form').addEvent('submit', function(e, form) {
 			e.stop();
 
-			this.disableCommentsSubmit();
-			this.addCommentSpinner();
+			this.disableSubmit(form);
+			this.addSpinner(form);
 
 			this.cleanNotices();
 
@@ -45,6 +46,12 @@ var Burndown = new Class({
 				'method' : 'post'
 			}).addEvent('success', this.checkCommentErrors.bind(this)).send(form.toQueryString());
 		}.bindWithEvent(this, $('comment_form')));
+	},
+
+	addBurndownFormEvents : function() {
+		$('burndown_form').addEvent('submit', function(e, form) {
+			this.addSpinner(form);
+		}.bindWithEvent(this, $('burndown_form')));
 	},
 
 	addLightbox : function() {
@@ -67,8 +74,8 @@ var Burndown = new Class({
 
 	checkCommentErrors : function(json) {
 		this.cleanErrors();
-		this.enableCommentsSubmit();
-		this.removeCommentSpinner();
+		this.enableSubmit($('comment_form'));
+		this.removeSpinner($('comment_form'));
 		if(json.ok) {
 			var notice = new Element('span', {
 				'class' : 'notice',
@@ -103,27 +110,27 @@ var Burndown = new Class({
 		}
 	},
 
-	addCommentSpinner : function() {
+	addSpinner : function(target_form) {
 		new Element('img', {
 			'src' : '/imgs/ico.loading.gif',
 			'class' : 'spinner'
 		}).setStyles({
 			'margin-left' : '0.5em'
-		}).injectAfter($('comment_form').getElement('.submit-comment'));
+		}).injectAfter(target_form.getElement('input[type="submit"]'));
 	},
 
-	removeCommentSpinner : function() {
-		$('comment_form').getElements('.spinner').each(function(el) {
+	removeSpinner : function(target) {
+		target_form.getElements('.spinner').each(function(el) {
 			el.dispose();
 		});
 	},
 
-	enableCommentsSubmit : function() {
-		$('comment_form').getElement('.submit-comment').disabled = false;
+	enableSubmit : function(target) {
+		target.getElement('input[type="submit"]').disabled = false;
 	},
 
-	disableCommentsSubmit : function() {
-		$('comment_form').getElement('.submit-comment').disabled = true;
+	disableSubmit : function(target) {
+		target.getElement('input[type="submit"]').disabled = true;
 	}
 });
 

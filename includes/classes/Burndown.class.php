@@ -70,6 +70,8 @@ class Burndown {
 	}
 
 	public function output() {
+		$this->_log();
+
 		$this->_drawTitle();
 
 		$this->_drawXAxis();
@@ -307,5 +309,23 @@ class Burndown {
 	private function _setLineThinDashed() {
 		$this->_pdf->setStrokeColor(0.8, 0.8, 0.8);
 		$this->_pdf->setLineStyle(1, '', '', array(5));
+	}
+
+	private function _log() {
+		$fd = fopen(dirname(__FILE__) . '/../../log.burndown.txt', 'a');
+		$data = array(
+			$_SERVER['REMOTE_ADDR'],
+			date('Y-m-d H:i:s'),
+			$this->_points,
+			$this->_days,
+			$this->_title,
+			($this->_hide_grid) ? 'N' : 'Y',
+			($this->_hide_speed) ? 'N' : 'Y',
+			$_SERVER['HTTP_USER_AGENT']
+		);
+
+		@fwrite($fd, implode("\t", $data) . "\n");
+
+		fclose($fd);
 	}
 }

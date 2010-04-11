@@ -23,16 +23,16 @@
 
 <h1>Yet another burndown online generator</h1>
 
-<p>Create your "ready to print" PDF page (A4 landscape) with your burndown charts with just a few clicks.</p>
+<p>Create your "ready to print" PDF page (A4 landscape) with your burndown chart with just a few clicks.</p>
 <p>Screenshots: <a href="/screenshots/default.png" class="mb" title="Burndown with default options">Default options</a> - <a href="/screenshots/wo.grid.speed.png" class="mb" title="Burndown with grid and speed hidden">Without grid and speed</a></p>
 
-<form action="burndown.php" method="post">
+<form action="?action=burndown" method="post" id="burndown_form">
 <fieldset>
 <legend>Main data</legend>
 <p>Complete this inputs to create your burndown chart:</p>
-<p><label for="YABOG_days">Days: </label><input type="text" id="YABOG_days" name="YABOG[days]" size="4" /></p>
-<p><label for="YABOG_points">Points: </label><input type="text" id="YABOG_points" name="YABOG[points]" size="4" /></p>
-<p><label for="YABOG_title">Title: </label><input type="text" id="YABOG_title" name="YABOG[title]" size="50" /></p>
+<p><label for="YABOG_days">Days: </label><input type="text" id="YABOG_days" name="YABOG[days]" size="4" value="{YABOG.days}" /><!-- BEGIN: error_days --><span class="error">{ERROR.text}<!-- END: error_days --></p>
+<p><label for="YABOG_points">Points: </label><input type="text" id="YABOG_points" name="YABOG[points]" size="4" value="{YABOG.points}" /><!-- BEGIN: error_points --><span class="error">{ERROR.text}<!-- END: error_points --></p>
+<p><label for="YABOG_title">Title: </label><input type="text" id="YABOG_title" name="YABOG[title]" size="50" value="{YABOG.title}" /><!-- BEGIN: error_title --><span class="error">{ERROR.text}<!-- END: error_title --></p>
 </fieldset>
 
 <fieldset>
