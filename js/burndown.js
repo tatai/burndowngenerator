@@ -2,6 +2,7 @@ var Burndown = new Class({
 	initialize : function() {
 		this.doFolding();
 		this.addCommentFormEvents();
+		this.addLightbox();
 
 		this.preloadImages();
 	},
@@ -44,6 +45,12 @@ var Burndown = new Class({
 				'method' : 'post'
 			}).addEvent('success', this.checkCommentErrors.bind(this)).send(form.toQueryString());
 		}.bindWithEvent(this, $('comment_form')));
+	},
+
+	addLightbox : function() {
+		new multiBox('mb', {
+			'overlay' : new overlay()
+		}); 
 	},
 
 	cleanNotices : function() {

@@ -1,4 +1,5 @@
 body {width:40em;font-family:Arial,Helvetica,sans-serif;}
+img {border:0;}
 
 label {width:6em;float:left;}
 input,textarea {border:1px solid #aaa;background-color:#eee;}

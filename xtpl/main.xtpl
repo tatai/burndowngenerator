@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Yet another burndown online generator</title>
 <link rel="stylesheet" type="text/css" media="screen" href="/css/general.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/multibox.css" />
 
 <!--script type="text/javascript" src="/js/mootools-1.2.4-core-yc.js"></script>
 <script type="text/javascript" src="/js/mootools-1.2.4.4-more.js"></script>
@@ -12,11 +13,18 @@
 <script type="text/javascript" src="/js/mootools-1.2.4.core-1.2.4.4-more.js"></script>
 
 <script type="text/javascript" src="/js/iphone-checkboxes.js"></script>
+<script type="text/javascript" src="/js/multibox/overlay.js"></script> 
+<script type="text/javascript" src="/js/multibox/assets.js"></script> 
+<script type="text/javascript" src="/js/multibox/multibox.js"></script> 
+
 <script type="text/javascript" src="/js/burndown.js"></script>
 </head>
 <body>
 
 <h1>Yet another burndown online generator</h1>
+
+<p>Create your "ready to print" PDF page (A4 landscape) with your burndown charts with just a few clicks.</p>
+<p>Screenshots: <a href="/screenshots/default.png" class="mb" title="Burndown with default options">Default options</a> - <a href="/screenshots/wo.grid.speed.png" class="mb" title="Burndown with grid and speed hidden">Without grid and speed</a></p>
 
 <form action="burndown.php" method="post">
 <fieldset>
@@ -47,8 +55,10 @@
 <p><label form="INFO_addr">Your mail: </label><input type="text" name="INFO[mail]" id="INFO_mail" size="25" /></p>
 <p><textarea name="INFO[comment]" id="INFO_comment" cols="60" rows="8"></textarea></p>
 <p><input type="submit" value="Send!" class="submit-comment" /></p>
+</fieldset>
 </div>
 </form>
+<p align="right"><a href="http://www.vim.org"><img src="/imgs/vim_created.gif" /></a></p>
 </body>
 </html>
 <!--  END: main -->
