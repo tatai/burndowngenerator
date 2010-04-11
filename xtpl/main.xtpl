@@ -38,8 +38,8 @@
 <fieldset>
 <legend>Configuration options (click to show/hide)</legend>
 <div class="fold close">
-<span><label for="YABOG_hide_speed">Hide speed: </label><input type="checkbox" id="YABOG_hide_speed" name="YABOG[hide_speed]" /></span>
-<span><label for="YABOG_hide_grid">Hide grid: </label><input type="checkbox" id="YABOG_hide_grid" name="YABOG[hide_grid]" /></span>
+<span><label for="YABOG_hide_speed">Hide speed: </label><input type="checkbox" id="YABOG_hide_speed" name="YABOG[hide_speed]" {YABOG.hide_speed}/></span>
+<span><label for="YABOG_hide_grid">Hide grid: </label><input type="checkbox" id="YABOG_hide_grid" name="YABOG[hide_grid]" {YABOG.hide_grid} /></span>
 </div>
 </fieldset>
 

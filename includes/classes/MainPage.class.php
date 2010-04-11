@@ -53,6 +53,21 @@ class MainPage {
 	}
 
 	private function _renderData($xtpl) {
+		$this->_changeSelectors();
+
 		$xtpl->assign('YABOG', $this->_data);
+	}
+
+	private function _changeSelectors() {
+		$checks = array(
+			'hide_grid',
+			'hide_speed'
+		);
+
+		foreach($checks AS $check) {
+			if($this->_data[$check]) {
+				$this->_data[$check] = 'checked="checked"';
+			}
+		}
 	}
 }
