@@ -8,6 +8,9 @@ fieldset {border:1px solid #aaa;}
 .error {color: #f00;margin-left:1em;display:block;}
 .notice {color: #00f;}
 
+#burndown_form {margin-top: 3em;}
+#comment_form {margin-top: 3em;}
+
 /* iPhone selectors */
 .iPhoneCheckContainer{ position:relative; width:85px; height:27px; cursor:pointer; overflow:hidden;  }
 .iPhoneCheckContainer input{ position:absolute; top:5px; left:30px;  }
