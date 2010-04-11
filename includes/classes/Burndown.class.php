@@ -132,7 +132,7 @@ class Burndown {
 	}
 
 	private function _drawXAxisTicks($split) {
-		for($i = 0; $i < $this->_points; $i++) {
+		for($i = 0; $i < $this->_days; $i++) {
 			$this->_setLineThinContinuous();
 			$this->_pdf->line(
 				$this->_margins['left'] + $split * $i,
@@ -144,7 +144,7 @@ class Burndown {
 	}
 	
 	private function _drawXAxisGrid($split) {
-		for($i = 1; $i < $this->_points; $i++) {
+		for($i = 1; $i < $this->_days; $i++) {
 			$this->_setLineThinDashed();
 			$this->_pdf->line(
 				$this->_margins['left'] + $split * $i,
@@ -156,7 +156,7 @@ class Burndown {
 	}
 	
 	private function _drawXAxisValues($split) {
-		for($i = 0; $i < $this->_points; $i++) {
+		for($i = 0; $i < $this->_days; $i++) {
 			$width = $this->_pdf->getTextWidth(4, $i);
 
 			$this->_pdf->addTextWrap(
