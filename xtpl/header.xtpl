@@ -3,6 +3,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Yet another burndown online generator</title>
+
+<link rel="shortcut icon" href="/imgs/favicon.ico" />
+
+<meta name="content-Language" content="English" />
+<meta name="Title" content="Yet another burndown online generator" />
+<meta name="Keywords" content="burndown, online generator, scrum, agile, generate burndown, create burndown, pdf, chart" />
+<meta name="Description" content="Generate your custom burndown chart fast and easy" />
+<meta name="robots" content="index,follow" />
+<meta name="locality" content="Pamplona, Navarra, España" />
+<meta name="lang" content="en" />
+
+<meta name="author" content="Tatai" />
+
+<link rel="start" href="/" title="Home page" />
+<link rel="author" title="Contact author" href="/" />
+<!--link rel="contents" href="/webmap" title="Mapa web. Índice de Contenidos" /-->
+<!--link rel="alternate" type="application/rss+xml" title="Yet another burndown online generator" href="http://www.burndowngenerator.com/rss" /-->
+
+
 <link rel="stylesheet" type="text/css" media="screen" href="/css/general.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/multibox.css" />
 
