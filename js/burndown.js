@@ -33,6 +33,10 @@ var Burndown = new Class({
 	},
 
 	addCommentFormEvents : function() {
+		if(!$('comment_form')) {
+			return false;
+		}
+
 		$('comment_form').addEvent('submit', function(e, form) {
 			e.stop();
 
@@ -49,6 +53,10 @@ var Burndown = new Class({
 	},
 
 	addBurndownFormEvents : function() {
+		if(!$('burndown_form')) {
+			return false;
+		}
+
 		$('burndown_form').addEvent('submit', function(e, form) {
 			this.addSpinner(form);
 		}.bindWithEvent(this, $('burndown_form')));
