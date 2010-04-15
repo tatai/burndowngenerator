@@ -3,11 +3,12 @@
 <h1>Yet another burndown online generator</h1>
 
 <p>Create your "ready to print" PDF page (A4 landscape) with your burndown chart with just a few clicks.</p>
+<p><a href="/instructions">Instructions</a> - <a href="/changelog">Changelog</a></p>
 <p>Screenshots:</p>
 
 {FILE "screenshots.xtpl"}
 
-<form action="?action=burndown" method="post" id="burndown_form">
+<form action="/burndown" method="post" id="burndown_form">
 <fieldset>
 <legend>Main data</legend>
 <p>Complete this inputs to create your burndown chart:</p>
@@ -27,7 +28,7 @@
 <p><input type="submit" value="Create burndown chart!" /></p>
 </form>
 
-<form action="?action=comment" id="comment_form">
+<form action="/comment" id="comment_form">
 <fieldset>
 <legend>Suggestions? Comments? Bugs? (click to show/hide)</legend>
 <div class="fold close">

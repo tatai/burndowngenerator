@@ -1,0 +1,25 @@
+<!--  BEGIN: main -->
+{FILE "header.xtpl"}
+<h1>Changelog</h1>
+
+<ul id="changelog">
+	<li>v.1.0.1
+	<ul>
+		<li>Fixed bug that make browser crash when direct call to generate burndown</li>
+		<li>Added sitemap.xml</li>
+		<li>Created instructions page</li>
+		<li>Generated dispatcher</li>
+		<li>Several small bugs fixed</li>
+		<li>Code refactoring</li>
+	</ul>
+	</li>
+	<li>v.1.0 (2010-04-11)
+	<ul>
+		<li>Initial version</li>
+		<li>Simple burndown with title, days and points</li>
+		<li>Showing grid and speed is optional (active by default)</li>
+	</ul>
+	</li>
+</ul>
+{FILE "footer.xtpl"}
+<!--  END: main -->
