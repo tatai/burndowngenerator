@@ -19,29 +19,34 @@ class EntryData {
 	protected function _initialize() {
 		$this->_checkFor['days'] = array(
 			'name' => 'Days',
+			'required' => true,
 			'validators' => array(
 				'ValidatorIntegerGreaterThanZero'
 				)
 			);
 		$this->_checkFor['points'] = array(
 			'name' => 'Points',
+			'required' => true,
 			'validators' => array(
 				'ValidatorIntegerGreaterThanZero'
 				)
 			);
 		$this->_checkFor['title'] = array(
 			'name' => 'Title',
+			'required' => true,
 			'validators' => array(
 				'ValidatorNonEmptyString'
 				)
 			);
 		$this->_checkFor['hide_speed'] = array(
 			'name' => 'Hide speed',
+			'required' => false,
 			'validators' => array(
 				)
 			);
 		$this->_checkFor['hide_grid'] = array(
 			'name' => 'Hide grid',
+			'required' => false,
 			'validators' => array(
 				)
 			);
@@ -60,7 +65,8 @@ class EntryData {
 			$result = true;
 
 			// Check if it has been set
-			if(!isset($this->_post[$var])) {
+			if($data['required'] && !isset($this->_post[$var])) {
+				$this->_errors[$var][] = $data['name'] . ' is required';
 				continue;
 			}
 
