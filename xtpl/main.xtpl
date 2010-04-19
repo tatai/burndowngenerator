@@ -3,7 +3,9 @@
 <h1>Yet another burndown online generator</h1>
 
 <p>Create your "ready to print" PDF page (A4 landscape) with your burndown chart with just a few clicks.</p>
-<p><a href="/instructions">Instructions</a> - <a href="/changelog">Changelog</a></p>
+
+{FILE "menu.xtpl"}
+
 <p>Screenshots:</p>
 
 {FILE "screenshots.xtpl"}

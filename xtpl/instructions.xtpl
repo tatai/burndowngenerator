@@ -12,5 +12,7 @@
 
 {FILE "screenshots.xtpl"}
 
+<a href="/">Back to main page</a>
+
 {FILE "footer.xtpl"}
 <!--  END: main -->

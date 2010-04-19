@@ -2,13 +2,15 @@
 {FILE "header.xtpl"}
 <h1>Changelog</h1>
 
+<a href="/" class="back">Back to main page</a>
+
 <ul id="changelog">
-	<li>v.1.0.1
+	<li>v.1.0.1 (2010-04-20)
 	<ul>
 		<li>Fixed bug that make browser crash when direct call to generate burndown</li>
 		<li>Added sitemap.xml</li>
 		<li>Created instructions page</li>
-		<li>Generated dispatcher</li>
+		<li>New dispatcher</li>
 		<li>Several small bugs fixed</li>
 		<li>Code refactoring</li>
 	</ul>
@@ -21,5 +23,8 @@
 	</ul>
 	</li>
 </ul>
+
+<a href="/" class="back">Back to main page</a>
+
 {FILE "footer.xtpl"}
 <!--  END: main -->
