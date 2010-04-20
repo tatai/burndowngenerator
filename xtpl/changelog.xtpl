@@ -9,6 +9,7 @@
 	<ul>
 		<li>Fixed bug that make browser crash when direct call to generate burndown</li>
 		<li>Added sitemap.xml</li>
+		<li>Added roadmap</li>
 		<li>Created instructions page</li>
 		<li>New dispatcher</li>
 		<li>Several small bugs fixed</li>

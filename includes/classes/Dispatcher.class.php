@@ -35,6 +35,7 @@ class Dispatcher {
 		switch($name) {
 			case 'instructions':
 			case 'changelog':
+			case 'roadmap':
 				$action = array(
 					'program' => 'SimplePageAction',
 					'params' => array('name' => $name)

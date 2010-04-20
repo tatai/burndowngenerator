@@ -1,0 +1,32 @@
+<!--  BEGIN: main -->
+{FILE "header.xtpl"}
+<h1>Roadmap</h1>
+
+<a href="/" class="back">Back to main page</a>
+
+<p>These are some features that <a href="/">Yet another burndown online generator</a> will implement (some day) and reported bugs. New features are not sort by priority, they are just listed.</p>
+
+<p>If you have any suggestion, please contact me via form at <a href="/">main page</a></p>
+
+<ul id="roadmap">
+	<li>Bugs
+	<ul>
+		<li>Title does not always show all characters</li>
+	</ul>
+	</li>
+	<li>New features
+	<ul>
+		<li>Paper size (not only A4)</li>
+		<li>Labels on X and Y axis</li>
+		<li>Burndown line in different colors</li>
+		<li>Weekdays on X Axis</li>
+		<li>Ability to input your daily work done</li>
+		<li>Import/Export preferences</li>
+	</ul>
+	</li>
+</ul>
+
+<a href="/" class="back">Back to main page</a>
+
+{FILE "footer.xtpl"}
+<!--  END: main -->
