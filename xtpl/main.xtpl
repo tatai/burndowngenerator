@@ -34,13 +34,13 @@
 <fieldset>
 <legend>Suggestions? Comments? Bugs? (click to show/hide)</legend>
 <div class="fold close">
-<p>Please, let me know!<p>
+<p>Please, let me know!</p>
 <p><label form="INFO_name">Your name: </label><input type="text" name="INFO[name]" id="INFO_name" size="25" /></p>
 <p><label form="INFO_addr">Your mail: </label><input type="text" name="INFO[mail]" id="INFO_mail" size="25" /></p>
 <p><textarea name="INFO[comment]" id="INFO_comment" cols="60" rows="8"></textarea></p>
 <p><input type="submit" value="Send!" class="submit-comment" /></p>
-</fieldset>
 </div>
+</fieldset>
 </form>
 {FILE "footer.xtpl"}
 <!--  END: main -->
