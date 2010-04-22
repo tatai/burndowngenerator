@@ -50,6 +50,13 @@ class EntryData {
 			'validators' => array(
 				)
 			);
+		$this->_checkFor['burndown_color'] = array(
+			'name' => 'Burndown line color',
+			'required' => false,
+			'validators' => array(
+				'ValidatorRGBString'
+				)
+			);
 	}
 
 	/**

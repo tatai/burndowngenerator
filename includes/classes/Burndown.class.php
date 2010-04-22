@@ -273,12 +273,29 @@ class Burndown {
 	}
 
 	private function _drawBurndownLine() {
-		$this->_setLineThickContinuous();
+		$color = $this->_convertRGBToBase1Array($this->_burndown_color);
+		$this->_setLineThickContinuous($color);
 		$this->_pdf->line(
 			$this->_margins['left'],
 			$this->_pdf->getPageHeight() - $this->_margins['top'],
 			$this->_pdf->getPageWidth() - $this->_margins['right'],
 			$this->_margins['bottom']
+		);
+	}
+
+	private function _convertRGBToBase1Array($color) {
+		if(is_null($color)) {
+			return null;
+		}
+
+		if(!preg_match('/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/', strtolower($this->_burndown_color), $c)) {
+			return null;
+		}
+
+		return array(
+			'r' => hexdec($c[1]) / 255,
+			'g' => hexdec($c[2]) / 255,
+			'b' => hexdec($c[3]) / 255
 		);
 	}
 
@@ -301,8 +318,16 @@ class Burndown {
 		$this->_pdf->setLineStyle(1, '', '', array(1,0));
 	}
 
-	private function _setLineThickContinuous() {
-		$this->_pdf->setStrokeColor(0, 0, 0);
+	private function _setLineThickContinuous($color = null) {
+		if(is_null($color)) {
+			$color = array(
+				'r' => 0,
+				'g' => 0,
+				'b' => 0
+			);
+		}
+
+		$this->_pdf->setStrokeColor($color['r'], $color['g'], $color['b']);
 		$this->_pdf->setLineStyle(5, '', '', array(5,0));
 	}
 

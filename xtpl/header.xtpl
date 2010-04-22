@@ -24,6 +24,7 @@
 
 <link rel="stylesheet" type="text/css" media="screen" href="/css/general.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="/css/multibox.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/mooRainbow.css" />
 
 <!--script type="text/javascript" src="/js/mootools-1.2.4-core-yc.js"></script>
 <script type="text/javascript" src="/js/mootools-1.2.4.4-more.js"></script>
@@ -34,6 +35,8 @@
 <script type="text/javascript" src="/js/iphone-checkboxes.js"></script>
 <script type="text/javascript" src="/js/multibox/overlay.js"></script> 
 <script type="text/javascript" src="/js/multibox/assets.js"></script> 
+<script type="text/javascript" src="/js/rainbow/mooRainbow.1.2b2.js"></script> 
+
 <script type="text/javascript" src="/js/multibox/multibox.js"></script> 
 
 <script type="text/javascript" src="/js/burndown.js"></script>

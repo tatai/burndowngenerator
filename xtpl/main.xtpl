@@ -6,7 +6,7 @@
 
 {FILE "menu.xtpl"}
 
-<p>Screenshots:</p>
+<p class="limpiar">Screenshots:</p>
 
 {FILE "screenshots.xtpl"}
 
@@ -24,8 +24,22 @@
 <div class="fold close">
 <span><label for="YABOG_hide_speed">Hide speed: </label><input type="checkbox" id="YABOG_hide_speed" name="YABOG[hide_speed]" {YABOG.hide_speed}/></span>
 <span><label for="YABOG_hide_grid">Hide grid: </label><input type="checkbox" id="YABOG_hide_grid" name="YABOG[hide_grid]" {YABOG.hide_grid} /></span>
+<span><label for="YABOG_burndown_color">Burndown line color: </label><input type="text" id="YABOG_burndown_color" name="YABOG[burndown_color]" value="{YABOG.burndown_color}" size="6" /></span>
 </div>
 </fieldset>
+
+<script type="text/javascript">
+new MooRainbow('YABOG_burndown_color', {
+	'imgPath' : 'imgs/rainbow/',
+	'startColor' : {YABOG.burndown_color_parsed},
+	'onComplete' : function(color) {
+		document.id('YABOG_burndown_color').set('value', color.hex);
+	},
+	'onChange' : function(color) {
+		document.id('YABOG_burndown_color').set('value', color.hex);
+	}
+});
+</script>
 
 <p><input type="submit" value="Create burndown chart!" /></p>
 </form>
@@ -34,7 +48,7 @@
 <fieldset>
 <legend>Suggestions? Comments? Bugs? (click to show/hide)</legend>
 <div class="fold close">
-<p>Please, let me know!</p>
+<p>Don't hesitate, do it!</p>
 <p><label form="INFO_name">Your name: </label><input type="text" name="INFO[name]" id="INFO_name" size="25" /></p>
 <p><label form="INFO_addr">Your mail: </label><input type="text" name="INFO[mail]" id="INFO_mail" size="25" /></p>
 <p><textarea name="INFO[comment]" id="INFO_comment" cols="60" rows="8"></textarea></p>

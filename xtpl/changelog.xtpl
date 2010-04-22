@@ -5,6 +5,11 @@
 <a href="/" class="back">Back to main page</a>
 
 <ul id="changelog">
+	<li>v.1.0.2
+	<ul>
+		<li>Burndown line color can be changed from main page</li>
+	</ul>
+	</li>
 	<li>v.1.0.1 (2010-04-20)
 	<ul>
 		<li>Fixed bug that make browser crash when direct call to generate burndown</li>

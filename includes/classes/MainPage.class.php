@@ -3,7 +3,8 @@ include_once(dirname(__FILE__) . '/XTemplate.class.php');
 class MainPage {
 	private
 		$_comments = null,
-		$_errors = null
+		$_errors = null,
+		$_data = null
 		;
 
 	public function __construct() {
@@ -12,6 +13,10 @@ class MainPage {
 		);
 
 		$this->_errors = array();
+
+		$this->_data = array(
+			'burndown_color' => '#000000'
+		);
 	}
 
 	public function setErrors($errors) {
@@ -59,7 +64,15 @@ class MainPage {
 	private function _renderData($xtpl) {
 		$this->_changeSelectors();
 
+		$this->_parseColorRainbow();
+
 		$xtpl->assign('YABOG', $this->_data);
+	}
+
+	private function _parseColorRainbow() {
+		if(preg_match('/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/', strtolower($this->_data['burndown_color']), $matches)) {
+			$this->_data['burndown_color_parsed'] = '[' . $matches[1] . ',' . $matches[2] . ',' . $matches[3] . ']';
+		}
 	}
 
 	private function _changeSelectors() {

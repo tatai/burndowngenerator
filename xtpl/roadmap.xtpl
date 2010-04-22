@@ -18,7 +18,7 @@
 	<ul>
 		<li>Paper size (not only A4)</li>
 		<li>Labels on X and Y axis</li>
-		<li>Burndown line in different colors</li>
+		<li><strike>Burndown line in different colors</strike> (available since v.1.0.2)</li>
 		<li>Weekdays on X Axis</li>
 		<li>Ability to input your daily work done</li>
 		<li>Import/Export preferences</li>
