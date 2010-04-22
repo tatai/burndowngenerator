@@ -10,6 +10,10 @@ class SimplePageAction {
 		include_once(dirname(__FILE__) . '/../XTemplate.class.php');
 		$xtpl = new XTemplate($this->_options['name'] . '.xtpl', dirname(__FILE__) . '/../../../xtpl');
 
+		if($GLOBALS['config']['ads'] == true) {
+			$xtpl->parse('main.ads');
+		}
+
 		$xtpl->parse('main');
 		$xtpl->out('main');
 	}

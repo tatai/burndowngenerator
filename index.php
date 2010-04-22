@@ -1,4 +1,6 @@
 <?php
+include_once(dirname(__FILE__) . '/config.php');
+
 include_once(dirname(__FILE__) . '/includes/classes/Dispatcher.class.php');
 $d = new Dispatcher();
 $redirect = $d->dispatch();

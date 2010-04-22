@@ -34,6 +34,10 @@ class MainPage {
 		$this->_renderData($xtpl);
 		$this->_renderErrors($xtpl);
 
+		if($GLOBALS['config']['ads'] == true) {
+			$xtpl->parse('main.ads');
+		}
+
 		$xtpl->parse('main');
 		$xtpl->out('main');
 	}

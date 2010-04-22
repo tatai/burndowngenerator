@@ -2,6 +2,7 @@
 </div> <!-- contenido -->
 
 <div id="lateral">
+<!-- BEGIN: ads -->
 <script type="text/javascript"><!--
 google_ad_client = "pub-3225905506449557";
 /* burndowngenerator, 120x600, 21/04/10 */
@@ -11,6 +12,7 @@ google_ad_height = 600;
 //-->
 </script>
 <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+<!-- END: ads -->
 </div> <!-- lateral -->
 
 <script type="text/javascript">
