@@ -41,6 +41,13 @@
 		<option value="folio">Folio</option>
 	</select>
 </div>
+<div>
+	<label for="YABOG_chart_type">Chart type: </label>
+	<select id="YABOG_chart_type" name="YABOG[chart_type]">
+		<option value="burndown" selected="selected">Burndown</option>
+		<option value="burnup">Burnup</option>
+	</select>
+</div>
 </div>
 </fieldset>
 

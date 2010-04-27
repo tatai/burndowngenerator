@@ -5,7 +5,12 @@
 <a href="/" class="back">Back to main page</a>
 
 <ul id="changelog">
-	<li>v.1.0.2
+	<li>v.1.0.3
+		<li>Generate burnup</li>
+	<ul>
+	</ul>
+	</li>
+	<li>v.1.0.2 (2010-04-27)
 	<ul>
 		<li>Burndown line color can be changed from main page</li>
 		<li>Several page size added: A0, A1, A2, A3, A4, A5, A6,

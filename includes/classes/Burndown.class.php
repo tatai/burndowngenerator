@@ -9,7 +9,9 @@ class Burndown {
 		$_tick_steps = null,
 		$_title = null,
 		$_hide_speed = null,
-		$_hide_grid = null
+		$_hide_grid = null,
+		$_burndown_color = null,
+		$_chart_type = null
 		;
 
 	public function __construct($pdf, $points, $days) {
@@ -60,6 +62,8 @@ class Burndown {
 		$this->_tick_size = 4;
 		$this->_hide_speed = false;
 		$this->_hide_grid = false;
+		$this->_burndown_color = '#000000';
+		$this->_chart_type = 'burndown';
 	}
 
 	public function setOptions($options) {
@@ -275,12 +279,22 @@ class Burndown {
 	private function _drawBurndownLine() {
 		$color = $this->_convertRGBToBase1Array($this->_burndown_color);
 		$this->_setLineThickContinuous($color);
-		$this->_pdf->line(
-			$this->_margins['left'],
-			$this->_pdf->getPageHeight() - $this->_margins['top'],
-			$this->_pdf->getPageWidth() - $this->_margins['right'],
-			$this->_margins['bottom']
-		);
+		if($this->_chart_type == 'burndown') {
+			$this->_pdf->line(
+				$this->_margins['left'],
+				$this->_pdf->getPageHeight() - $this->_margins['top'],
+				$this->_pdf->getPageWidth() - $this->_margins['right'],
+				$this->_margins['bottom']
+			);
+		}
+		else if($this->_chart_type == 'burnup') {
+			$this->_pdf->line(
+				$this->_margins['left'],
+				$this->_margins['bottom'],
+				$this->_pdf->getPageWidth() - $this->_margins['right'],
+				$this->_pdf->getPageHeight() - $this->_margins['top']
+			);
+		}
 	}
 
 	private function _convertRGBToBase1Array($color) {

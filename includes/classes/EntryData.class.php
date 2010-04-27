@@ -65,6 +65,13 @@ class EntryData {
 				'ValidatorPageSize'
 				)
 			);
+		$this->_checkFor['chart_type'] = array(
+			'name' => 'Chart type',
+			'required' => false,
+			'validators' => array(
+				'ValidatorChartType'
+				)
+			);
 	}
 
 	/**
