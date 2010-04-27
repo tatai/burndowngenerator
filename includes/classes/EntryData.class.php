@@ -5,6 +5,7 @@ class EntryData {
 		$_errors = null,
 		$_days = null,
 		$_points = null,
+		$_page_size = null,
 		$_options = null
 		;
 
@@ -57,6 +58,13 @@ class EntryData {
 				'ValidatorRGBString'
 				)
 			);
+		$this->_checkFor['page_size'] = array(
+			'name' => 'Page size',
+			'required' => false,
+			'validators' => array(
+				'ValidatorPageSize'
+				)
+			);
 	}
 
 	/**
@@ -99,6 +107,9 @@ class EntryData {
 				else if($var == 'points') {
 					$this->_points = $valueToCheck;
 				}
+				else if($var == 'page_size') {
+					$this->_page_size = $valueToCheck;
+				}
 				else {
 					$this->_options[$var] = $valueToCheck;
 				}
@@ -118,5 +129,9 @@ class EntryData {
 
 	public function getOptions() {
 		return $this->_options;
+	}
+
+	public function getPageSize() {
+		return $this->_page_size;
 	}
 }

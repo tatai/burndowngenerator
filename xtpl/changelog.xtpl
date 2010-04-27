@@ -8,6 +8,8 @@
 	<li>v.1.0.2
 	<ul>
 		<li>Burndown line color can be changed from main page</li>
+		<li>Several page size added: A0, A1, A2, A3, A4, A5, A6,
+		Letter, Legal, Executive and Folio</li>
 	</ul>
 	</li>
 	<li>v.1.0.1 (2010-04-20)

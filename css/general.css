@@ -2,7 +2,7 @@ body {font-family:Arial,Helvetica,sans-serif;}
 img {border:0;}
 
 label {width:6em;float:left;}
-input,textarea {border:1px solid #aaa;background-color:#eee;}
+input, textarea, select {border:1px solid #aaa;background-color:#eee;}
 fieldset {border:1px solid #aaa;}
 
 .left {float:left;}
@@ -19,6 +19,8 @@ fieldset {border:1px solid #aaa;}
 
 div#contenido {width:40em;float:left;}
 div#lateral {margin-left:30px;width:130px;float:left;}
+
+div.fold div {height:3em;}
 
 /* iPhone selectors */
 .iPhoneCheckContainer{ position:relative; width:85px; height:27px; cursor:pointer; overflow:hidden;  }

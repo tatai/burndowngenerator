@@ -30,6 +30,7 @@ class IndexAction {
 				$data = array_merge(
 					array('points' => $entry->getPoints()),
 					array('days' => $entry->getDays()),
+					array('page_size' => $entry->getPageSize()),
 					$entry->getOptions()
 				);
 			}
@@ -56,7 +57,7 @@ class IndexAction {
 			include(dirname(__FILE__) . '/../MetricsPdf.class.php');
 			include(dirname(__FILE__) . '/../Burndown.class.php');
 
-			$pdf = new MetricsPdf('a4', 'landscape');
+			$pdf = new MetricsPdf($entry->getPageSize(), 'landscape');
 
 			$burndown = new Burndown($pdf, $entry->getPoints(), $entry->getDays());
 			$burndown->setOptions($entry->getOptions());

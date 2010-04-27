@@ -22,9 +22,25 @@
 <fieldset>
 <legend>Configuration options (click to show/hide)</legend>
 <div class="fold close">
-<span><label for="YABOG_hide_speed">Hide speed: </label><input type="checkbox" id="YABOG_hide_speed" name="YABOG[hide_speed]" {YABOG.hide_speed}/></span>
-<span><label for="YABOG_hide_grid">Hide grid: </label><input type="checkbox" id="YABOG_hide_grid" name="YABOG[hide_grid]" {YABOG.hide_grid} /></span>
-<span><label for="YABOG_burndown_color">Burndown line color: </label><input type="text" id="YABOG_burndown_color" name="YABOG[burndown_color]" value="{YABOG.burndown_color}" size="6" /></span>
+<div><label for="YABOG_hide_speed">Hide speed: </label><input type="checkbox" id="YABOG_hide_speed" name="YABOG[hide_speed]" {YABOG.hide_speed}/></div>
+<div><label for="YABOG_hide_grid">Hide grid: </label><input type="checkbox" id="YABOG_hide_grid" name="YABOG[hide_grid]" {YABOG.hide_grid} /></div>
+<div><label for="YABOG_burndown_color">Burndown line color: </label><input type="text" id="YABOG_burndown_color" name="YABOG[burndown_color]" value="{YABOG.burndown_color}" size="6" /></div>
+<div>
+	<label for="YABOG_page_size">Paper size: </label>
+	<select id="YABOG_page_size" name="YABOG[page_size]">
+		<option value="a0">A0</option>
+		<option value="a1">A1</option>
+		<option value="a2">A2</option>
+		<option value="a3">A3</option>
+		<option value="a4" selected="selected">A4</option>
+		<option value="a5">A5</option>
+		<option value="a6">A6</option>
+		<option value="letter">Letter</option>
+		<option value="legal">Legal</option>
+		<option value="executive">Executive</option>
+		<option value="folio">Folio</option>
+	</select>
+</div>
 </div>
 </fieldset>
 
