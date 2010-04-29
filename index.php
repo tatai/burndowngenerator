@@ -22,8 +22,9 @@ include_once (dirname(__FILE__) . '/includes/classes/Dispatcher.class.php');
 $d = new Dispatcher();
 $redirect = $d->dispatch();
 if(!is_null($redirect)) {
-	include_once (dirname(__FILE__) . '/includes/classes/pages/' . $redirect['program'] . '.class.php');
-	$page = new $redirect['program']($redirect['params']);
+	$action = $redirect['program'];
+	include_once(dirname(__FILE__) . '/includes/classes/pages/' . $action . '.class.php');
+	$page = new $action($redirect['params']);
 	$page->execute();
 }
 else {
