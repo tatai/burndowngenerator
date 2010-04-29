@@ -17,7 +17,7 @@
 	<li>New features
 	<ul>
 		<li><strike>Paper size (not only A4)</strike> (available since v.1.0.2)</li>
-		<li>Labels on X and Y axis</li>
+		<li><strike>Labels on X and Y axis</strike> (available since v.1.0.3)</li>
 		<li><strike>Burndown line in different colors</strike> (available since v.1.0.2)</li>
 		<li>Weekdays on X Axis</li>
 		<li>Ability to input your daily work done</li>

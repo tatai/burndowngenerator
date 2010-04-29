@@ -89,6 +89,18 @@ class EntryData {
 				'ValidatorChartType'
 				)
 			);
+		$this->_checkFor['xlabel'] = array(
+			'name' => 'X label',
+			'required' => false,
+			'validators' => array(
+				)
+			);
+		$this->_checkFor['ylabel'] = array(
+			'name' => 'Y label',
+			'required' => false,
+			'validators' => array(
+				)
+			);
 	}
 
 	/**

@@ -17,8 +17,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class Burndown {
+		/**
+		 * PDF Class
+		 * 
+		 * @var MetricsPdf
+		 * @private
+		 */
+	private $_pdf = null;
+	
 	private
-		$_pdf = null,
 		$_points = null,
 		$_days = null,
 		$_margins = null,
@@ -28,6 +35,8 @@ class Burndown {
 		$_hide_speed = null,
 		$_hide_grid = null,
 		$_burndown_color = null,
+		$_xlabel = null,
+		$_ylabel = null,
 		$_chart_type = null
 		;
 
@@ -137,6 +146,8 @@ class Burndown {
 		if(!$this->_hide_grid) {
 			$this->_drawXAxisGrid($xAxisSplit);
 		}
+
+		$this->_drawXAxisLabel();
 	}
 
 	private function _drawXAxisLine() {
@@ -202,6 +213,8 @@ class Burndown {
 		if(!$this->_hide_grid) {
 			$this->_drawYAxisGrid($yAxisSplit, $yPoints);
 		}
+		
+		$this->_drawYAxisLabel();
 	}
 
 	private function _drawYAxisLine() {
@@ -269,6 +282,42 @@ class Burndown {
 				4,
 				$factor * $i,
 				'left'
+			);
+		}
+	}
+	
+	private function _drawYAxisLabel() {
+		$text = trim($this->_ylabel);
+		if(strlen($text) > 0) {
+			$size = 5;
+			$width = $this->_pdf->getTextWidth($size, $text);
+	
+			$this->_pdf->addTextWrap(
+				$this->_margins['left'] - 10 - $size,
+				$this->_pdf->getPageHeight() / 2,
+				$width,
+				$size,
+				$text,
+				'center',
+				90
+			);
+		}
+	}
+
+	private function _drawXAxisLabel() {
+		$text = trim($this->_xlabel);
+		if(strlen($text) > 0) {
+			$size = 5;
+			$width = $this->_pdf->getTextWidth($size, $text);
+	
+			$this->_pdf->addTextWrap(
+				$this->_pdf->getPageWidth() / 2 - $width / 2,
+				$this->_margins['bottom'] - 10 - $size,
+				$width,
+				$size,
+				$text,
+				'center',
+				0
 			);
 		}
 	}

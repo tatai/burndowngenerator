@@ -5,10 +5,11 @@
 <a href="/" class="back">Back to main page</a>
 
 <ul id="changelog">
-	<li>v.1.0.3
+	<li>v.1.0.3 (2010-04-30)
 	<ul>
 		<li>Generate burnup</li>
 		<li>Bug fixed: sometimes text are not completely shown, text missed last word</li>
+		<li>Labels on X and Y axis</li>
 	</ul>
 	</li>
 	<li>v.1.0.2 (2010-04-27)
