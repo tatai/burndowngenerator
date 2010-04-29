@@ -36,7 +36,8 @@ class MetricsPdf extends Cezpdf {
 	}
 
 	public function addTextWrap($x, $y, $width, $size, $text, $just = 'left', $angle = 0) {
-		return parent::addTextWrap($this->_convert($x), $this->_convert($y), $this->_convert($width), $this->_convert($size), $text, $just, $angle);
+		// $width is multiplied by 1.01 (1%) trying to avoid line jumping (second line will not appear)
+		return parent::addTextWrap($this->_convert($x), $this->_convert($y), $this->_convert($width) * 1.01, $this->_convert($size), $text, $just, $angle);
 	}
 
 	public function getPageWidth() {

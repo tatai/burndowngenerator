@@ -11,7 +11,7 @@
 <ul id="roadmap">
 	<li>Bugs
 	<ul>
-		<li>Title does not always show all characters</li>
+		<li><strike>Title does not always show all characters</strike> (fixed in v.1.0.3)</li>
 	</ul>
 	</li>
 	<li>New features

@@ -8,6 +8,7 @@
 	<li>v.1.0.3
 	<ul>
 		<li>Generate burnup</li>
+		<li>Bug fixed: sometimes text are not completely shown, text missed last word</li>
 	</ul>
 	</li>
 	<li>v.1.0.2 (2010-04-27)
