@@ -1,0 +1,10 @@
+RewriteEngine on
+
+RewriteCond	%{REQUEST_URI}	!^\/$
+RewriteCond	%{REQUEST_URI}	!^\/sitemap\.xml$
+RewriteCond	%{REQUEST_URI}	!\.php$
+RewriteCond	%{REQUEST_URI}	!^\/imgs\/
+RewriteCond	%{REQUEST_URI}	!^\/css\/
+RewriteCond	%{REQUEST_URI}	!^\/js\/
+RewriteCond 	%{REQUEST_URI}	!^\/screenshots\/
+RewriteRule	^(.*)$		/index.php/$1.php	[L]
