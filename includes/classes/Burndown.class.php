@@ -426,7 +426,11 @@ class Burndown {
 			$this->_title,
 			($this->_hide_grid) ? 'N' : 'Y',
 			($this->_hide_speed) ? 'N' : 'Y',
-			$_SERVER['HTTP_USER_AGENT']
+			$_SERVER['HTTP_USER_AGENT'],
+			$this->_xlabel,
+			$this->_ylabel,
+			$this->_burndown_color,
+			$this->_chart_type
 		);
 
 		@fwrite($fd, implode("\t", $data) . "\n");
