@@ -2,7 +2,7 @@
 {FILE "header.xtpl"}
 <h1>Yet another burndown online generator</h1>
 
-<p>Create your "ready to print" PDF page (A4 landscape) with your burndown chart with just a few clicks.</p>
+<p>Create your "ready to print" PDF page with your burndown chart with just a few clicks.</p>
 
 {FILE "menu.xtpl"}
 
