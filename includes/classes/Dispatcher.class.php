@@ -22,37 +22,25 @@ class Dispatcher {
 
 	public function dispatch() {
 		$name = $this->_extractPagename();
-
-		return $this->_decide($name);
+		return $this->_route($name);
 	}
 
 	protected function _extractPagename() {
 		$url = $_SERVER['REQUEST_URI'];
-		$pos = strpos($url, '?'); 
-		if($pos !== false) {
-			$url = substr($url, 0, $pos);
-		}
-
-		if($url == '') {
-			return 'index';
-		}
-		else if($url == '/') {
-			return 'index';
-		}
-		else if($url == '/index.php') {
-			return 'index';
-		}
-		else if(preg_match('/^\/index.php\/([^\/]+)$/', $url, $matches)) {
-			return $matches[1];
-		}
-		else if(preg_match('/^\/([^\/]+)$/', $url, $matches)) {
+		if(preg_match('/^\/([^\/]+)$/', $url, $matches)) {
 			return $matches[1];
 		}
 
-		return null;
+		return '';
+	}
+	
+	private function getUrl() {
+		$url = $_SERVER['REQUEST_URI'];
+		return $url;
 	}
 
-	protected function _decide($name) {
+
+	protected function _route($name) {
 		switch($name) {
 			case 'instructions':
 			case 'changelog':
@@ -64,6 +52,7 @@ class Dispatcher {
 				break;
 			case 'index':
 			case 'burndown':
+			case '':
 				$action = array(
 					'program' => 'IndexAction',
 					'params' => array('action' => $name)
