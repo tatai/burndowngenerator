@@ -99,7 +99,7 @@ class MainPage {
 		);
 
 		foreach($checks AS $check) {
-			if($this->_data[$check]) {
+			if(isset($this->_data[$check]) && $this->_data[$check]) {
 				$this->_data[$check] = 'checked="checked"';
 			}
 		}

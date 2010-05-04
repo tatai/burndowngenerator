@@ -35,8 +35,7 @@ class Dispatcher {
 	}
 	
 	private function getUrl() {
-		$url = $_SERVER['REQUEST_URI'];
-		return $url;
+		return array_shift(explode('?', $_SERVER['REQUEST_URI']));
 	}
 
 
