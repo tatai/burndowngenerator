@@ -122,7 +122,10 @@ class EntryData {
 			}
 
 			// Avoid problem with PDF Class
-			$valueToCheck = utf8_decode($this->_post[$var]);
+			$valueToCheck = '';
+			if(isset($this->_post[$var])) {
+				$valueToCheck = utf8_decode($this->_post[$var]);
+			}
 
 			foreach($data['validators'] AS $validatorName) {
 				include_once(dirname(__FILE__) . '/validators/' . $validatorName . '.class.php');

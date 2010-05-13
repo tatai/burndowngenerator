@@ -5,6 +5,11 @@
 <a href="/" class="back">Back to main page</a>
 
 <ul id="changelog">
+	<li>v.1.0.4
+	<ul>
+		<li>Y label turned 180º</li>
+	</ul>
+	</li>
 	<li>v.1.0.3 (2010-05-04)
 	<ul>
 		<li>Generate burnup</li>

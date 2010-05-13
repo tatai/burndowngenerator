@@ -293,13 +293,13 @@ class Burndown {
 			$width = $this->_pdf->getTextWidth($size, $text);
 	
 			$this->_pdf->addTextWrap(
-				$this->_margins['left'] - 10 - $size,
-				$this->_pdf->getPageHeight() / 2,
+				$this->_margins['left'] - 7 - $size,
+				$this->_pdf->getPageHeight() / 2 - $width / 2,
 				$width,
 				$size,
 				$text,
 				'center',
-				90
+				270
 			);
 		}
 	}
