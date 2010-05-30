@@ -16,8 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once 'PHPUnit/Framework/TestCase.php';
-require_once dirname(__FILE__) . '/../includes/classes/validators/ValidatorIntegerGreaterThanZero.class.php';
+require_once(dirname(__FILE__) . '/test_startup.php');
 require_once dirname(__FILE__) . '/ValidatorTestBase.php';
 
 class ValidatorIntegerGreaterThanZeroTest extends ValidatorTestBase {
@@ -55,3 +54,5 @@ class ValidatorIntegerGreaterThanZeroTest extends ValidatorTestBase {
 		$this->assertFalse($this->_validator->check(' '));
 	}
 }
+
+require_once(dirname(__FILE__) . '/test_shutdown.php');

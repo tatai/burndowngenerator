@@ -17,15 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class SimplePageAction {
-	private $_options = null;
+	private $_name = null;
 
-	public function __construct($options) {
-		$this->_options = $options;
+	public function __construct($name) {
+		$this->_name = $name;
 	}
 
 	public function execute() {
-		include_once(dirname(__FILE__) . '/../XTemplate.class.php');
-		$xtpl = new XTemplate($this->_options['name'] . '.xtpl', dirname(__FILE__) . '/../../../xtpl');
+		$xtpl = new XTemplate($this->_name . '.xtpl', dirname(__FILE__) . '/../../../xtpl');
 
 		if($GLOBALS['config']['ads'] == true) {
 			$xtpl->parse('main.ads');

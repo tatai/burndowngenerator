@@ -128,7 +128,6 @@ class EntryData {
 			}
 
 			foreach($data['validators'] AS $validatorName) {
-				include_once(dirname(__FILE__) . '/validators/' . $validatorName . '.class.php');
 				$validator = new $validatorName();
 				$check = $validator->check($valueToCheck);
 

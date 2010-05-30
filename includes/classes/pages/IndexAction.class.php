@@ -19,13 +19,11 @@
 class IndexAction {
 	private $_action = null;
 
-	public function __construct($options) {
-		$this->_action = $options['action'];
+	public function __construct($action) {
+		$this->_action = $action;
 	}
 
 	public function execute() {
-		include_once(dirname(__FILE__) . '/../MainPage.class.php');
-
 		$action = 'main';
 		switch($this->_action) {
 			case 'burndown':
@@ -38,7 +36,6 @@ class IndexAction {
 
 		// First lets check out if data to draw burndown is available
 		if($action == 'burndown') {
-			include(dirname(__FILE__) . '/../EntryData.class.php');
 			$entry = new EntryData();
 			$errors = $entry->check();
 
@@ -70,9 +67,6 @@ class IndexAction {
 			header('Cache-Control: no-store, no-cache, must-revalidate');
 			header('Cache-Control: post-check=0, pre-check=0', false);
 			header('Pragma: no-cache');
-
-			include(dirname(__FILE__) . '/../MetricsPdf.class.php');
-			include(dirname(__FILE__) . '/../Burndown.class.php');
 
 			$pdf = new MetricsPdf($entry->getPageSize(), 'landscape');
 

@@ -21,7 +21,6 @@ class CommentsAction {
 	}
 
 	public function execute() {
-		include_once(dirname(__FILE__) . '/../Comments.class.php');
 		$comments = new Comments();
 		if($comments->check()) {
 			$comments->send();

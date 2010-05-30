@@ -26,7 +26,7 @@ class Dispatcher {
 	}
 
 	protected function _extractPagename() {
-		$url = $_SERVER['REQUEST_URI'];
+		$url = $this->_getUrl();
 		if(preg_match('/^\/([^\/]+)$/', $url, $matches)) {
 			return $matches[1];
 		}
@@ -34,7 +34,7 @@ class Dispatcher {
 		return '';
 	}
 	
-	private function getUrl() {
+	private function _getUrl() {
 		return array_shift(explode('?', $_SERVER['REQUEST_URI']));
 	}
 
@@ -44,24 +44,32 @@ class Dispatcher {
 			case 'instructions':
 			case 'changelog':
 			case 'roadmap':
-				$action = array(
+				$action = new SimplePageAction($name);
+				/*$action = array(
 					'program' => 'SimplePageAction',
 					'params' => array('name' => $name)
 				);
+				*/
 				break;
 			case 'index':
 			case 'burndown':
 			case '':
+				$action = new IndexAction($name);
+				/*
 				$action = array(
 					'program' => 'IndexAction',
 					'params' => array('action' => $name)
 				);
+				*/
 				break;
 			case 'comment':
+				$action = new CommentsAction();
+				/*
 				$action = array(
 					'program' => 'CommentsAction',
 					'params' => array()
 				);
+				*/
 				break;
 			default:
 				$action = null;

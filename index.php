@@ -16,18 +16,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-include_once (dirname(__FILE__) . '/config.php');
+include_once (dirname(__FILE__) . '/startup.php');
 
 include_once (dirname(__FILE__) . '/includes/classes/Dispatcher.class.php');
 $d = new Dispatcher();
 $redirect = $d->dispatch();
 if(!is_null($redirect)) {
+	$redirect->execute();
+	/*
 	$action = $redirect['program'];
 	include_once(dirname(__FILE__) . '/includes/classes/pages/' . $action . '.class.php');
 	$page = new $action($redirect['params']);
 	$page->execute();
+	*/
 }
 else {
 	header('HTTP/1.0 404 Not Found');
 }
+
+include_once (dirname(__FILE__) . '/shutdown.php');
 ?>

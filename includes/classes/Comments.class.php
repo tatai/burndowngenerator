@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-include_once(dirname(__FILE__) . '/validators/ValidatorNonEmptyString.class.php');
 class Comments {
 	private 
 		$_recipients = null,

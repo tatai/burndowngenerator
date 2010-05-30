@@ -16,8 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once 'PHPUnit/Framework/TestCase.php';
-require_once dirname(__FILE__) . '/../includes/classes/validators/ValidatorNonEmptyString.class.php';
+require_once(dirname(__FILE__) . '/test_startup.php');
 
 abstract class ValidatorTestBase extends PHPUnit_Framework_TestCase {
 	protected 
@@ -44,3 +43,5 @@ abstract class ValidatorTestBase extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($this->_validator->getError('name') == null);
 	}
 }
+
+require_once(dirname(__FILE__) . '/test_shutdown.php');
