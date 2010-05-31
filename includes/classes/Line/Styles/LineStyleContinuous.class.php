@@ -19,6 +19,6 @@
 class LineStyleContinuous extends LineStyle {
 	public function __construct() {
 		$this->setCap('');
-		$this->setDash('');
+		$this->setDash(array(1, 0));
 	}
 }

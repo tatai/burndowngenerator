@@ -36,8 +36,8 @@ class LineStyleContinuousTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 */
-	public function dashStyleIsEmpty() {
-		$this->assertEquals('', $this->_style->getDash());
+	public function continuousLineHasNoDashSpace() {
+		$this->assertEquals(array(1, 0), $this->_style->getDash());
 	}
 }
 
