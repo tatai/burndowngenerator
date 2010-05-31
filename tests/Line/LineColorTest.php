@@ -53,9 +53,23 @@ class LineColorTest extends PHPUnit_Framework_TestCase {
 	public function acceptsHexadecimalValuesAndReturnsDecimal() {
 		$colorLine = new LineColor(new Hexadecimal('a'), new Hexadecimal('aa'), new Hexadecimal('ff'));
 		
-		$this->assertEquals(10, $colorLine->red());
-		$this->assertEquals(170, $colorLine->green());
-		$this->assertEquals(255, $colorLine->blue());
+		$this->assertEquals(10 / 255, $colorLine->red());
+		$this->assertEquals(170 / 255, $colorLine->green());
+		$this->assertEquals(255 / 255, $colorLine->blue());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function dataReturnedIsBaseOne() {
+		$red = new Decimal(0);
+		$green = new Decimal(200);
+		$blue = new Decimal(255);
+		$colorLine = new LineColor($red, $green, $blue);
+
+		$this->assertEquals($red->decimal() / 255, $colorLine->red());
+		$this->assertEquals($green->decimal() / 255, $colorLine->green());
+		$this->assertEquals($blue->decimal() / 255, $colorLine->blue());
 	}
 }
 

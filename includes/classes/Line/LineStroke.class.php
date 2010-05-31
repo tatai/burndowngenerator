@@ -21,6 +21,11 @@ class LineStroke {
 	private $_valid = null;
 	private $_style = null;
 
+	/**
+	 * 
+	 * @param $width int stroke width
+	 * @param $style ILineStyle line style
+	 */
 	public function __construct($width, ILineStyle $style) {
 		$this->_valid = $this->_checkIsNotNegative($width);
 

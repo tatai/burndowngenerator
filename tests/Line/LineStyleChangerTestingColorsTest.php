@@ -43,7 +43,7 @@ class LineStyleChangerTestingColorsTest extends PHPUnit_Framework_TestCase {
 
 		$this->_pdf->expects($this->once())
 			->method('setStrokeColor')
-			->with($red->decimal(), $green->decimal(), $blue->decimal());
+			->with($red->decimal() / 255, $green->decimal() / 255, $blue->decimal() / 255);
 
 		$this->_changer->change($this->_pdf, $lineColor, $this->_stroke);
 	}
@@ -60,7 +60,7 @@ class LineStyleChangerTestingColorsTest extends PHPUnit_Framework_TestCase {
 
 		$this->_pdf->expects($this->once())
 			->method('setStrokeColor')
-			->with($red->decimal(), $green->decimal(), $blue->decimal());
+			->with($red->decimal() / 255, $green->decimal() / 255, $blue->decimal() / 255);
 
 		$this->_changer->change($this->_pdf, $lineColor, $this->_stroke);
 	}

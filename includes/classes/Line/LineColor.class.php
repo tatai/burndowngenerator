@@ -23,6 +23,7 @@ class LineColor {
 	private $_isValid = null;
 
 	/**
+	 * Define line color
 	 * 
 	 * @param $red INumeralSystem value for red
 	 * @param $green INumeralSystem value for green
@@ -43,15 +44,15 @@ class LineColor {
 	}
 
 	public function red() {
-		return $this->_red->decimal();
+		return $this->_red->decimal() / 255;
 	}
 
 	public function green() {
-		return $this->_green->decimal();
+		return $this->_green->decimal() / 255;
 	}
 
 	public function blue() {
-		return $this->_blue->decimal();
+		return $this->_blue->decimal() / 255;
 	}
 
 	private function _checkIsValid(INumeralSystem $number) {
