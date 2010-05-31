@@ -343,7 +343,7 @@ class Burndown {
 	}
 
 	private function _drawBurndownLine() {
-		$color = $this->_convertRGBToBase1Array($this->_burndown_color);
+		$color = $this->_convertRGBToLineColorObject($this->_burndown_color);
 		$this->_setLineThickContinuous($color);
 		if($this->_chart_type == 'burndown') {
 			$this->_pdf->line(
@@ -363,19 +363,15 @@ class Burndown {
 		}
 	}
 
-	private function _convertRGBToBase1Array($color) {
-		if(is_null($color)) {
-			return null;
+	private function _convertRGBToLineColorObject($color) {
+		if(is_null($color) || !preg_match('/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/', strtolower($this->_burndown_color), $c)) {
+			return new LineColor(new Decimal(0), new Decimal(0), new Decimal(0));
 		}
 
-		if(!preg_match('/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/', strtolower($this->_burndown_color), $c)) {
-			return null;
-		}
-
-		return array(
-			'r' => hexdec($c[1]) / 255,
-			'g' => hexdec($c[2]) / 255,
-			'b' => hexdec($c[3]) / 255
+		return new LineColor(
+			new Hexadecimal($c[1]),
+			new Hexadecimal($c[2]),
+			new Hexadecimal($c[3])
 		);
 	}
 
@@ -394,26 +390,28 @@ class Burndown {
 	}
 
 	private function _setLineThinContinuous() {
-		$this->_pdf->setStrokeColor(0, 0, 0);
-		$this->_pdf->setLineStyle(1, '', '', array(1,0));
+		$color = new LineColor(new Decimal(0), new Decimal(0), new Decimal(0));
+		$stroke = new LineStroke(1, new LineStyleContinuous());
+		
+		$this->_setLineStyleTo($color, $stroke);
 	}
+	
+	private function _setLineThickContinuous(LineColor $color) {
+		$stroke = new LineStroke(5, new LineStyleContinuous());
 
-	private function _setLineThickContinuous($color = null) {
-		if(is_null($color)) {
-			$color = array(
-				'r' => 0,
-				'g' => 0,
-				'b' => 0
-			);
-		}
-
-		$this->_pdf->setStrokeColor($color['r'], $color['g'], $color['b']);
-		$this->_pdf->setLineStyle(5, '', '', array(5,0));
+		$this->_setLineStyleTo($color, $stroke);
 	}
 
 	private function _setLineThinDashed() {
-		$this->_pdf->setStrokeColor(0.8, 0.8, 0.8);
-		$this->_pdf->setLineStyle(1, '', '', array(5));
+		$color = new LineColor(new Decimal(200), new Decimal(200), new Decimal(200));
+		$stroke = new LineStroke(1, new LineStyleDashed(5));
+		
+		$this->_setLineStyleTo($color, $stroke);
+	}
+
+	private function _setLineStyleTo(LineColor $color, LineStroke $stroke) {
+		$styleChanger = new LineStyleChanger();
+		$styleChanger->change($this->_pdf, $color, $stroke);
 	}
 
 	private function _log() {
