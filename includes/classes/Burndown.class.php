@@ -343,7 +343,7 @@ class Burndown {
 	}
 
 	private function _drawBurndownLine() {
-		$color = $this->_convertRGBToLineColorObject($this->_burndown_color);
+		$color = $this->_convertRGBToColorObject($this->_burndown_color);
 		$this->_setLineThickContinuous($color);
 		if($this->_chart_type == 'burndown') {
 			$this->_pdf->line(
@@ -363,12 +363,12 @@ class Burndown {
 		}
 	}
 
-	private function _convertRGBToLineColorObject($color) {
+	private function _convertRGBToColorObject($color) {
 		if(is_null($color) || !preg_match('/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/', strtolower($this->_burndown_color), $c)) {
-			return new LineColor(new Decimal(0), new Decimal(0), new Decimal(0));
+			return new Color(new Decimal(0), new Decimal(0), new Decimal(0));
 		}
 
-		return new LineColor(
+		return new Color(
 			new Hexadecimal($c[1]),
 			new Hexadecimal($c[2]),
 			new Hexadecimal($c[3])
@@ -390,26 +390,26 @@ class Burndown {
 	}
 
 	private function _setLineThinContinuous() {
-		$color = new LineColor(new Decimal(0), new Decimal(0), new Decimal(0));
+		$color = new Color(new Decimal(0), new Decimal(0), new Decimal(0));
 		$stroke = new LineStroke(1, new LineStyleContinuous());
 		
 		$this->_setLineStyleTo($color, $stroke);
 	}
 	
-	private function _setLineThickContinuous(LineColor $color) {
+	private function _setLineThickContinuous(Color $color) {
 		$stroke = new LineStroke(5, new LineStyleContinuous());
 
 		$this->_setLineStyleTo($color, $stroke);
 	}
 
 	private function _setLineThinDashed() {
-		$color = new LineColor(new Decimal(200), new Decimal(200), new Decimal(200));
+		$color = new Color(new Decimal(200), new Decimal(200), new Decimal(200));
 		$stroke = new LineStroke(1, new LineStyleDashed(5));
 		
 		$this->_setLineStyleTo($color, $stroke);
 	}
 
-	private function _setLineStyleTo(LineColor $color, LineStroke $stroke) {
+	private function _setLineStyleTo(Color $color, LineStroke $stroke) {
 		$styleChanger = new LineStyleChanger();
 		$styleChanger->change($this->_pdf, $color, $stroke);
 	}

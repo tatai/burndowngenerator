@@ -18,13 +18,13 @@
  */
 require_once (dirname(__FILE__) . '/../test_startup.php');
 
-class LineColorTest extends PHPUnit_Framework_TestCase {
+class ColorTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @test
 	 */
 	public function whenColorIsBiggerThanDecimal255GivesNotValidData() {
-		$colorLine = new LineColor(new Decimal(300), new Decimal(302), new Decimal(304));
+		$colorLine = new Color(new Decimal(300), new Decimal(302), new Decimal(304));
 		
 		$this->assertFalse($colorLine->isValid());
 	}
@@ -33,7 +33,7 @@ class LineColorTest extends PHPUnit_Framework_TestCase {
 	 * @test
 	 */
 	public function whenColorIsSmallerThanDecimal0GivesNotValidData() {
-		$colorLine = new LineColor(new Decimal(-25), new Decimal(-32), new Decimal(-45));
+		$colorLine = new Color(new Decimal(-25), new Decimal(-32), new Decimal(-45));
 		
 		$this->assertFalse($colorLine->isValid());
 	}
@@ -42,7 +42,7 @@ class LineColorTest extends PHPUnit_Framework_TestCase {
 	 * @test
 	 */
 	public function whenColorIsNotNumericReturnsDecimal0() {
-		$colorLine = new LineColor(new Decimal(null), new Decimal(false), new Decimal('er'));
+		$colorLine = new Color(new Decimal(null), new Decimal(false), new Decimal('er'));
 		
 		$this->assertFalse($colorLine->isValid());
 	}
@@ -51,7 +51,7 @@ class LineColorTest extends PHPUnit_Framework_TestCase {
 	 * @test
 	 */
 	public function acceptsHexadecimalValuesAndReturnsDecimal() {
-		$colorLine = new LineColor(new Hexadecimal('a'), new Hexadecimal('aa'), new Hexadecimal('ff'));
+		$colorLine = new Color(new Hexadecimal('a'), new Hexadecimal('aa'), new Hexadecimal('ff'));
 		
 		$this->assertEquals(10 / 255, $colorLine->red());
 		$this->assertEquals(170 / 255, $colorLine->green());
@@ -65,7 +65,7 @@ class LineColorTest extends PHPUnit_Framework_TestCase {
 		$red = new Decimal(0);
 		$green = new Decimal(200);
 		$blue = new Decimal(255);
-		$colorLine = new LineColor($red, $green, $blue);
+		$colorLine = new Color($red, $green, $blue);
 
 		$this->assertEquals($red->decimal() / 255, $colorLine->red());
 		$this->assertEquals($green->decimal() / 255, $colorLine->green());

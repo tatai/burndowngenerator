@@ -39,7 +39,7 @@ class LineStyleChangerTestingColorsTest extends PHPUnit_Framework_TestCase {
 		$green = new Decimal(20);
 		$blue = new Decimal(100);
 		
-		$lineColor = new LineColor($red, $green, $blue);
+		$lineColor = new Color($red, $green, $blue);
 
 		$this->_pdf->expects($this->once())
 			->method('setStrokeColor')
@@ -56,7 +56,7 @@ class LineStyleChangerTestingColorsTest extends PHPUnit_Framework_TestCase {
 		$green = new Hexadecimal('33');
 		$blue = new Hexadecimal('ff');
 		
-		$lineColor = new LineColor($red, $green, $blue);
+		$lineColor = new Color($red, $green, $blue);
 
 		$this->_pdf->expects($this->once())
 			->method('setStrokeColor')

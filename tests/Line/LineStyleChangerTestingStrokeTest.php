@@ -31,7 +31,7 @@ class LineStyleChangerTestingStrokeTest extends PHPUnit_Framework_TestCase {
 		$green = new Decimal(20);
 		$blue = new Decimal(100);
 		$color = $this->getMock('Decimal', array(), array(30));
-		$this->_color = $this->getMock('LineColor', array(), array($color, $color, $color));
+		$this->_color = $this->getMock('Color', array(), array($color, $color, $color));
 
 		$width = 1;
 		$line = $this->getMock('ILineStyle');
