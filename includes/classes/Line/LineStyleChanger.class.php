@@ -16,37 +16,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class LineStroke {
-	private $_width = null;
-	private $_valid = null;
-	private $_style = null;
-
-	public function __construct($width, ILineStyle $style) {
-		$this->_valid = $this->_checkIsNotNegative($width);
-
-		if($this->isValid()) {
-			$this->_width = $width;
-			$this->_style = $style;
-		}
+class LineStyleChanger {
+	public function __construct() {
+		
 	}
 	
-	public function getWidth() {
-		return $this->_width;
-	}
-	
-	public function getCap() {
-		return $this->_style->getCap();
-	}
-	
-	public function getDash() {
-		return $this->_style->getDash();
-	}
-	
-	private function _checkIsNotNegative($value) {
-		return (is_numeric($value) && $value >= 0);
-	}
-	
-	public function isValid() {
-		return $this->_valid;
+	public function change(MetricsPdf &$pdf, LineColor $color, LineStroke $stroke) {
+		$pdf->setStrokeColor($color->red(), $color->green(), $color->blue());
+		$pdf->setLineStyle($stroke->getWidth(), $stroke->getCap(), '', $stroke->getDash());
 	}
 }

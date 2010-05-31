@@ -19,15 +19,60 @@
 require_once (dirname(__FILE__) . '/../test_startup.php');
 
 class LineStrokeTest extends PHPUnit_Framework_TestCase {
+	private $_style = null;
+	
+	public function setUp() {
+		$this->_style = $this->getMock('ILineStyle');
+	}
+
 	/**
 	 * @test
 	 */
 	public function widthCannotBeNegative() {
 		$width = -1;
 		
-		$stroke = new LineStroke($width);
+		$stroke = new LineStroke($width, $this->_style);
 		
 		$this->assertFalse($stroke->isValid());
+	}
+	
+	/**
+	 * @test
+	 */
+	public function returnsStrokeWidth() {
+		$width = 5;
+		
+		$stroke = new LineStroke($width, $this->_style);
+		
+		$this->assertEquals($width, $stroke->getWidth());
+	}
+
+	/**
+	 * @test
+	 */
+	public function returnsCapShape() {
+		$width = 2;
+		
+		$this->_style
+			->expects($this->once())
+			->method('getCap');
+		
+		$stroke = new LineStroke($width, $this->_style);
+		$stroke->getCap();
+	}
+
+	/**
+	 * @test
+	 */
+	public function returnsDashStyle() {
+		$width = 2;
+		
+		$this->_style
+			->expects($this->once())
+			->method('getDash');
+		
+		$stroke = new LineStroke($width, $this->_style);
+		$stroke->getDash();
 	}
 }
 
