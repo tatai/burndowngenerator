@@ -364,15 +364,8 @@ class Burndown {
 	}
 
 	private function _convertRGBToColorObject($color) {
-		if(is_null($color) || !preg_match('/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/', strtolower($this->_burndown_color), $c)) {
-			return new Color(new Decimal(0), new Decimal(0), new Decimal(0));
-		}
-
-		return new Color(
-			new Hexadecimal($c[1]),
-			new Hexadecimal($c[2]),
-			new Hexadecimal($c[3])
-		);
+		$converter = new ColorConverter();
+		return $converter->fromRGBToColor($color);
 	}
 
 	private function _drawAds() {
