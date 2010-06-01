@@ -57,7 +57,7 @@ class TextBorderTest extends PHPUnit_Framework_TestCase {
 				$this->_upperLeft->x(),
 				$this->_upperLeft->y(),
 				$this->_lowerRight->x(),
-				$this->_lowerRight->y() - 2
+				$this->_adjustLowerRightY($this->_lowerRight->y())
 			);
 
 		$border = new TextBorder();
@@ -75,12 +75,21 @@ class TextBorderTest extends PHPUnit_Framework_TestCase {
 				$this->_upperLeft->x() - $padding,
 				$this->_upperLeft->y() - $padding,
 				$this->_lowerRight->x() + $padding,
-				$this->_lowerRight->y() + $padding - 2
+				$this->_adjustLowerRightY($this->_lowerRight->y() + $padding)
 			);
 
 		$border = new TextBorder($padding);
 		$border->draw($this->_pdf, $this->_upperLeft, $this->_lowerRight);
 		
+	}
+	
+	/**
+	 * Small adjust to the y value of lower right corner
+	 * 
+	 * @param $value float value to adjust
+	 */
+	private function _adjustLowerRightY($value) {
+		return $value - 2;
 	}
 }
 
