@@ -30,7 +30,6 @@ class Burndown {
 		$_days = null,
 		$_margins = null,
 		$_tick_size = null,
-		$_tick_steps = null,
 		$_title = null,
 		$_hide_speed = null,
 		$_hide_grid = null,
@@ -50,39 +49,6 @@ class Burndown {
 			'bottom' => 20,
 			'left' => 20,
 			'right' => 20
-		);
-
-		$this->_tick_steps = array(
-			0,  // Mandatory to get a correct do-while code
-			1,
-			2,
-			3,
-			5,
-			10,
-			15,
-			20,
-			25,
-			50,
-			75,
-			100,
-			125,
-			150,
-			200,
-			250,
-			300,
-			400,
-			500,
-			1000,
-			1500,
-			2000,
-			2500,
-			5000,
-			10000,
-			15000,
-			20000,
-			25000,
-			50000,
-			100000
 		);
 
 		$this->_tick_size = 4;
