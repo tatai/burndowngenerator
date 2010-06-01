@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class TextBorder {
+class TextBorder implements ITextDecorator {
 	private $_padding = null;
 
 	public function __construct($padding = 0) {
@@ -31,7 +31,7 @@ class TextBorder {
 			$upperLeft->x() - $this->_padding,
 			$upperLeft->y() - $this->_padding,
 			$lowerRight->x() + $this->_padding,
-			$lowerRight->y() + $this->_padding
+			$lowerRight->y() + $this->_padding - 2
 		);
 	}
 }

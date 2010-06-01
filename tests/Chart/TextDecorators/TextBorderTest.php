@@ -39,6 +39,13 @@ class TextBorderTest extends PHPUnit_Framework_TestCase {
 		$this->_upperLeft = new Point(12, 23);
 		$this->_lowerRight = new Point(17, 42);
 	}
+	
+	/**
+	 * @test
+	 */
+	public function implementsITextDecorator() {
+		$this->assertTrue(new TextBorder() instanceof ITextDecorator);
+	}
 
 	/**
 	 * @test
@@ -46,7 +53,12 @@ class TextBorderTest extends PHPUnit_Framework_TestCase {
 	public function createsRectangle() {
 		$this->_pdf->expects($this->once())
 			->method('rectangle')
-			->with($this->_upperLeft->x(), $this->_upperLeft->y(), $this->_lowerRight->x(), $this->_lowerRight->y());
+			->with(
+				$this->_upperLeft->x(),
+				$this->_upperLeft->y(),
+				$this->_lowerRight->x(),
+				$this->_lowerRight->y() - 2
+			);
 
 		$border = new TextBorder();
 		$border->draw($this->_pdf, $this->_upperLeft, $this->_lowerRight);
@@ -63,7 +75,7 @@ class TextBorderTest extends PHPUnit_Framework_TestCase {
 				$this->_upperLeft->x() - $padding,
 				$this->_upperLeft->y() - $padding,
 				$this->_lowerRight->x() + $padding,
-				$this->_lowerRight->y() + $padding
+				$this->_lowerRight->y() + $padding - 2
 			);
 
 		$border = new TextBorder($padding);

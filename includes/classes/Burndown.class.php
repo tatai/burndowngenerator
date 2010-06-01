@@ -272,24 +272,17 @@ class Burndown {
 	}
 
 	private function _drawSpeed() {
+		$border = new TextBorder(1);
+
 		$size = 7;
 		$text = $this->_points;
 		$position = new Point(
 			$this->_margins['left'],
-			$this->_pdf->getPageHeight() - $this->_margins['top'] + 3
+			$this->_pdf->getPageHeight() - $this->_margins['top'] + 5
 		);
-		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'right');
 
-		// @TODO
-		/*
 		$this->_setLineThinContinuous();
-		$this->_pdf->rectangle(
-			$this->_margins['left'] - $width - 1,
-			$this->_pdf->getPageHeight() - $this->_margins['top'] + 2,
-			$this->_margins['left'] + 1,
-			$this->_pdf->getPageHeight() - $this->_margins['top'] + 9
-		);
-		*/
+		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'right', $border);
 	}
 
 	private function _drawBurndownLine() {
