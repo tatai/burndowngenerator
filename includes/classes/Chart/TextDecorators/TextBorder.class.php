@@ -17,11 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class TextBorder {
-	public function __construct() {
-		
+	private $_padding = null;
+
+	public function __construct($padding = 0) {
+		$this->_padding = 0;
+		if(is_numeric($padding)) {
+			$this->_padding = $padding;
+		}
 	}
 	
 	public function draw(MetricsPdf &$pdf, Point $upperLeft, Point $lowerRight) {
-		$pdf->rectangle($upperLeft->x(), $upperLeft->y(), $lowerRight->x(), $lowerRight->y());
+		$pdf->rectangle(
+			$upperLeft->x() - $this->_padding,
+			$upperLeft->y() - $this->_padding,
+			$lowerRight->x() + $this->_padding,
+			$lowerRight->y() + $this->_padding
+		);
 	}
 }

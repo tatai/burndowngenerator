@@ -19,28 +19,56 @@
 require_once(dirname(__FILE__) . '/../../test_startup.php');
 
 class TextBorderTest extends PHPUnit_Framework_TestCase {
-		/**
+	/**
 	 * @var $_pdf MetricsPdf
 	 */
 	private $_pdf = null;
 	
+	/**
+	 * @var Point
+	 */
+	private $_upperLeft = null;
+	
+	/**
+	 * @var Point
+	 */
+	private $_lowerRight = null;
+	
 	public function setUp() {
 		$this->_pdf = $this->getMock('MetricsPdf', array(), array('a4', 'landscape'));
+		$this->_upperLeft = new Point(12, 23);
+		$this->_lowerRight = new Point(17, 42);
 	}
 
 	/**
 	 * @test
 	 */
 	public function createsRectangle() {
-		$upperLeft = new Point(12, 23);
-		$lowerRight = new Point(17, 42);
-		
 		$this->_pdf->expects($this->once())
 			->method('rectangle')
-			->with($upperLeft->x(), $upperLeft->y(), $lowerRight->x(), $lowerRight->y());
+			->with($this->_upperLeft->x(), $this->_upperLeft->y(), $this->_lowerRight->x(), $this->_lowerRight->y());
 
 		$border = new TextBorder();
-		$border->draw($this->_pdf, $upperLeft, $lowerRight);
+		$border->draw($this->_pdf, $this->_upperLeft, $this->_lowerRight);
+	}
+	
+	/**
+	 * @test
+	 */
+	public function borderCanHavePadding() {
+		$padding = 4;
+		$this->_pdf->expects($this->once())
+			->method('rectangle')
+			->with(
+				$this->_upperLeft->x() - $padding,
+				$this->_upperLeft->y() - $padding,
+				$this->_lowerRight->x() + $padding,
+				$this->_lowerRight->y() + $padding
+			);
+
+		$border = new TextBorder($padding);
+		$border->draw($this->_pdf, $this->_upperLeft, $this->_lowerRight);
+		
 	}
 }
 
