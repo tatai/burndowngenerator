@@ -17,52 +17,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class ScaleBeautifier {
-	private $_tick_steps = null;
 	private $_points_between_ticks = null;
 	private $_number_ticks = null;
 	private $_distance_between_ticks = null;
-	
-	
-	public function __construct($axisSize, $maxPointsToDraw, $minSizeBetweenSteps) {
-		$this->_tick_steps = array(
-			0,  // Mandatory to get a correct do-while code
-			1, 
-			2, 
-			3, 
-			5, 
-			10, 
-			15, 
-			20, 
-			25, 
-			50, 
-			75, 
-			100, 
-			125, 
-			150, 
-			200, 
-			250, 
-			300, 
-			400, 
-			500, 
-			1000, 
-			1500, 
-			2000, 
-			2500, 
-			5000, 
-			10000, 
-			15000, 
-			20000, 
-			25000, 
-			50000, 
-			100000);
 
-		$this->_calculate($axisSize, $maxPointsToDraw, $minSizeBetweenSteps);
+	public function __construct($axisSize, $maxPointsToDraw, $minSizeBetweenSteps, array $scaleRange) {
+		$this->_calculate($axisSize, $maxPointsToDraw, $minSizeBetweenSteps, $scaleRange);
 	}
 	
-	public function _calculate($axisSize, $maxPointsToDraw, $minSizeBetweenSteps) {
-		reset($this->_tick_steps);
+	public function _calculate($axisSize, $maxPointsToDraw, $minSizeBetweenSteps, $scale) {
+		reset($scale);
 		do {
-			$separationDistance = next($this->_tick_steps);
+			$separationDistance = next($scale);
 			//print 'separationDistance: ' . $separationDistance . "\n";
 			
 			$pointsPerSplit = $maxPointsToDraw / $separationDistance;

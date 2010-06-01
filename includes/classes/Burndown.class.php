@@ -241,7 +241,7 @@ class Burndown {
 		$axisSize = $this->_pdf->getPageHeight() - $this->_margins['top'] - $this->_margins['bottom'];
 		$minSeparation = 5; // millimeters
 		
-		return new ScaleBeautifier($axisSize, $this->_points, $minSeparation);
+		return new ScaleBeautifier($axisSize, $this->_points, $minSeparation, Scale::$BASIC);
 	}
 
 	private function _drawYAxisTicks($split, $points) {

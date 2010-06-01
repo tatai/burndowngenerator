@@ -28,7 +28,7 @@ class ScaleBeautifierTest extends PHPUnit_Framework_TestCase {
 		$points = 200;
 		$minSizeBetweenSteps = 5;
 		
-		$scale = new ScaleBeautifier($axisSize, $points, $minSizeBetweenSteps);
+		$scale = new ScaleBeautifier($axisSize, $points, $minSizeBetweenSteps, Scale::$BASIC);
 		
 		$this->assertEquals(10, $scale->pointsBetweenTicks());
 		$this->assertEquals(21, $scale->numberTicks());
@@ -43,7 +43,7 @@ class ScaleBeautifierTest extends PHPUnit_Framework_TestCase {
 		$points = 345;
 		$minSizeBetweenSteps = 5;
 		
-		$scale = new ScaleBeautifier($axisSize, $points, $minSizeBetweenSteps);
+		$scale = new ScaleBeautifier($axisSize, $points, $minSizeBetweenSteps, Scale::$BASIC);
 		
 		$ticks = 24;
 		
