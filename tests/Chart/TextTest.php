@@ -43,7 +43,7 @@ class TextTest extends PHPUnit_Framework_TestCase {
 		$position->expects($this->once())
 			->method('y');
 			
-		$this->_text->write($this->_pdf, $this->_string, $this->_size, $position);
+		$this->_text->horizontal($this->_pdf, $this->_string, $this->_size, $position);
 	}
 	
 	/**
@@ -55,7 +55,7 @@ class TextTest extends PHPUnit_Framework_TestCase {
 		$this->_pdf->expects($this->once())
 			->method('getTextWidth');
 		
-		$this->_text->write($this->_pdf, $this->_string, $this->_size, $position);
+		$this->_text->horizontal($this->_pdf, $this->_string, $this->_size, $position);
 	}
 
 	/**
@@ -67,7 +67,7 @@ class TextTest extends PHPUnit_Framework_TestCase {
 		$this->_pdf->expects($this->once())
 			->method('addTextWrap');
 
-		$this->_text->write($this->_pdf, $this->_string, $this->_size, $position);
+		$this->_text->horizontal($this->_pdf, $this->_string, $this->_size, $position);
 	}
 }
 

@@ -22,17 +22,29 @@ class Text {
 	
 	}
 
-	public function write(MetricsPdf &$pdf, $text, $size, Point $position) {
+	public function horizontal(MetricsPdf &$pdf, $text, $size, Point $position, $align = 'left') {
 		$size = 10;
 		$width = $pdf->getTextWidth($size, $text);
 		
+		$x = $this->_calculateTextPosition($position, $align, $width);
+		
 		$pdf->addTextWrap(
-			$position->x(),
+			$x,
 			$position->y(),
 			$width,
 			$size, 
 			$text
 		);
-	
 	}
+	
+	private function _calculateTextPosition(Point $position, $align, $width) {
+		if($align == 'center') {
+			return $position->x() - ($width / 2);
+		}
+		else if($align == 'right') {
+			return $position->x() - $width;
+		}
+		
+		return $position->x();
+	} 
 }
