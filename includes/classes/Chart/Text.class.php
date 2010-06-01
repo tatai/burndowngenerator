@@ -22,27 +22,35 @@ class Text {
 	
 	}
 
-	public function horizontal(MetricsPdf &$pdf, $text, $size, Point $position, $align = 'left') {
+	public function horizontal(MetricsPdf &$pdf, $text, $size, Point $position, $align = 'left', $decorator = null) {
 		$width = $pdf->getTextWidth($size, $text);
 		
 		$x = $this->_calculateTextPosition($position, 'x', $align, $width);
+		$y = $position->y();
 		
 		$pdf->addTextWrap(
 			$x,
-			$position->y(),
+			$y,
 			$width,
 			$size, 
 			$text
 		);
+		
+		if($decorator instanceof ITextDecorator) {
+			$upperLeft = new Point($x, $y);
+			$lowerRight = new Point($x + $width, $y + $size);
+			$this->_callDecorator($pdf, $decorator, $upperLeft, $lowerRight);
+		}
 	}
 	
-	public function vertical(MetricsPdf &$pdf, $text, $size, Point $position, $align = 'left') {
+	public function vertical(MetricsPdf &$pdf, $text, $size, Point $position, $align = 'left', $decorator = null) {
 		$width = $pdf->getTextWidth($size, $text);
 		
+		$x = $position->x();
 		$y = $this->_calculateTextPosition($position, 'y', $align, $width);
 		
 		$pdf->addTextWrap(
-			$position->x(),
+			$x,
 			$y,
 			$width,
 			$size, 
@@ -50,6 +58,12 @@ class Text {
 			'left',
 			270
 		);
+
+		if($decorator instanceof ITextDecorator) {
+			$upperLeft = new Point($x, $y);
+			$lowerRight = new Point($x + $width, $y + $size);
+			$this->_callDecorator($pdf, $decorator, $upperLeft, $lowerRight);
+		}
 	}
 	
 	private function _calculateTextPosition(Point $position, $axis, $align, $width) {
@@ -61,5 +75,9 @@ class Text {
 		}
 		
 		return $position->$axis();
-	} 
+	}
+
+	private function _callDecorator(MetricsPdf $pdf, ITextDecorator $decorator, Point $upperLeft, Point $lowerRight) {
+		$decorator->draw($pdf, $upperLeft, $lowerRight);
+	}
 }
