@@ -206,7 +206,12 @@ class Burndown {
 	private function _drawYAxis() {
 		$this->_drawYAxisLine();
 
-		list($yAxisSplit, $yPoints, $factor) = $this->_calculateYAxisProperties();
+		$scale = $this->_calculateYAxisProperties();
+		
+		$yAxisSplit = $scale->distanceBetweenTicks();
+		$yPoints = $scale->numberTicks();
+		$factor = $scale->pointsBetweenTicks();
+		
 		$this->_drawYAxisTicks($yAxisSplit, $yPoints);
 		$this->_drawYAxisValues($yAxisSplit, $yPoints, $factor);
 
@@ -228,23 +233,15 @@ class Burndown {
 		);
 	}
 
+	/**
+	 *
+	 * @return ScaleBeautifier
+	 */
 	private function _calculateYAxisProperties() {
-		$resultingPoints = $this->_points;
-		do {
-			$factor = next($this->_tick_steps);
-
-			$resultingPoints = $this->_points / $factor + 1;
-			$split = ($this->_pdf->getPageHeight() - $this->_margins['top'] - $this->_margins['bottom']) / ($resultingPoints - 1);
-
-			// Floor result yo get an integer number of points
-			$resultingPoints = floor($resultingPoints);
-		} while($split < 5);
-
-		return array(
-			$split,
-			$resultingPoints,
-			$factor
-		);
+		$axisSize = $this->_pdf->getPageHeight() - $this->_margins['top'] - $this->_margins['bottom'];
+		$minSeparation = 5; // millimeters
+		
+		return new ScaleBeautifier($axisSize, $this->_points, $minSeparation);
 	}
 
 	private function _drawYAxisTicks($split, $points) {

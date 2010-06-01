@@ -18,8 +18,12 @@
  */
 class ScaleBeautifier {
 	private $_tick_steps = null;
-
-	public function __construct() {
+	private $_points_between_ticks = null;
+	private $_number_ticks = null;
+	private $_distance_between_ticks = null;
+	
+	
+	public function __construct($axisSize, $maxPointsToDraw, $minSizeBetweenSteps) {
 		$this->_tick_steps = array(
 			0,  // Mandatory to get a correct do-while code
 			1, 
@@ -51,9 +55,11 @@ class ScaleBeautifier {
 			25000, 
 			50000, 
 			100000);
-	}
 
-	public function fitSize($axisSize, $maxPointsToDraw, $minSizeBetweenSteps) {
+		$this->_calculate($axisSize, $maxPointsToDraw, $minSizeBetweenSteps);
+	}
+	
+	public function _calculate($axisSize, $maxPointsToDraw, $minSizeBetweenSteps) {
 		reset($this->_tick_steps);
 		do {
 			$separationDistance = next($this->_tick_steps);
@@ -66,6 +72,20 @@ class ScaleBeautifier {
 			//print 'split: ' . $split . "\n";
 		} while($split < $minSizeBetweenSteps);
 		
-		return $separationDistance;
+		$this->_points_between_ticks = $separationDistance;
+		$this->_number_ticks = floor($maxPointsToDraw / $separationDistance + 1);
+		$this->_distance_between_ticks = $axisSize / ($maxPointsToDraw / $separationDistance);
+	}
+	
+	public function pointsBetweenTicks() {
+		return $this->_points_between_ticks;
+	}
+	
+	public function numberTicks() {
+		return $this->_number_ticks;
+	}
+	
+	public function distanceBetweenTicks() {
+		return $this->_distance_between_ticks;
 	}
 }

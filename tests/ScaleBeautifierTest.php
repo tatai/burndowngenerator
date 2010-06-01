@@ -19,17 +19,37 @@
 require_once (dirname(__FILE__) . '/test_startup.php');
 
 class ScaleBeautifierTest extends PHPUnit_Framework_TestCase {
+
 	/**
 	 * @test
 	 */
 	public function scaleToFitAtLeastSize() {
-		$scale = new ScaleBeautifier();
-		
 		$axisSize = 100;
 		$points = 200;
 		$minSizeBetweenSteps = 5;
 		
-		$this->assertEquals(10, $scale->fitSize($axisSize, $points, $minSizeBetweenSteps));
+		$scale = new ScaleBeautifier($axisSize, $points, $minSizeBetweenSteps);
+		
+		$this->assertEquals(10, $scale->pointsBetweenTicks());
+		$this->assertEquals(21, $scale->numberTicks());
+		$this->assertEquals(5, $scale->distanceBetweenTicks());
+	}
+
+	/**
+	 * @test
+	 */
+	public function anotherTest() {
+		$axisSize = 165;
+		$points = 345;
+		$minSizeBetweenSteps = 5;
+		
+		$scale = new ScaleBeautifier($axisSize, $points, $minSizeBetweenSteps);
+		
+		$ticks = 24;
+		
+		$this->assertEquals(15, $scale->pointsBetweenTicks());
+		$this->assertEquals($ticks, $scale->numberTicks());
+		$this->assertEquals(165 / ($ticks - 1), $scale->distanceBetweenTicks());
 	}
 }
 
