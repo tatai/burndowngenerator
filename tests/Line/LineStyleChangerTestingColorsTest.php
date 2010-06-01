@@ -20,49 +20,38 @@ require_once (dirname(__FILE__) . '/../test_startup.php');
 
 class LineStyleChangerTestingColorsTest extends PHPUnit_Framework_TestCase {
 	private $_changer = null;
-	private $_stroke = null;
+	private $_lineStyle = null;
 
 	public function setUp() {
 		$this->_changer = new LineStyleChanger();
 		$this->_pdf = $this->getMock('MetricsPdf', array(), array('a4', 'landscape'));
 
 		$width = 1;
-		$line = $this->getMock('ILineStyle');
-		$this->_stroke = $this->getMock('LineStroke', array(), array(1, $line));
+		$color = new Color(new Decimal(0), new Decimal(0), new Decimal(0));
+		$this->_lineStyle = new LineStyle(
+			$color,
+			$this->getMock('LineStroke', array(), array(1, $this->getMock('ILineStyle')))
+		);
 	}
 
 	/**
 	 * @test
 	 */
-	public function changesColorWithDecimalValues() {
-		$red = new Decimal(30);
-		$green = new Decimal(20);
-		$blue = new Decimal(100);
-		
-		$lineColor = new Color($red, $green, $blue);
-
+	public function strokeIsChangedInPdf() {
 		$this->_pdf->expects($this->once())
-			->method('setStrokeColor')
-			->with($red->decimal() / 255, $green->decimal() / 255, $blue->decimal() / 255);
+			->method('setStrokeColor');
 
-		$this->_changer->change($this->_pdf, $lineColor, $this->_stroke);
+		$this->_changer->change($this->_pdf, $this->_lineStyle);
 	}
 
 	/**
 	 * @test
 	 */
-	public function changesColorWithHexadecimalValues() {
-		$red = new Hexadecimal('1a');
-		$green = new Hexadecimal('33');
-		$blue = new Hexadecimal('ff');
-		
-		$lineColor = new Color($red, $green, $blue);
-
+	public function lineStyleIsChangedInPdf() {
 		$this->_pdf->expects($this->once())
-			->method('setStrokeColor')
-			->with($red->decimal() / 255, $green->decimal() / 255, $blue->decimal() / 255);
+			->method('setLineStyle');
 
-		$this->_changer->change($this->_pdf, $lineColor, $this->_stroke);
+		$this->_changer->change($this->_pdf, $this->_lineStyle);
 	}
 }
 

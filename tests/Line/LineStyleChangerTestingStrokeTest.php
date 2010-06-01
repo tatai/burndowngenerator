@@ -22,7 +22,8 @@ class LineStyleChangerTestingStrokeTest extends PHPUnit_Framework_TestCase {
 	private $_changer = null;
 	private $_stroke = null;
 	private $_color = null;
-
+	private $_lineStyle = null;
+	
 	public function setUp() {
 		$this->_changer = new LineStyleChanger();
 		$this->_pdf = $this->getMock('MetricsPdf', array(), array('a4', 'landscape'));
@@ -36,6 +37,10 @@ class LineStyleChangerTestingStrokeTest extends PHPUnit_Framework_TestCase {
 		$width = 1;
 		$line = $this->getMock('ILineStyle');
 		$this->_stroke = $this->getMock('LineStroke', array(), array(1, $line));
+		$this->_lineStyle = new LineStyle(
+			$this->_color,
+			$this->_stroke
+		);
 	}
 
 	/**
@@ -61,7 +66,7 @@ class LineStyleChangerTestingStrokeTest extends PHPUnit_Framework_TestCase {
 			->method('setLineStyle')
 			->with($width, $cap, '', $dash);
 
-		$this->_changer->change($this->_pdf, $this->_color, $this->_stroke);
+		$this->_changer->change($this->_pdf, $this->_lineStyle);
 	}
 }
 

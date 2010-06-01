@@ -21,7 +21,9 @@ class LineStyleChanger {
 		
 	}
 	
-	public function change(MetricsPdf &$pdf, Color $color, LineStroke $stroke) {
+	public function change(MetricsPdf &$pdf, LineStyle $style) {
+		$color = $style->getColor();
+		$stroke = $style->getStroke();
 		$pdf->setStrokeColor($color->red(), $color->green(), $color->blue());
 		$pdf->setLineStyle($stroke->getWidth(), $stroke->getCap(), '', $stroke->getDash());
 	}

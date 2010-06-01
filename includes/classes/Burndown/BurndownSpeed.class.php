@@ -46,10 +46,7 @@ class BurndownSpeed {
 	}
 	
 	private function _setLineStyle() {
-		$color = new Color(new Decimal(0), new Decimal(0), new Decimal(0));
-		$stroke = new LineStroke(1, new LineStyleContinuous());
-
-		$this->_lineStyleChanger->change($this->_pdf, $color, $stroke);
+		$this->_lineStyleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
 	}
 	
 	private function _drawSpeedText($text, array $margins) {

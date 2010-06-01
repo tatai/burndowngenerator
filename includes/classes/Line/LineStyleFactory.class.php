@@ -23,19 +23,19 @@ class LineStyleFactory {
 	}
 
 	static public function thinContinuous() {
-		return array(
+		return new LineStyle(
 			new Color(new Decimal(0), new Decimal(0), new Decimal(0)), 
 			new LineStroke(1, new LineStyleContinuous()));
 	}
 
 	static public function thickContinuous(Color $color) {
-		return array(
+		return new LineStyle(
 			$color, 
-			new LineStroke(1, new LineStyleContinuous()));
+			new LineStroke(5, new LineStyleContinuous()));
 	}
 
-	static public function thinDashed(Color $color) {
-		return array(
+	static public function thinDashed() {
+		return new LineStyle(
 			new Color(new Decimal(200), new Decimal(200), new Decimal(200)), 
 			new LineStroke(1, new LineStyleDashed(5)));
 	}

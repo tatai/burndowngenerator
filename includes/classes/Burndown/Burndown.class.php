@@ -130,7 +130,7 @@ class Burndown {
 
 	private function _drawXAxisLine() {
 		// Horizontal line
-		$this->_setLineThinContinuous();
+		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
 		$this->_pdf->line(
 			$this->_margins['left'],
 			$this->_margins['bottom'],
@@ -144,9 +144,9 @@ class Burndown {
 	}
 
 	private function _drawXAxisTicks($split) {
+		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
 		for($i = 0; $i < $this->_days; $i++) {
-			$this->_setLineThinContinuous();
-			$this->_pdf->line(
+				$this->_pdf->line(
 				$this->_margins['left'] + $split * $i,
 				$this->_margins['bottom'] - ($this->_tick_size / 2),
 				$this->_margins['left'] + $split * $i,
@@ -156,8 +156,8 @@ class Burndown {
 	}
 	
 	private function _drawXAxisGrid($split) {
+		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinDashed());
 		for($i = 1; $i < $this->_days; $i++) {
-			$this->_setLineThinDashed();
 			$this->_pdf->line(
 				$this->_margins['left'] + $split * $i,
 				$this->_margins['bottom'] + ($this->_tick_size / 2),
@@ -199,7 +199,7 @@ class Burndown {
 
 	private function _drawYAxisLine() {
 		// Vertical line
-		$this->_setLineThinContinuous();
+		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
 		$this->_pdf->line(
 			$this->_margins['left'],
 			$this->_margins['bottom'],
@@ -220,8 +220,8 @@ class Burndown {
 	}
 
 	private function _drawYAxisTicks($split, $points) {
+		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
 		for($i = 0; $i < $points; $i++) {
-			$this->_setLineThinContinuous();
 			$this->_pdf->line(
 				$this->_margins['left'] - ($this->_tick_size / 2),
 				$this->_margins['bottom'] + $split * $i,
@@ -232,8 +232,8 @@ class Burndown {
 	}
 
 	private function _drawYAxisGrid($split, $points) {
+		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinDashed());
 		for($i = 1; $i < $points; $i++) {
-			$this->_setLineThinDashed();
 			$this->_pdf->line(
 				$this->_margins['left'] + ($this->_tick_size / 2),
 				$this->_margins['bottom'] + $split * $i,
@@ -286,7 +286,7 @@ class Burndown {
 
 	private function _drawBurndownLine() {
 		$color = $this->_convertRGBToColorObject($this->_burndown_color);
-		$this->_setLineThickContinuous($color);
+		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thickContinuous($color));
 		if($this->_chart_type == 'burndown') {
 			$this->_pdf->line(
 				$this->_margins['left'],
@@ -318,30 +318,6 @@ class Burndown {
 			10
 		);
 		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'right');
-	}
-
-	private function _setLineThinContinuous() {
-		$color = new Color(new Decimal(0), new Decimal(0), new Decimal(0));
-		$stroke = new LineStroke(1, new LineStyleContinuous());
-		
-		$this->_setLineStyleTo($color, $stroke);
-	}
-	
-	private function _setLineThickContinuous(Color $color) {
-		$stroke = new LineStroke(5, new LineStyleContinuous());
-
-		$this->_setLineStyleTo($color, $stroke);
-	}
-
-	private function _setLineThinDashed() {
-		$color = new Color(new Decimal(200), new Decimal(200), new Decimal(200));
-		$stroke = new LineStroke(1, new LineStyleDashed(5));
-		
-		$this->_setLineStyleTo($color, $stroke);
-	}
-
-	private function _setLineStyleTo(Color $color, LineStroke $stroke) {
-		$this->_styleChanger->change($this->_pdf, $color, $stroke);
 	}
 
 	private function _log() {
