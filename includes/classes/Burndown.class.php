@@ -25,6 +25,13 @@ class Burndown {
 		 */
 	private $_pdf = null;
 	
+	/**
+	 * Class to handle text insertion into pdf
+	 * 
+	 * @var Text
+	 */
+	private $_text = null;
+	
 	private
 		$_points = null,
 		$_days = null,
@@ -43,6 +50,7 @@ class Burndown {
 		$this->_pdf = $pdf;
 		$this->_points = $points;
 		$this->_days = $days;
+		$this->_text = new Text();
 
 		$this->_margins = array(
 			'top' => 25,
@@ -91,15 +99,11 @@ class Burndown {
 		}
 
 		$size = 10;
-		$width = $this->_pdf->getTextWidth($size, $text);
-
-		$this->_pdf->addTextWrap(
-			$this->_pdf->getPageWidth() / 2 - $width / 2,
-			$this->_pdf->getPageHeight() - $this->_margins['top'] + $size / 2,
-			$width,
-			$size,
-			$text
+		$position = new Point(
+			$this->_pdf->getPageWidth() / 2,
+			$this->_pdf->getPageHeight() - $this->_margins['top'] + $size / 2
 		);
+		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'center');
 	}
 
 	private function _drawXAxis() {
@@ -157,15 +161,12 @@ class Burndown {
 	
 	private function _drawXAxisValues($split) {
 		for($i = 0; $i < $this->_days; $i++) {
-			$width = $this->_pdf->getTextWidth(4, $i);
-
-			$this->_pdf->addTextWrap(
-				$this->_margins['left'] + $split * $i - ($width / 2),
-				$this->_margins['bottom'] - $this->_tick_size / 2 - 4,
-				$width,
-				4,
-				$i
+			$size = 4;
+			$position = new Point(
+				$this->_margins['left'] + $split * $i,
+				$this->_margins['bottom'] - $this->_tick_size / 2 - $size
 			);
+			$this->_text->horizontal($this->_pdf, $i, $size, $position, 'center');
 		}
 	}
 
@@ -236,16 +237,13 @@ class Burndown {
 
 	private function _drawYAxisValues($split, $points, $factor) {
 		for($i = 0; $i < $points; $i++) {
-			$width = $this->_pdf->getTextWidth(4, $factor * $i);
-
-			$this->_pdf->addTextWrap(
-				$this->_margins['left'] - ($this->_tick_size / 2) - $width - 2,
-				$this->_margins['bottom'] + ($split * $i) - 1,
-				$width,
-				4,
-				$factor * $i,
-				'left'
+			$size = 4;
+			$text = $factor * $i;
+			$position = new Point(
+				$this->_margins['left'] - ($this->_tick_size / 2) - 2,
+				$this->_margins['bottom'] + ($split * $i) - 1
 			);
+			$this->_text->horizontal($this->_pdf, $text, $size, $position, 'right');
 		}
 	}
 	
@@ -253,17 +251,11 @@ class Burndown {
 		$text = trim($this->_ylabel);
 		if(strlen($text) > 0) {
 			$size = 5;
-			$width = $this->_pdf->getTextWidth($size, $text);
-	
-			$this->_pdf->addTextWrap(
+			$position = new Point(
 				$this->_margins['left'] - 7 - $size,
-				$this->_pdf->getPageHeight() / 2 - $width / 2,
-				$width,
-				$size,
-				$text,
-				'center',
-				270
+				$this->_pdf->getPageHeight() / 2
 			);
+			$this->_text->vertical($this->_pdf, $text, $size, $position, 'center');
 		}
 	}
 
@@ -271,31 +263,25 @@ class Burndown {
 		$text = trim($this->_xlabel);
 		if(strlen($text) > 0) {
 			$size = 5;
-			$width = $this->_pdf->getTextWidth($size, $text);
-	
-			$this->_pdf->addTextWrap(
-				$this->_pdf->getPageWidth() / 2 - $width / 2,
-				$this->_margins['bottom'] - 10 - $size,
-				$width,
-				$size,
-				$text,
-				'center',
-				0
+			$position = new Point(
+				$this->_pdf->getPageWidth() / 2,
+				$this->_margins['bottom'] - 10 - $size
 			);
+			$this->_text->horizontal($this->_pdf, $text, $size, $position, 'center');
 		}
 	}
 
 	private function _drawSpeed() {
-		$width = $this->_pdf->getTextWidth(7, $this->_points);
-
-		$this->_pdf->addTextWrap(
-			$this->_margins['left'] - $width,
-			$this->_pdf->getPageHeight() - $this->_margins['top'] + 3,
-			$width,
-			7,
-			$this->_points
+		$size = 7;
+		$text = $this->_points;
+		$position = new Point(
+			$this->_margins['left'],
+			$this->_pdf->getPageHeight() - $this->_margins['top'] + 3
 		);
+		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'right');
 
+		// @TODO
+		/*
 		$this->_setLineThinContinuous();
 		$this->_pdf->rectangle(
 			$this->_margins['left'] - $width - 1,
@@ -303,6 +289,7 @@ class Burndown {
 			$this->_margins['left'] + 1,
 			$this->_pdf->getPageHeight() - $this->_margins['top'] + 9
 		);
+		*/
 	}
 
 	private function _drawBurndownLine() {
@@ -332,17 +319,13 @@ class Burndown {
 	}
 
 	private function _drawAds() {
-		$url = 'http://www.burndowngenerator.com';
 		$size = 3;
-		$width = $this->_pdf->getTextWidth(3, $url);
-
-		$this->_pdf->addTextWrap(
-			$this->_pdf->getPageWidth() - $this->_margins['right'] - $width,
-			10,
-			$width,
-			3,
-			$url
+		$text = 'http://www.burndowngenerator.com';
+		$position = new Point(
+			$this->_pdf->getPageWidth() - $this->_margins['right'],
+			10
 		);
+		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'right');
 	}
 
 	private function _setLineThinContinuous() {
