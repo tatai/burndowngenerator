@@ -32,6 +32,13 @@ class Burndown {
 	 */
 	private $_text = null;
 	
+	/**
+	 * Delegación del cambio de estilos de línea
+	 * 
+	 * @var LineStyleChanger
+	 */
+	private $_styleChanger = null;
+	
 	private
 		$_points = null,
 		$_days = null,
@@ -51,6 +58,7 @@ class Burndown {
 		$this->_points = $points;
 		$this->_days = $days;
 		$this->_text = new Text();
+		$this->_styleChanger = new LineStyleChanger();
 
 		$this->_margins = array(
 			'top' => 25,
@@ -272,17 +280,8 @@ class Burndown {
 	}
 
 	private function _drawSpeed() {
-		$border = new TextBorder(1);
-
-		$size = 7;
-		$text = $this->_points;
-		$position = new Point(
-			$this->_margins['left'],
-			$this->_pdf->getPageHeight() - $this->_margins['top'] + 5
-		);
-
-		$this->_setLineThinContinuous();
-		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'right', $border);
+		$speed = new BurndownSpeed($this->_pdf, $this->_styleChanger, $this->_text);
+		$speed->draw($this->_points, $this->_margins);
 	}
 
 	private function _drawBurndownLine() {
@@ -342,8 +341,7 @@ class Burndown {
 	}
 
 	private function _setLineStyleTo(Color $color, LineStroke $stroke) {
-		$styleChanger = new LineStyleChanger();
-		$styleChanger->change($this->_pdf, $color, $stroke);
+		$this->_styleChanger->change($this->_pdf, $color, $stroke);
 	}
 
 	private function _log() {
