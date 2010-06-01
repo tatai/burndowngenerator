@@ -34,7 +34,7 @@ class TextTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 */
-	public function usesPointCoordinates() {
+	public function usesPointCoordinatesWhenCreatingHorizontalText() {
 		$position = $this->getMock('Point', array(), array(1, 2));
 		
 		$position->expects($this->once())
@@ -49,13 +49,28 @@ class TextTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 */
+	public function usesPointCoordinatesWhenCreatingVerticalText() {
+		$position = $this->getMock('Point', array(), array(1, 2));
+		
+		$position->expects($this->once())
+			->method('x');
+
+		$position->expects($this->once())
+			->method('y');
+			
+		$this->_text->vertical($this->_pdf, $this->_string, $this->_size, $position);
+	}
+	
+	/**
+	 * @test
+	 */
 	public function calculatesWidthWithSize() {
 		$position = new Point(10, 25);
 
 		$this->_pdf->expects($this->once())
 			->method('getTextWidth');
 		
-		$this->_text->horizontal($this->_pdf, $this->_string, $this->_size, $position);
+		$this->_text->vertical($this->_pdf, $this->_string, $this->_size, $position);
 	}
 
 	/**
@@ -67,7 +82,7 @@ class TextTest extends PHPUnit_Framework_TestCase {
 		$this->_pdf->expects($this->once())
 			->method('addTextWrap');
 
-		$this->_text->horizontal($this->_pdf, $this->_string, $this->_size, $position);
+		$this->_text->vertical($this->_pdf, $this->_string, $this->_size, $position);
 	}
 }
 

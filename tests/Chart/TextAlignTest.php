@@ -77,7 +77,7 @@ class TextAlignTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 */
-	public function alignsTextCentered() {
+	public function alignsHorizontalTextCentered() {
 		$checkXPosition = $this->_position->x() - ($this->_virtualWidth / 2);
 		$this->_mockPdfToXPosition($checkXPosition);
 
@@ -87,7 +87,7 @@ class TextAlignTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 */
-	public function alignsTextLefted() {
+	public function alignsHorizontalTextLefted() {
 		$this->_mockPdfToXPosition($this->_position->x());
 		
 		$this->_text->horizontal($this->_pdf, $this->_string, $this->_size, $this->_position, 'left');
@@ -96,11 +96,46 @@ class TextAlignTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 */
-	public function alignsTextRighted() {
+	public function alignsHorizontalTextRighted() {
 		$checkXPosition = $this->_position->x() - $this->_virtualWidth;
 		$this->_mockPdfToXPosition($checkXPosition);
 		
 		$this->_text->horizontal($this->_pdf, $this->_string, $this->_size, $this->_position, 'right');
+	}
+
+	private function _mockPdfToYPosition($yPos) {
+		$this->_pdf->expects($this->once())
+			->method('addTextWrap')
+			->with($this->_position->x(), $yPos, $this->_virtualWidth, $this->_size, $this->_string, 'left', 270);
+	}
+
+	/**
+	 * @test
+	 */
+	public function alignsVerticalTextCentered() {
+		$checkYPosition = $this->_position->y() - ($this->_virtualWidth / 2);
+		$this->_mockPdfToYPosition($checkYPosition);
+
+		$this->_text->vertical($this->_pdf, $this->_string, $this->_size, $this->_position, 'center');
+	}
+
+	/**
+	 * @test
+	 */
+	public function alignsVerticalTextLefted() {
+		$this->_mockPdfToYPosition($this->_position->y());
+		
+		$this->_text->vertical($this->_pdf, $this->_string, $this->_size, $this->_position, 'left');
+	}
+
+	/**
+	 * @test
+	 */
+	public function alignsVerticalTextRighted() {
+		$checkYPosition = $this->_position->y() - $this->_virtualWidth;
+		$this->_mockPdfToYPosition($checkYPosition);
+		
+		$this->_text->vertical($this->_pdf, $this->_string, $this->_size, $this->_position, 'right');
 	}
 }
 

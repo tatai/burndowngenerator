@@ -23,10 +23,9 @@ class Text {
 	}
 
 	public function horizontal(MetricsPdf &$pdf, $text, $size, Point $position, $align = 'left') {
-		$size = 10;
 		$width = $pdf->getTextWidth($size, $text);
 		
-		$x = $this->_calculateTextPosition($position, $align, $width);
+		$x = $this->_calculateTextPosition($position, 'x', $align, $width);
 		
 		$pdf->addTextWrap(
 			$x,
@@ -37,14 +36,30 @@ class Text {
 		);
 	}
 	
-	private function _calculateTextPosition(Point $position, $align, $width) {
+	public function vertical(MetricsPdf &$pdf, $text, $size, Point $position, $align = 'left') {
+		$width = $pdf->getTextWidth($size, $text);
+		
+		$y = $this->_calculateTextPosition($position, 'y', $align, $width);
+		
+		$pdf->addTextWrap(
+			$position->x(),
+			$y,
+			$width,
+			$size, 
+			$text,
+			'left',
+			270
+		);
+	}
+	
+	private function _calculateTextPosition(Point $position, $axis, $align, $width) {
 		if($align == 'center') {
-			return $position->x() - ($width / 2);
+			return $position->$axis() - ($width / 2);
 		}
 		else if($align == 'right') {
-			return $position->x() - $width;
+			return $position->$axis() - $width;
 		}
 		
-		return $position->x();
+		return $position->$axis();
 	} 
 }
