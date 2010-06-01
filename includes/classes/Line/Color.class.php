@@ -38,7 +38,7 @@ class Color {
 			$this->_blue = $blue;
 		}
 	}
-	
+
 	public function isValid() {
 		return $this->_isValid;
 	}
@@ -53,6 +53,10 @@ class Color {
 
 	public function blue() {
 		return $this->_blue->decimal() / 255;
+	}
+
+	public function isEqual(Color $color) {
+		return ($this->red() == $color->red()) && ($this->green() == $color->green()) && ($this->blue() == $color->blue());
 	}
 
 	private function _checkIsValid(INumeralSystem $number) {

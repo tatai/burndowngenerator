@@ -16,9 +16,33 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class LineStyleContinuous extends LineStyleAbstract {
-	public function __construct() {
-		$this->setCap('');
-		$this->setDash(array(1, 0));
+require_once (dirname(__FILE__) . '/../test_startup.php');
+
+class LineStyleTest extends PHPUnit_Framework_TestCase {
+
+	/**
+	 * @test
+	 */
+	public function returnSameColorAsGiven() {
+		$color = new Color(new Decimal(0), new Decimal(0), new Decimal(0));
+		$stroke = new LineStroke(1, new LineStyleContinuous());
+		
+		$lineStyle = new LineStyle($color, $stroke);
+		
+		$this->assertTrue($color->isEqual($lineStyle->getColor()));
+	}
+
+	/**
+	 * @test
+	 */
+	public function returnSameStrokeAsGiven() {
+		$color = new Color(new Decimal(0), new Decimal(0), new Decimal(0));
+		$stroke = new LineStroke(1, new LineStyleContinuous());
+		
+		$lineStyle = new LineStyle($color, $stroke);
+		
+		$this->assertTrue($stroke->isEqual($lineStyle->getStroke()));
 	}
 }
+
+require_once (dirname(__FILE__) . '/../test_shutdown.php');

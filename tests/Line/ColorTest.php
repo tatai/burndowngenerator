@@ -71,6 +71,45 @@ class ColorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($green->decimal() / 255, $colorLine->green());
 		$this->assertEquals($blue->decimal() / 255, $colorLine->blue());
 	}
+	
+	/**
+	 * @test
+	 */
+	public function whenComparingOneColorWithItselfReturnsTrue() {
+		$color = new Color(new Decimal(43), new Decimal(82), new Decimal(218));
+
+		$this->assertTrue($color->isEqual($color));
+	}
+
+	/**
+	 * @test
+	 */
+	public function whenRedComponentIsDifferentComparisionReturnsFalse() {
+		$color = new Color(new Decimal(43), new Decimal(82), new Decimal(218));
+		$another = new Color(new Hexadecimal(43), new Decimal(82), new Decimal(218));
+		
+		$this->assertFalse($color->isEqual($another));
+	}
+	
+	/**
+	 * @test
+	 */
+	public function whenGreenComponentIsDifferentComparisionReturnsFalse() {
+		$color = new Color(new Decimal(43), new Decimal(82), new Decimal(218));
+		$another = new Color(new Decimal(43), new Hexadecimal(82), new Decimal(218));
+		
+		$this->assertFalse($color->isEqual($another));
+	}
+		
+	/**
+	 * @test
+	 */
+	public function whenBlueComponentIsDifferentComparisionReturnsFalse() {
+		$color = new Color(new Decimal(43), new Decimal(82), new Decimal(218));
+		$another = new Color(new Decimal(43), new Decimal(82), new Hexadecimal('ff'));
+		
+		$this->assertFalse($color->isEqual($another));
+	}
 }
 
 require_once (dirname(__FILE__) . '/../test_shutdown.php');

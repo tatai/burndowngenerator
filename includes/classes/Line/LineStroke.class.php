@@ -54,4 +54,8 @@ class LineStroke {
 	public function isValid() {
 		return $this->_valid;
 	}
+	
+	public function isEqual(LineStroke $stroke) {
+		return ($this->getWidth() == $stroke->getWidth()) && ($this->getCap() == $stroke->getCap()) && ($this->getDash()== $stroke->getDash());
+	}
 }

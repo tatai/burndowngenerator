@@ -16,9 +16,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class LineStyleContinuous extends LineStyleAbstract {
-	public function __construct() {
-		$this->setCap('');
-		$this->setDash(array(1, 0));
+class LineStyleFactory {
+
+	private function __construct() {
+	
+	}
+
+	static public function thinContinuous() {
+		return array(
+			new Color(new Decimal(0), new Decimal(0), new Decimal(0)), 
+			new LineStroke(1, new LineStyleContinuous()));
+	}
+
+	static public function thickContinuous(Color $color) {
+		return array(
+			$color, 
+			new LineStroke(1, new LineStyleContinuous()));
+	}
+
+	static public function thinDashed(Color $color) {
+		return array(
+			new Color(new Decimal(200), new Decimal(200), new Decimal(200)), 
+			new LineStroke(1, new LineStyleDashed(5)));
 	}
 }

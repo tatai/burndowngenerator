@@ -74,6 +74,35 @@ class LineStrokeTest extends PHPUnit_Framework_TestCase {
 		$stroke = new LineStroke($width, $this->_style);
 		$stroke->getDash();
 	}
+
+	/**
+	 * @test
+	 */
+	public function whenComparingAStrokeWithItselfItReturnsTrue() {
+		$stroke = new LineStroke(1, $this->_style);
+		
+		$this->assertTrue($stroke->isEqual($stroke));
+	}
+
+	/**
+	 * @test
+	 */
+	public function whenChangingWidthComparisionReturnsFalse() {
+		$stroke = new LineStroke(1, $this->_style);
+		$widerStroke = new LineStroke(2, $this->_style);
+		
+		$this->assertFalse($stroke->isEqual($widerStroke));
+	}
+
+	/**
+	 * @test
+	 */
+	public function whenChangingLineStyleComparisionReturnsFalse() {
+		$stroke = new LineStroke(1, new LineStyleContinuous());
+		$widerStroke = new LineStroke(1, new LineStyleDashed());
+		
+		$this->assertFalse($stroke->isEqual($widerStroke));
+	}
 }
 
 require_once (dirname(__FILE__) . '/../test_shutdown.php');
