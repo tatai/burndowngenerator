@@ -101,17 +101,8 @@ class Burndown {
 	}
 
 	private function _drawTitle() {
-		$text = 'Burndown online generator';
-		if($this->_title) {
-			$text = $this->_title;
-		}
-
-		$size = 10;
-		$position = new Point(
-			$this->_pdf->getPageWidth() / 2,
-			$this->_pdf->getPageHeight() - $this->_margins['top'] + $size / 2
-		);
-		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'center');
+		$title = new BurndownTitle($this->_pdf, $this->_text, $this->_margins);
+		$title->draw($this->_title);
 	}
 
 	private function _drawXAxis() {
