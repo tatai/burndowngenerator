@@ -17,12 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class Burndown {
-		/**
-		 * PDF Class
-		 * 
-		 * @var MetricsPdf
-		 * @private
-		 */
+	/**
+	 * PDF Class
+	 * 
+	 * @var MetricsPdf
+	 * @private
+	 */
 	private $_pdf = null;
 	
 	/**
