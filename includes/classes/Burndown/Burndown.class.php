@@ -39,6 +39,13 @@ class Burndown {
 	 */
 	private $_styleChanger = null;
 	
+	/**
+	 * Delegación del dibujo de líneas
+	 * 
+	 * @var DrawLine
+	 */
+	private $_drawLine = null;
+	
 	private
 		$_points = null,
 		$_days = null,
@@ -59,6 +66,7 @@ class Burndown {
 		$this->_days = $days;
 		$this->_text = new DrawText();
 		$this->_styleChanger = new LineStyleChanger();
+		$this->_drawLine = new DrawLine($this->_pdf, $this->_styleChanger);
 
 		$this->_margins = array(
 			'top' => 25,
@@ -121,13 +129,11 @@ class Burndown {
 
 	private function _drawXAxisLine() {
 		// Horizontal line
-		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
-		$this->_pdf->line(
-			$this->_margins['left'],
-			$this->_margins['bottom'],
-			$this->_pdf->getPageWidth() - $this->_margins['right'],
-			$this->_margins['bottom']
-		);
+		$from = new Point($this->_margins['left'], $this->_margins['bottom']);
+		$to = new Point($this->_pdf->getPageWidth() - $this->_margins['right'], $this->_margins['bottom']);
+		
+		$line = new Line($from, $to);
+		$this->_drawLine->draw($line, LineStyleFactory::thinContinuous());
 	}
 
 	private function _calculateXAxisSplit() {
@@ -137,24 +143,22 @@ class Burndown {
 	private function _drawXAxisTicks($split) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
 		for($i = 0; $i < $this->_days; $i++) {
-				$this->_pdf->line(
-				$this->_margins['left'] + $split * $i,
-				$this->_margins['bottom'] - ($this->_tick_size / 2),
-				$this->_margins['left'] + $split * $i,
-				$this->_margins['bottom'] + ($this->_tick_size / 2)
-			);
+			$from = new Point($this->_margins['left'] + $split * $i, $this->_margins['bottom'] - ($this->_tick_size / 2));
+			$to = new Point($this->_margins['left'] + $split * $i, $this->_margins['bottom'] + ($this->_tick_size / 2));
+			
+			$line = new Line($from, $to);
+			$this->_drawLine->draw($line);
 		}
 	}
 	
 	private function _drawXAxisGrid($split) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinDashed());
 		for($i = 1; $i < $this->_days; $i++) {
-			$this->_pdf->line(
-				$this->_margins['left'] + $split * $i,
-				$this->_margins['bottom'] + ($this->_tick_size / 2),
-				$this->_margins['left'] + $split * $i,
-				$this->_pdf->getPageHeight() - $this->_margins['top']
-			);
+			$from = new Point($this->_margins['left'] + $split * $i, $this->_margins['bottom'] + ($this->_tick_size / 2));
+			$to = new Point($this->_margins['left'] + $split * $i, $this->_pdf->getPageHeight() - $this->_margins['top']);
+			
+			$line = new Line($from, $to);
+			$this->_drawLine->draw($line);
 		}
 	}
 	
@@ -190,13 +194,11 @@ class Burndown {
 
 	private function _drawYAxisLine() {
 		// Vertical line
-		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
-		$this->_pdf->line(
-			$this->_margins['left'],
-			$this->_margins['bottom'],
-			$this->_margins['left'],
-			$this->_pdf->getPageHeight() - $this->_margins['top']
-		);
+		$from = new Point($this->_margins['left'], $this->_margins['bottom']);
+		$to = new Point($this->_margins['left'], $this->_pdf->getPageHeight() - $this->_margins['top']);
+		
+		$line = new Line($from, $to);
+		$this->_drawLine->draw($line, LineStyleFactory::thinContinuous());
 	}
 
 	/**
@@ -213,24 +215,22 @@ class Burndown {
 	private function _drawYAxisTicks($split, $points) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
 		for($i = 0; $i < $points; $i++) {
-			$this->_pdf->line(
-				$this->_margins['left'] - ($this->_tick_size / 2),
-				$this->_margins['bottom'] + $split * $i,
-				$this->_margins['left'] + ($this->_tick_size / 2),
-				$this->_margins['bottom'] + $split * $i
-			);
+			$from = new Point($this->_margins['left'] - ($this->_tick_size / 2), $this->_margins['bottom'] + $split * $i);
+			$to = new Point($this->_margins['left'] + ($this->_tick_size / 2), $this->_margins['bottom'] + $split * $i);
+			
+			$line = new Line($from, $to);
+			$this->_drawLine->draw($line);
 		}
 	}
 
 	private function _drawYAxisGrid($split, $points) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinDashed());
 		for($i = 1; $i < $points; $i++) {
-			$this->_pdf->line(
-				$this->_margins['left'] + ($this->_tick_size / 2),
-				$this->_margins['bottom'] + $split * $i,
-				$this->_pdf->getPageWidth() - $this->_margins['right'],
-				$this->_margins['bottom'] + $split * $i
-			);
+			$from = new Point($this->_margins['left'] + ($this->_tick_size / 2), $this->_margins['bottom'] + $split * $i);
+			$to = new Point($this->_pdf->getPageWidth() - $this->_margins['right'], $this->_margins['bottom'] + $split * $i);
+			
+			$line = new Line($from, $to);
+			$this->_drawLine->draw($line);
 		}
 	}
 

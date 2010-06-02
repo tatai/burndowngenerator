@@ -23,7 +23,7 @@ class LineStyleContinuousTest extends PHPUnit_Framework_TestCase {
 	private $_style = null;
 
 	public function setUp() {
-		$this->_style = new LineStyleContinuous();
+		$this->_style = new LineStrokeContinuous();
 	}
 
 	/**

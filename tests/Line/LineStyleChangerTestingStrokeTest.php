@@ -35,7 +35,7 @@ class LineStyleChangerTestingStrokeTest extends PHPUnit_Framework_TestCase {
 		$this->_color = $this->getMock('Color', array(), array($color, $color, $color));
 
 		$width = 1;
-		$line = $this->getMock('ILineStyle');
+		$line = $this->getMock('ILineStroke');
 		$this->_stroke = $this->getMock('LineStroke', array(), array(1, $line));
 		$this->_lineStyle = new LineStyle(
 			$this->_color,

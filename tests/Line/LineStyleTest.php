@@ -25,7 +25,7 @@ class LineStyleTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function returnSameColorAsGiven() {
 		$color = new Color(new Decimal(0), new Decimal(0), new Decimal(0));
-		$stroke = new LineStroke(1, new LineStyleContinuous());
+		$stroke = new LineStroke(1, new LineStrokeContinuous());
 		
 		$lineStyle = new LineStyle($color, $stroke);
 		
@@ -37,7 +37,7 @@ class LineStyleTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function returnSameStrokeAsGiven() {
 		$color = new Color(new Decimal(0), new Decimal(0), new Decimal(0));
-		$stroke = new LineStroke(1, new LineStyleContinuous());
+		$stroke = new LineStroke(1, new LineStrokeContinuous());
 		
 		$lineStyle = new LineStyle($color, $stroke);
 		

@@ -24,7 +24,7 @@ class LineStyleDashedTest extends PHPUnit_Framework_TestCase {
 	 * @test
 	 */
 	public function capStyleIsEmpty() {
-		$style = new LineStyleDashed();
+		$style = new LineStrokeDashed();
 		$this->assertEquals('', $style->getCap());
 	}
 
@@ -33,7 +33,7 @@ class LineStyleDashedTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function dashStyleByDefaultIsOne() {
 		$dashStyle = array(1);
-		$style = new LineStyleDashed();
+		$style = new LineStrokeDashed();
 		$this->assertEquals($dashStyle, $style->getDash());
 	}
 
@@ -43,7 +43,7 @@ class LineStyleDashedTest extends PHPUnit_Framework_TestCase {
 	public function whenGivingWidthDashStyleHasThisWidth() {
 		$width = 3;
 		$dashStyle = array($width);
-		$style = new LineStyleDashed($width);
+		$style = new LineStrokeDashed($width);
 		$this->assertEquals($dashStyle, $style->getDash());
 	}
 }

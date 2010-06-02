@@ -22,7 +22,7 @@ class LineStrokeTest extends PHPUnit_Framework_TestCase {
 	private $_style = null;
 	
 	public function setUp() {
-		$this->_style = $this->getMock('ILineStyle');
+		$this->_style = $this->getMock('ILineStroke');
 	}
 
 	/**
@@ -98,8 +98,8 @@ class LineStrokeTest extends PHPUnit_Framework_TestCase {
 	 * @test
 	 */
 	public function whenChangingLineStyleComparisionReturnsFalse() {
-		$stroke = new LineStroke(1, new LineStyleContinuous());
-		$widerStroke = new LineStroke(1, new LineStyleDashed());
+		$stroke = new LineStroke(1, new LineStrokeContinuous());
+		$widerStroke = new LineStroke(1, new LineStrokeDashed());
 		
 		$this->assertFalse($stroke->isEqual($widerStroke));
 	}

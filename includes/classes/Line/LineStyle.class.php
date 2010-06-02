@@ -1,6 +1,6 @@
 <?php
 
-class LineStyle {
+class LineStyle implements ILineStyle {
 	/**
 	 * 
 	 * @var Color

@@ -17,7 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class Line {
+	/**
+	 * 
+	 * @var Point
+	 */
 	private $_from = null;
+
+	/**
+	 * 
+	 * @var Point
+	 */
 	private $_to = null;
 
 	public function __construct(Point $from, Point $to) {
@@ -25,10 +34,16 @@ class Line {
 		$this->_to = $to;
 	}
 
+	/**
+	 * @return Point
+	 */
 	public function from() {
 		return $this->_from;
 	}
 
+	/**
+	 * @return Point
+	 */
 	public function to() {
 		return $this->_to;
 	}

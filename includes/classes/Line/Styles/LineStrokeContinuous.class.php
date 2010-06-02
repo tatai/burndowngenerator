@@ -16,15 +16,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class LineStyleChanger {
+class LineStrokeContinuous extends LineStrokeAbstract {
 	public function __construct() {
-		
-	}
-	
-	public function change(MetricsPdf &$pdf, ILineStyle $style) {
-		$color = $style->getColor();
-		$stroke = $style->getStroke();
-		$pdf->setStrokeColor($color->red(), $color->green(), $color->blue());
-		$pdf->setLineStyle($stroke->getWidth(), $stroke->getCap(), '', $stroke->getDash());
+		$this->setCap('');
+		$this->setDash(array(1, 0));
 	}
 }

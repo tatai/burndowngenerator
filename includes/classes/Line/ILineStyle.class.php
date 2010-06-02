@@ -16,9 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class LineStyleDashed extends LineStyleAbstract {
-	public function __construct($width = 1) {
-		$this->setCap('');
-		$this->setDash(array($width));
-	}
+interface ILineStyle {
+	public function getColor();
+	public function getStroke();
 }

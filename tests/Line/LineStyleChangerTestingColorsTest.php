@@ -30,7 +30,7 @@ class LineStyleChangerTestingColorsTest extends PHPUnit_Framework_TestCase {
 		$color = new Color(new Decimal(0), new Decimal(0), new Decimal(0));
 		$this->_lineStyle = new LineStyle(
 			$color,
-			$this->getMock('LineStroke', array(), array(1, $this->getMock('ILineStyle')))
+			$this->getMock('LineStroke', array(), array(1, $this->getMock('ILineStroke')))
 		);
 	}
 

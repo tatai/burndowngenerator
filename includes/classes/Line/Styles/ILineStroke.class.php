@@ -16,9 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class LineStyleContinuous extends LineStyleAbstract {
-	public function __construct() {
-		$this->setCap('');
-		$this->setDash(array(1, 0));
-	}
+interface ILineStroke {
+	public function getCap();
+	public function getDash();
 }

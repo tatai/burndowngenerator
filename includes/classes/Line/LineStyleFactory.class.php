@@ -25,18 +25,18 @@ class LineStyleFactory {
 	static public function thinContinuous() {
 		return new LineStyle(
 			new Color(new Decimal(0), new Decimal(0), new Decimal(0)), 
-			new LineStroke(1, new LineStyleContinuous()));
+			new LineStroke(1, new LineStrokeContinuous()));
 	}
 
 	static public function thickContinuous(Color $color) {
 		return new LineStyle(
 			$color, 
-			new LineStroke(5, new LineStyleContinuous()));
+			new LineStroke(5, new LineStrokeContinuous()));
 	}
 
 	static public function thinDashed() {
 		return new LineStyle(
 			new Color(new Decimal(200), new Decimal(200), new Decimal(200)), 
-			new LineStroke(1, new LineStyleDashed(5)));
+			new LineStroke(1, new LineStrokeDashed(5)));
 	}
 }

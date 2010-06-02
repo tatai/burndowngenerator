@@ -16,7 +16,34 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-interface ILineStyle {
-	public function getCap();
-	public function getDash();
+class DrawLine {
+	/**
+	 * 
+	 * @var MetricsPdf
+	 */
+	private $_pdf = null;
+	
+	/**
+	 * 
+	 * @var LineStyleChanger
+	 */
+	private $_styleChanger = null;
+
+	public function __construct(MetricsPdf $pdf, LineStyleChanger $style) {
+		$this->_pdf = $pdf;
+		$this->_styleChanger = $style;
+	}
+
+	public function draw(Line $line, ILineStyle $style = null) {
+		if(!is_null($style)) {
+			$this->_styleChanger->change($this->_pdf, $style);
+		}
+
+		$this->_pdf->line(
+			$line->from()->x(),
+			$line->from()->y(),
+			$line->to()->x(),
+			$line->to()->y()
+		);
+	}
 }
