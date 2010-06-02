@@ -277,22 +277,16 @@ class Burndown {
 
 	private function _drawBurndownLine() {
 		$color = $this->_convertRGBToColorObject($this->_burndown_color);
-		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thickContinuous($color));
-		if($this->_chart_type == 'burndown') {
-			$this->_pdf->line(
-				$this->_margins['left'],
-				$this->_pdf->getPageHeight() - $this->_margins['top'],
-				$this->_pdf->getPageWidth() - $this->_margins['right'],
-				$this->_margins['bottom']
-			);
+
+		$upperLeft = new Point($this->_margins['left'], $this->_pdf->getPageHeight() - $this->_margins['top']);
+		$lowerRight = new Point($this->_pdf->getPageWidth() - $this->_margins['right'], $this->_margins['bottom']);
+		
+		$line = new BurndownLine($this->_pdf, $this->_styleChanger, $this->_margins);
+		if($this->_chart_type == 'burnup') {
+			$line->draw($color, new BurndownLineUp($upperLeft, $lowerRight));
 		}
-		else if($this->_chart_type == 'burnup') {
-			$this->_pdf->line(
-				$this->_margins['left'],
-				$this->_margins['bottom'],
-				$this->_pdf->getPageWidth() - $this->_margins['right'],
-				$this->_pdf->getPageHeight() - $this->_margins['top']
-			);
+		else {
+			$line->draw($color, new BurndownLineDown($upperLeft, $lowerRight));
 		}
 	}
 
