@@ -18,7 +18,7 @@
  */
 require_once (dirname(__FILE__) . '/../test_startup.php');
 
-class TextAlignTest extends PHPUnit_Framework_TestCase {
+class DrawTextAlignTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @var $_pdf MetricsPdf
 	 */
@@ -56,7 +56,7 @@ class TextAlignTest extends PHPUnit_Framework_TestCase {
 	
 	public function setUp() {
 		$this->_pdf = $this->getMock('MetricsPdf', array(), array('a4', 'landscape'));
-		$this->_text = new Text();
+		$this->_text = new DrawText();
 		$this->_string = 'aaaa';
 		$this->_size = 10;
 		$this->_position = new Point(10, 25);

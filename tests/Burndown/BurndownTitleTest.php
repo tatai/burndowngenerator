@@ -26,7 +26,7 @@ class BurndownTitleTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * 
-	 * @var Text
+	 * @var DrawText
 	 */
 	private $_text = null;
 	
@@ -40,7 +40,7 @@ class BurndownTitleTest extends PHPUnit_Framework_TestCase {
 		$this->_pdf = $this->getMock('MetricsPdf', array(), array(
 			'a4', 
 			'landscape'));
-		$this->_text = $this->getMock('Text');
+		$this->_text = $this->getMock('DrawText');
 		$margins = array();
 		$this->_title = new BurndownTitle($this->_pdf, $this->_text, $margins);
 	}

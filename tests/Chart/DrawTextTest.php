@@ -18,7 +18,7 @@
  */
 require_once (dirname(__FILE__) . '/../test_startup.php');
 
-class TextTest extends PHPUnit_Framework_TestCase {
+class DrawTextTest extends PHPUnit_Framework_TestCase {
 	private $_pdf = null;
 	private $_text = null;
 	private $_string = null;
@@ -26,7 +26,7 @@ class TextTest extends PHPUnit_Framework_TestCase {
 	
 	public function setUp() {
 		$this->_pdf = $this->getMock('MetricsPdf', array(), array('a4', 'landscape'));
-		$this->_text = new Text();
+		$this->_text = new DrawText();
 		$this->_string = 'aaaa';
 		$this->_size = 10;
 	}

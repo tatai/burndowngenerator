@@ -24,7 +24,7 @@ class BurndownTitle {
 	
 	/**
 	 * 
-	 * @var Text
+	 * @var DrawText
 	 */
 	private $_text = null;
 	
@@ -37,10 +37,10 @@ class BurndownTitle {
 	/**
 	 * 
 	 * @param MetricsPdf $pdf
-	 * @param Text $text
+	 * @param DrawText $text
 	 * @param array $margins
 	 */
-	public function __construct(MetricsPdf $pdf, Text $text, array $margins) {
+	public function __construct(MetricsPdf $pdf, DrawText $text, array $margins) {
 		$this->_pdf = $pdf;
 		$this->_text = $text;
 		$this->_margins = $margins;

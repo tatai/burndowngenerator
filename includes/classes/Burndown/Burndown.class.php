@@ -28,7 +28,7 @@ class Burndown {
 	/**
 	 * Class to handle text insertion into pdf
 	 * 
-	 * @var Text
+	 * @var DrawText
 	 */
 	private $_text = null;
 	
@@ -57,7 +57,7 @@ class Burndown {
 		$this->_pdf = $pdf;
 		$this->_points = $points;
 		$this->_days = $days;
-		$this->_text = new Text();
+		$this->_text = new DrawText();
 		$this->_styleChanger = new LineStyleChanger();
 
 		$this->_margins = array(
