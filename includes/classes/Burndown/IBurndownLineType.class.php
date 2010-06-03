@@ -17,6 +17,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 interface IBurndownLineType {
-	public function __construct(Point $upperLeft, Point $lowerRight);
 	public function draw(MetricsPdf &$pdf);
 }

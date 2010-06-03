@@ -16,24 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class BurndownLineUp implements IBurndownLineType {
-	/**
-	 * 
-	 * @var Point
-	 */
-	private $_upperLeft = null;
-	
-	/**
-	 * 
-	 * @var Point
-	 */
-	private $_lowerRight = null;
-
-	public function __construct(Point $upperLeft, Point $lowerRight) {
-		$this->_upperLeft = $upperLeft;
-		$this->_lowerRight = $lowerRight;
-	}
-
+class BurndownLineUp extends BurndownLineAbstract {
 	public function draw(MetricsPdf &$pdf) {
 		$pdf->line(
 			$this->_upperLeft->x(),

@@ -63,22 +63,6 @@ class PointWithInvalidDataTest extends PHPUnit_Framework_TestCase {
 		
 		$this->assertNull($point->y());
 	}
-
-	/**
-	 * @test
-	 * @expectedException PHPUnit_Framework_Error
-	 */
-	public function constructFailsWhenReceivingNoArgument() {
-		$point = new Point();
-	}
-
-	/**
-	 * @test
-	 * @expectedException PHPUnit_Framework_Error
-	 */
-	public function constructFailsWhenReceivingOneArgument() {
-		$point = new Point(3);
-	}
 }
 
 require_once(dirname(__FILE__) . '/../test_shutdown.php');

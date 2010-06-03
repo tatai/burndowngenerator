@@ -49,7 +49,7 @@ class BurndownLineTest extends PHPUnit_Framework_TestCase {
 		$this->_styleChanger = $this->getMock('LineStyleChanger');
 		$margins = array();
 		$this->_line = new BurndownLine($this->_pdf, $this->_styleChanger, $margins);
-		$this->_burndownLineType = $this->getMock('IBurndownLineType');
+		$this->_burndownLineType = $this->getMock('IBurndownLineType', array(), array(new Point(1, 2), new Point(3, 4)));
 	}
 	
 	/**
