@@ -31,6 +31,14 @@ class DecimalTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 */
+	public function whenNoDecimalValueGivenHexadecimalReturnsNull() {
+		$decimal = new Decimal('a');
+		$this->assertNull($decimal->hexadecimal());
+	}
+	
+	/**
+	 * @test
+	 */
 	public function convertToHexadecimal() {
 		$decimal = new Decimal(10);
 		$this->assertEquals('a', $decimal->hexadecimal());
