@@ -40,7 +40,7 @@ class BurndownSpeed {
 		$this->_text = $text;
 	}
 	
-	public function draw($text, array $margins) {
+	public function draw($text, BurndownMargins $margins) {
 		$this->_setLineStyle();
 		$this->_drawSpeedText($text, $margins);
 	}
@@ -49,13 +49,13 @@ class BurndownSpeed {
 		$this->_lineStyleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
 	}
 	
-	private function _drawSpeedText($text, array $margins) {
+	private function _drawSpeedText($text, BurndownMargins $margins) {
 		$border = new TextBorder(1);
 		
 		$size = 7;
 		$position = new Point(
-			$margins['left'],
-			$this->_pdf->getPageHeight() - $margins['top'] + 5
+			$margins->left(),
+			$this->_pdf->getPageHeight() - $margins->top() + 5
 		);
 
 		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'right', $border);

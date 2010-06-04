@@ -30,7 +30,7 @@ class BurndownTitle {
 	
 	/**
 	 * 
-	 * @var array
+	 * @var BurndownMargins
 	 */
 	private $_margins = null;
 
@@ -38,9 +38,9 @@ class BurndownTitle {
 	 * 
 	 * @param MetricsPdf $pdf
 	 * @param DrawText $text
-	 * @param array $margins
+	 * @param BurndownMargins $margins
 	 */
-	public function __construct(MetricsPdf $pdf, DrawText $text, array $margins) {
+	public function __construct(MetricsPdf $pdf, DrawText $text, BurndownMargins $margins) {
 		$this->_pdf = $pdf;
 		$this->_text = $text;
 		$this->_margins = $margins;
@@ -50,7 +50,7 @@ class BurndownTitle {
 		$size = 10;
 		$text = $this->_validate($title);
 		
-		$position = new Point($this->_pdf->getPageWidth() / 2, $this->_pdf->getPageHeight() - $this->_margins['top'] + $size / 2);
+		$position = new Point($this->_pdf->getPageWidth() / 2, $this->_pdf->getPageHeight() - $this->_margins->top() + $size / 2);
 		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'center');
 	}
 

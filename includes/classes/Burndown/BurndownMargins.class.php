@@ -16,26 +16,55 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class BurndownLine {
+class BurndownMargins {
 	/**
 	 * 
-	 * @var MetricsPdf
+	 * @var int
 	 */
-	private $_pdf = null;
+	private $_left = null;
 	
 	/**
 	 * 
-	 * @var LineStyleChanger
+	 * @var int
 	 */
-	private $_styleChanger = null;
+	private $_right = null;
 	
-	public function __construct(MetricsPdf &$pdf, LineStyleChanger $styleChanger) {
-		$this->_pdf = $pdf;
-		$this->_styleChanger = $styleChanger;
+	/**
+	 * 
+	 * @var int
+	 */
+	private $_top = null;
+	
+	/**
+	 * 
+	 * @var int
+	 */
+	private $_bottom = null;
+
+	public function __construct($left, $top, $right, $bottom) {
+		$this->_left = $this->_validate($left);
+		$this->_top = $this->_validate($top);
+		$this->_right = $this->_validate($right);
+		$this->_bottom = $this->_validate($bottom);
 	}
 	
-	public function draw(Color $color, IBurndownLineType $line) {
-		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thickContinuous($color));
-		$line->draw($this->_pdf);
+	public function left() {
+		return $this->_left;
+	}
+	
+	public function top() {
+		return $this->_top;
+	}
+	
+	public function right() {
+		return $this->_right;
+	}
+	
+	public function bottom() {
+		return $this->_bottom;
+	}
+	
+	private function _validate($value) {
+		return is_numeric($value) ? $value : 0;
 	}
 }

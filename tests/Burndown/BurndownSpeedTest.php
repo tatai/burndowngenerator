@@ -61,12 +61,7 @@ class BurndownSpeedTest extends PHPUnit_Framework_TestCase {
 		$this->_text = $this->getMock('DrawText');
 		$this->_speed = new BurndownSpeed($this->_pdf, $this->_lineStyleChanger, $this->_text);
 		
-		$this->_margins = array(
-			'left' => 0, 
-			'top' => 0, 
-			'right' => 0, 
-			'bottom' => 0
-		);
+		$this->_margins = new BurndownMargins(0, 0, 0, 0);
 		$this->_points = 100;
 	}
 

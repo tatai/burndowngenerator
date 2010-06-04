@@ -45,11 +45,17 @@ class Burndown {
 	 * @var DrawLine
 	 */
 	private $_drawLine = null;
+
+	/**
+	 * Margins in pdf drawing
+	 * 
+	 * @var BurndownMargins
+	 */
+	private $_margins = null;
 	
 	private
 		$_points = null,
 		$_days = null,
-		$_margins = null,
 		$_tick_size = null,
 		$_title = null,
 		$_hide_speed = null,
@@ -68,12 +74,7 @@ class Burndown {
 		$this->_styleChanger = new LineStyleChanger();
 		$this->_drawLine = new DrawLine($this->_pdf, $this->_styleChanger);
 
-		$this->_margins = array(
-			'top' => 25,
-			'bottom' => 20,
-			'left' => 20,
-			'right' => 20
-		);
+		$this->_margins = new BurndownMargins(20, 25, 20, 20);
 
 		$this->_tick_size = 4;
 		$this->_hide_speed = false;
@@ -129,22 +130,22 @@ class Burndown {
 
 	private function _drawXAxisLine() {
 		// Horizontal line
-		$from = new Point($this->_margins['left'], $this->_margins['bottom']);
-		$to = new Point($this->_pdf->getPageWidth() - $this->_margins['right'], $this->_margins['bottom']);
+		$from = new Point($this->_margins->left(), $this->_margins->bottom());
+		$to = new Point($this->_pdf->getPageWidth() - $this->_margins->right(), $this->_margins->bottom());
 		
 		$line = new Line($from, $to);
 		$this->_drawLine->draw($line, LineStyleFactory::thinContinuous());
 	}
 
 	private function _calculateXAxisSplit() {
-		return ($this->_pdf->getPageWidth() - $this->_margins['right'] - $this->_margins['left']) / ($this->_days - 1);
+		return ($this->_pdf->getPageWidth() - $this->_margins->right() - $this->_margins->left()) / ($this->_days - 1);
 	}
 
 	private function _drawXAxisTicks($split) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
 		for($i = 0; $i < $this->_days; $i++) {
-			$from = new Point($this->_margins['left'] + $split * $i, $this->_margins['bottom'] - ($this->_tick_size / 2));
-			$to = new Point($this->_margins['left'] + $split * $i, $this->_margins['bottom'] + ($this->_tick_size / 2));
+			$from = new Point($this->_margins->left() + $split * $i, $this->_margins->bottom() - ($this->_tick_size / 2));
+			$to = new Point($this->_margins->left() + $split * $i, $this->_margins->bottom() + ($this->_tick_size / 2));
 			
 			$line = new Line($from, $to);
 			$this->_drawLine->draw($line);
@@ -154,8 +155,8 @@ class Burndown {
 	private function _drawXAxisGrid($split) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinDashed());
 		for($i = 1; $i < $this->_days; $i++) {
-			$from = new Point($this->_margins['left'] + $split * $i, $this->_margins['bottom'] + ($this->_tick_size / 2));
-			$to = new Point($this->_margins['left'] + $split * $i, $this->_pdf->getPageHeight() - $this->_margins['top']);
+			$from = new Point($this->_margins->left() + $split * $i, $this->_margins->bottom() + ($this->_tick_size / 2));
+			$to = new Point($this->_margins->left() + $split * $i, $this->_pdf->getPageHeight() - $this->_margins->top());
 			
 			$line = new Line($from, $to);
 			$this->_drawLine->draw($line);
@@ -166,8 +167,8 @@ class Burndown {
 		for($i = 0; $i < $this->_days; $i++) {
 			$size = 4;
 			$position = new Point(
-				$this->_margins['left'] + $split * $i,
-				$this->_margins['bottom'] - $this->_tick_size / 2 - $size
+				$this->_margins->left() + $split * $i,
+				$this->_margins->bottom() - $this->_tick_size / 2 - $size
 			);
 			$this->_text->horizontal($this->_pdf, $i, $size, $position, 'center');
 		}
@@ -194,8 +195,8 @@ class Burndown {
 
 	private function _drawYAxisLine() {
 		// Vertical line
-		$from = new Point($this->_margins['left'], $this->_margins['bottom']);
-		$to = new Point($this->_margins['left'], $this->_pdf->getPageHeight() - $this->_margins['top']);
+		$from = new Point($this->_margins->left(), $this->_margins->bottom());
+		$to = new Point($this->_margins->left(), $this->_pdf->getPageHeight() - $this->_margins->top());
 		
 		$line = new Line($from, $to);
 		$this->_drawLine->draw($line, LineStyleFactory::thinContinuous());
@@ -206,7 +207,7 @@ class Burndown {
 	 * @return ScaleBeautifier
 	 */
 	private function _calculateYAxisProperties() {
-		$axisSize = $this->_pdf->getPageHeight() - $this->_margins['top'] - $this->_margins['bottom'];
+		$axisSize = $this->_pdf->getPageHeight() - $this->_margins->top() - $this->_margins->bottom();
 		$minSeparation = 5; // millimeters
 		
 		return new ScaleBeautifier($axisSize, $this->_points, $minSeparation, Scale::$BASIC);
@@ -215,8 +216,8 @@ class Burndown {
 	private function _drawYAxisTicks($split, $points) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
 		for($i = 0; $i < $points; $i++) {
-			$from = new Point($this->_margins['left'] - ($this->_tick_size / 2), $this->_margins['bottom'] + $split * $i);
-			$to = new Point($this->_margins['left'] + ($this->_tick_size / 2), $this->_margins['bottom'] + $split * $i);
+			$from = new Point($this->_margins->left() - ($this->_tick_size / 2), $this->_margins->bottom() + $split * $i);
+			$to = new Point($this->_margins->left() + ($this->_tick_size / 2), $this->_margins->bottom() + $split * $i);
 			
 			$line = new Line($from, $to);
 			$this->_drawLine->draw($line);
@@ -226,8 +227,8 @@ class Burndown {
 	private function _drawYAxisGrid($split, $points) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinDashed());
 		for($i = 1; $i < $points; $i++) {
-			$from = new Point($this->_margins['left'] + ($this->_tick_size / 2), $this->_margins['bottom'] + $split * $i);
-			$to = new Point($this->_pdf->getPageWidth() - $this->_margins['right'], $this->_margins['bottom'] + $split * $i);
+			$from = new Point($this->_margins->left() + ($this->_tick_size / 2), $this->_margins->bottom() + $split * $i);
+			$to = new Point($this->_pdf->getPageWidth() - $this->_margins->right(), $this->_margins->bottom() + $split * $i);
 			
 			$line = new Line($from, $to);
 			$this->_drawLine->draw($line);
@@ -239,8 +240,8 @@ class Burndown {
 			$size = 4;
 			$text = $factor * $i;
 			$position = new Point(
-				$this->_margins['left'] - ($this->_tick_size / 2) - 2,
-				$this->_margins['bottom'] + ($split * $i) - 1
+				$this->_margins->left() - ($this->_tick_size / 2) - 2,
+				$this->_margins->bottom() + ($split * $i) - 1
 			);
 			$this->_text->horizontal($this->_pdf, $text, $size, $position, 'right');
 		}
@@ -251,7 +252,7 @@ class Burndown {
 		if(strlen($text) > 0) {
 			$size = 5;
 			$position = new Point(
-				$this->_margins['left'] - 7 - $size,
+				$this->_margins->left() - 7 - $size,
 				$this->_pdf->getPageHeight() / 2
 			);
 			$this->_text->vertical($this->_pdf, $text, $size, $position, 'center');
@@ -264,7 +265,7 @@ class Burndown {
 			$size = 5;
 			$position = new Point(
 				$this->_pdf->getPageWidth() / 2,
-				$this->_margins['bottom'] - 10 - $size
+				$this->_margins->bottom() - 10 - $size
 			);
 			$this->_text->horizontal($this->_pdf, $text, $size, $position, 'center');
 		}
@@ -278,10 +279,10 @@ class Burndown {
 	private function _drawBurndownLine() {
 		$color = $this->_convertRGBToColorObject($this->_burndown_color);
 
-		$upperLeft = new Point($this->_margins['left'], $this->_pdf->getPageHeight() - $this->_margins['top']);
-		$lowerRight = new Point($this->_pdf->getPageWidth() - $this->_margins['right'], $this->_margins['bottom']);
+		$upperLeft = new Point($this->_margins->left(), $this->_pdf->getPageHeight() - $this->_margins->top());
+		$lowerRight = new Point($this->_pdf->getPageWidth() - $this->_margins->right(), $this->_margins->bottom());
 		
-		$line = new BurndownLine($this->_pdf, $this->_styleChanger, $this->_margins);
+		$line = new BurndownLine($this->_pdf, $this->_styleChanger);
 		if($this->_chart_type == 'burnup') {
 			$line->draw($color, new BurndownLineUp($upperLeft, $lowerRight));
 		}
@@ -299,7 +300,7 @@ class Burndown {
 		$size = 3;
 		$text = 'http://www.burndowngenerator.com';
 		$position = new Point(
-			$this->_pdf->getPageWidth() - $this->_margins['right'],
+			$this->_pdf->getPageWidth() - $this->_margins->right(),
 			10
 		);
 		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'right');
