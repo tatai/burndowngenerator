@@ -34,6 +34,17 @@ class LineTest extends PHPUnit_Framework_TestCase {
 	private function _randomPoint() {
 		return new Point(rand(1, 100), rand(1,100));
 	}
+	
+	/**
+	 * @test
+	 */
+	public function sizeIsCalculatedFromPoints() {
+		$from = new Point(1, 1);
+		$to = new Point(5, 1);
+		
+		$line = new Line($from, $to);
+		$this->assertEquals(4, $line->size());
+	}
 }
 
 require_once(dirname(__FILE__) . '/../test_shutdown.php');

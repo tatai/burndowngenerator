@@ -47,4 +47,14 @@ class Line {
 	public function to() {
 		return $this->_to;
 	}
+	
+	/**
+	 * @return float
+	 */
+	public function size() {
+		$x = $this->to()->x() - $this->from()->x();
+		$y = $this->to()->y() - $this->from()->y();
+
+		return (sqrt(pow($x, 2) + pow($y, 2)));
+	}
 }
