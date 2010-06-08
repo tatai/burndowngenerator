@@ -143,13 +143,12 @@ class Burndown {
 
 	private function _drawXAxisTicks($split) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
-		for($i = 0; $i < $this->_days; $i++) {
-			$from = new Point($this->_margins->left() + $split * $i, $this->_margins->bottom() - ($this->_tick_size / 2));
-			$to = new Point($this->_margins->left() + $split * $i, $this->_margins->bottom() + ($this->_tick_size / 2));
-			
-			$line = new Line($from, $to);
-			$this->_drawLine->draw($line);
-		}
+		
+		$axisTicks = new DrawAxisTicks($this->_drawLine);
+		
+		$start = new Point($this->_margins->left(), $this->_margins->bottom());
+		$end = new Point($this->_pdf->getPageWidth() - $this->_margins->right(), $this->_margins->bottom());
+		$axisTicks->draw($split, $this->_tick_size, new Line($start, $end));
 	}
 	
 	private function _drawXAxisGrid($split) {
@@ -215,13 +214,12 @@ class Burndown {
 
 	private function _drawYAxisTicks($split, $points) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
-		for($i = 0; $i < $points; $i++) {
-			$from = new Point($this->_margins->left() - ($this->_tick_size / 2), $this->_margins->bottom() + $split * $i);
-			$to = new Point($this->_margins->left() + ($this->_tick_size / 2), $this->_margins->bottom() + $split * $i);
-			
-			$line = new Line($from, $to);
-			$this->_drawLine->draw($line);
-		}
+		
+		$axisTicks = new DrawAxisTicks($this->_drawLine);
+		
+		$start = new Point($this->_margins->left(), $this->_margins->bottom());
+		$end = new Point($this->_margins->left(), $this->_pdf->getPageHeight() - $this->_margins->top());
+		$axisTicks->draw($split, $this->_tick_size, new Line($start, $end));
 	}
 
 	private function _drawYAxisGrid($split, $points) {
