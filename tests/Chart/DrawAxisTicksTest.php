@@ -74,7 +74,7 @@ class DrawAxisTicksTest extends PHPUnit_Framework_TestCase {
 		$distanceBetweenTicks = 3;
 		$lineSize = $this->_line->to()->x() - $this->_line->from()->x();
 		
-		$ticks = (int)floor($lineSize / $distanceBetweenTicks);
+		$ticks = (int)floor($lineSize / $distanceBetweenTicks) + 1;
 
 		$this->_draw_line->expects($this->exactly($ticks))->method('draw');
 		
