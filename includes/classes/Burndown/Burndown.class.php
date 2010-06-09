@@ -163,13 +163,14 @@ class Burndown {
 	}
 	
 	private function _drawXAxisValues($split) {
+		$axisTicks = new DrawAxisLabels($this->_pdf, $this->_text, 0, 1);
+		
 		for($i = 0; $i < $this->_days; $i++) {
-			$size = 4;
 			$position = new Point(
 				$this->_margins->left() + $split * $i,
-				$this->_margins->bottom() - $this->_tick_size / 2 - $size
+				$this->_margins->bottom() - $this->_tick_size / 2 - 4
 			);
-			$this->_text->horizontal($this->_pdf, $i, $size, $position, 'center');
+			$axisTicks->next($position);
 		}
 	}
 
@@ -234,14 +235,13 @@ class Burndown {
 	}
 
 	private function _drawYAxisValues($split, $points, $factor) {
+		$axisTicks = new DrawAxisLabels($this->_pdf, $this->_text, 0, $factor);
 		for($i = 0; $i < $points; $i++) {
-			$size = 4;
-			$text = $factor * $i;
 			$position = new Point(
 				$this->_margins->left() - ($this->_tick_size / 2) - 2,
 				$this->_margins->bottom() + ($split * $i) - 1
 			);
-			$this->_text->horizontal($this->_pdf, $text, $size, $position, 'right');
+			$axisTicks->next($position, 'right');
 		}
 	}
 	
