@@ -24,30 +24,12 @@ class DrawAxisTicksTest extends PHPUnit_Framework_TestCase {
 	 * @var DrawLine
 	 */
 	private $_draw_line = null;
-	
-	/**
-	 * 
-	 * @var int
-	 */
-	private $_tick_size = null;
-	
+
 	/**
 	 * 
 	 * @var DrawAxisTicks
 	 */
 	private $_draw_axis_ticks = null;
-	
-	/**
-	 * 
-	 * @var Line
-	 */
-	private $_line = null;
-	
-	/**
-	 * 
-	 * @var float
-	 */
-	private $_step = null;
 
 	public function setUp() {
 		$pdf = $this->getMock('MetricsPdf', array(), array(
@@ -59,11 +41,6 @@ class DrawAxisTicksTest extends PHPUnit_Framework_TestCase {
 			$pdf, 
 			$styleChanger));
 		
-		$this->_tick_size = 3;
-		$this->_step = 2;
-		
-		$this->_line = new Line(new Point(2, 4), new Point(8.5, 4));
-		
 		$this->_draw_axis_ticks = new DrawAxisTicks($this->_draw_line);
 	}
 	
@@ -71,14 +48,19 @@ class DrawAxisTicksTest extends PHPUnit_Framework_TestCase {
 	 * @test
 	 */
 	public function createsTicksWithinLine() {
-		$distanceBetweenTicks = 3;
-		$lineSize = $this->_line->to()->x() - $this->_line->from()->x();
-		
-		$ticks = (int)floor($lineSize / $distanceBetweenTicks) + 1;
+		$ticks = 4;
+		$tickSize = 4;
+
+		$splits = $this->getMock('AxisSplitter', array(), array(1, new Line(new Point(2, 4), new Point(8.5, 4))));
+		$axisElements = $this->getMock('IAxisElements');
+		$axisElements->expects($this->exactly($ticks))->method('tick')->will($this->returnValue(new Line(new Point(1, 2), new Point(6, 7))));
+
+		$splits->expects($this->any())->method('splits')->will($this->returnValue($ticks));
+		$splits->expects($this->any())->method('next')->will($this->returnValue(new Point(1, 2)));
 
 		$this->_draw_line->expects($this->exactly($ticks))->method('draw');
-		
-		$this->_draw_axis_ticks->draw($distanceBetweenTicks, $this->_tick_size, $this->_line);
+
+		$this->_draw_axis_ticks->draw($splits, $axisElements, $tickSize);
 	}
 
 	/**
@@ -86,20 +68,22 @@ class DrawAxisTicksTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function twoTicksMeansOneTickAtStartPointAndOneAtTheEnd() {
 		$ticks = 2;
+		$tickSize = 3;
+
 		$startTick = new Line(
-			new Point($this->_start_point->x(), $this->_start_point->y() - $this->_tick_size / 2),
-			new Point($this->_start_point->x(), $this->_start_point->y() + $this->_tick_size / 2)
+			new Point($this->_start_point->x(), $this->_start_point->y() - $tickSize / 2),
+			new Point($this->_start_point->x(), $this->_start_point->y() + $tickSize / 2)
 		);
 		
 		$endTick = new Line(
-			new Point($this->_end_point->x(), $this->_end_point->y() - $this->_tick_size / 2),
-			new Point($this->_end_point->x(), $this->_end_point->y() + $this->_tick_size / 2)
+			new Point($this->_end_point->x(), $this->_end_point->y() - $tickSize / 2),
+			new Point($this->_end_point->x(), $this->_end_point->y() + $tickSize / 2)
 		);
 		
 		$this->_draw_line->expects($this->once())->method('draw')->with($startTick);
 		$this->_draw_line->expects($this->once())->method('draw')->with($endTick);
 		
-		$this->_draw_axis_ticks->draw($ticks, $this->_tick_size, $this->_line);
+		$this->_draw_axis_ticks->draw($ticks, $tickSize, $this->_line);
 	}
 }
 

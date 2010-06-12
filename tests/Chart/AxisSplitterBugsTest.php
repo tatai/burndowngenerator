@@ -16,27 +16,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class DrawAxisTicks {
+require_once (dirname(__FILE__) . '/../test_startup.php');
+
+class AxisSplitterBugsTest extends PHPUnit_Framework_TestCase {
 	/**
-	 * 
-	 * @var DrawLine
+	 * @test
 	 */
-	private $_draw_line = null;
+	public function avoidIncorrectSplitSize() {
+		$splits = 28;
 
-	/**
-	 * 
-	 * @param DrawLine $drawLine
-	 */
-	public function __construct(DrawLine $drawLine) {
-		$this->_draw_line = $drawLine;
-	}
-
-	public function draw(AxisSplitter $splitter, IAxisElements $axisElements, $tickSize) {
-		for($i = 0; $i < $splitter->splits(); $i++) {
-			$at = $splitter->next();
-
-			$tick = $axisElements->tick($at, $tickSize);
-			$this->_draw_line->draw($tick);
-		}
+		$line = new Line(new Point(0, 1), new Point(165, 1));
+		$a = 165/$splits;
+		$axisSplitter = new AxisSplitter($a, $line);
+		
+		$this->assertEquals($splits, $axisSplitter->splits());
 	}
 }
+
+require_once (dirname(__FILE__) . '/../test_shutdown.php');

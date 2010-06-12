@@ -16,27 +16,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class DrawAxisTicks {
-	/**
-	 * 
-	 * @var DrawLine
-	 */
-	private $_draw_line = null;
-
-	/**
-	 * 
-	 * @param DrawLine $drawLine
-	 */
-	public function __construct(DrawLine $drawLine) {
-		$this->_draw_line = $drawLine;
-	}
-
-	public function draw(AxisSplitter $splitter, IAxisElements $axisElements, $tickSize) {
-		for($i = 0; $i < $splitter->splits(); $i++) {
-			$at = $splitter->next();
-
-			$tick = $axisElements->tick($at, $tickSize);
-			$this->_draw_line->draw($tick);
-		}
+class AxisVerticalElements implements IAxisElements {
+	public function tick(Point $at, $size) {
+		$midSize = $size / 2;
+		return new Line(new Point($at->x() - $midSize, $at->y()), new Point($at->x() + $midSize, $at->y()));
 	}
 }

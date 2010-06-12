@@ -143,12 +143,15 @@ class Burndown {
 
 	private function _drawXAxisTicks($split) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
-		
-		$axisTicks = new DrawAxisTicks($this->_drawLine);
-		
+
 		$start = new Point($this->_margins->left(), $this->_margins->bottom());
 		$end = new Point($this->_pdf->getPageWidth() - $this->_margins->right(), $this->_margins->bottom());
-		$axisTicks->draw($split, $this->_tick_size, new Line($start, $end));
+		$line = new Line($start, $end);
+		$axisSplitter = new AxisSplitter($split, $line);
+		
+		$axisTicks = new DrawAxisTicks($this->_drawLine);
+		$axisTicks->draw($axisSplitter, new AxisHorizontalElements(), $this->_tick_size);
+		//$axisTicks->draw($split, $this->_tick_size, new Line($start, $end));
 	}
 	
 	private function _drawXAxisGrid($split) {
@@ -183,7 +186,7 @@ class Burndown {
 		$yPoints = $scale->numberTicks();
 		$factor = $scale->pointsBetweenTicks();
 		
-		$this->_drawYAxisTicks($yAxisSplit, $yPoints);
+		$this->_drawYAxisTicks($yAxisSplit);
 		$this->_drawYAxisValues($yAxisSplit, $yPoints, $factor);
 
 		if(!$this->_hide_grid) {
@@ -213,14 +216,16 @@ class Burndown {
 		return new ScaleBeautifier($axisSize, $this->_points, $minSeparation, Scale::$BASIC);
 	}
 
-	private function _drawYAxisTicks($split, $points) {
+	private function _drawYAxisTicks($split) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
-		
-		$axisTicks = new DrawAxisTicks($this->_drawLine);
-		
+
 		$start = new Point($this->_margins->left(), $this->_margins->bottom());
 		$end = new Point($this->_margins->left(), $this->_pdf->getPageHeight() - $this->_margins->top());
-		$axisTicks->draw($split, $this->_tick_size, new Line($start, $end));
+		$line = new Line($start, $end);
+		$axisSplitter = new AxisSplitter($split, $line);
+		
+		$axisTicks = new DrawAxisTicks($this->_drawLine);
+		$axisTicks->draw($axisSplitter, new AxisVerticalElements(), $this->_tick_size);
 	}
 
 	private function _drawYAxisGrid($split, $points) {

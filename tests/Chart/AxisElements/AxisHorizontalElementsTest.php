@@ -16,27 +16,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class DrawAxisTicks {
+require_once (dirname(__FILE__) . '/../../test_startup.php');
+
+class AxisHorizontalElementsTest extends PHPUnit_Framework_TestCase {
 	/**
-	 * 
-	 * @var DrawLine
+	 * @test
 	 */
-	private $_draw_line = null;
+	public function tickIsCorrectlyDrawn() {
+		$elements = new AxisHorizontalElements();
+		$size = 4;
 
-	/**
-	 * 
-	 * @param DrawLine $drawLine
-	 */
-	public function __construct(DrawLine $drawLine) {
-		$this->_draw_line = $drawLine;
-	}
+		$point = new Point(3, 4);
+		$result = new Line(new Point(3, 2), new Point(3, 6));
 
-	public function draw(AxisSplitter $splitter, IAxisElements $axisElements, $tickSize) {
-		for($i = 0; $i < $splitter->splits(); $i++) {
-			$at = $splitter->next();
-
-			$tick = $axisElements->tick($at, $tickSize);
-			$this->_draw_line->draw($tick);
-		}
+		$this->assertEquals($result, $elements->tick($point, $size));
 	}
 }
+
+require_once (dirname(__FILE__) . '/../../test_shutdown.php');
