@@ -59,7 +59,7 @@ class Burndown {
 		$this->_pdf = $pdf;
 		$this->_points = $points;
 		$this->_days = $days;
-		$this->_text = new DrawText();
+		$this->_text = new DrawText($this->_pdf);
 		$this->_styleChanger = new LineStyleChanger();
 		$this->_drawLine = new DrawLine($this->_pdf, $this->_styleChanger);
 		
@@ -152,7 +152,7 @@ class Burndown {
 	}
 
 	private function _drawXAxisValues($split) {
-		$axisTicks = new DrawAxisLabels($this->_pdf, $this->_text, 0, 1);
+		$axisTicks = new DrawAxisLabels($this->_text, 0, 1);
 		
 		for($i = 0; $i < $this->_days; $i++) {
 			$position = new Point($this->_margins->left() + $split * $i, $this->_margins->bottom() - $this->_tick_size / 2 - 4);
@@ -223,7 +223,7 @@ class Burndown {
 	}
 
 	private function _drawYAxisValues($split, $points, $factor) {
-		$axisTicks = new DrawAxisLabels($this->_pdf, $this->_text, 0, $factor);
+		$axisTicks = new DrawAxisLabels($this->_text, 0, $factor);
 		for($i = 0; $i < $points; $i++) {
 			$position = new Point($this->_margins->left() - ($this->_tick_size / 2) - 2, $this->_margins->bottom() + ($split * $i) - 1);
 			$axisTicks->next($position, 'right');
@@ -235,7 +235,7 @@ class Burndown {
 		if(strlen($text) > 0) {
 			$size = 5;
 			$position = new Point($this->_margins->left() - 7 - $size, $this->_pdf->getPageHeight() / 2);
-			$this->_text->vertical($this->_pdf, $text, $size, $position, 'center');
+			$this->_text->vertical($text, $size, $position, 'center');
 		}
 	}
 
@@ -244,7 +244,7 @@ class Burndown {
 		if(strlen($text) > 0) {
 			$size = 5;
 			$position = new Point($this->_pdf->getPageWidth() / 2, $this->_margins->bottom() - 10 - $size);
-			$this->_text->horizontal($this->_pdf, $text, $size, $position, 'center');
+			$this->_text->horizontal($text, $size, $position, 'center');
 		}
 	}
 
@@ -277,7 +277,7 @@ class Burndown {
 		$size = 3;
 		$text = 'http://www.burndowngenerator.com';
 		$position = new Point($this->_pdf->getPageWidth() - $this->_margins->right(), 10);
-		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'right');
+		$this->_text->horizontal($text, $size, $position, 'right');
 	}
 
 	private function _log() {

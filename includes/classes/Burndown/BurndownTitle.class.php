@@ -51,7 +51,7 @@ class BurndownTitle {
 		$text = $this->_validate($title);
 		
 		$position = new Point($this->_pdf->getPageWidth() / 2, $this->_pdf->getPageHeight() - $this->_margins->top() + $size / 2);
-		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'center');
+		$this->_text->horizontal($text, $size, $position, 'center');
 	}
 
 	private function _validate($title) {

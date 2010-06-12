@@ -34,7 +34,7 @@ class BurndownSpeed {
 	 */
 	private $_text = null;
 	
-	public function __construct(MetricsPdf &$pdf, LineStyleChanger &$changer, DrawText &$text) {
+	public function __construct(MetricsPdf $pdf, LineStyleChanger &$changer, DrawText &$text) {
 		$this->_pdf = $pdf;
 		$this->_lineStyleChanger = $changer;
 		$this->_text = $text;
@@ -58,6 +58,6 @@ class BurndownSpeed {
 			$this->_pdf->getPageHeight() - $margins->top() + 5
 		);
 
-		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'right', $border);
+		$this->_text->horizontal($text, $size, $position, 'right', $border);
 	}
 }

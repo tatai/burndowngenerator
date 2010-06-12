@@ -56,7 +56,7 @@ class DrawTextAlignTest extends PHPUnit_Framework_TestCase {
 	
 	public function setUp() {
 		$this->_pdf = $this->getMock('MetricsPdf', array(), array('a4', 'landscape'));
-		$this->_text = new DrawText();
+		$this->_text = new DrawText($this->_pdf);
 		$this->_string = 'aaaa';
 		$this->_size = 10;
 		$this->_position = new Point(10, 25);
@@ -81,7 +81,7 @@ class DrawTextAlignTest extends PHPUnit_Framework_TestCase {
 		$checkXPosition = $this->_position->x() - ($this->_virtualWidth / 2);
 		$this->_mockPdfToXPosition($checkXPosition);
 
-		$this->_text->horizontal($this->_pdf, $this->_string, $this->_size, $this->_position, 'center');
+		$this->_text->horizontal($this->_string, $this->_size, $this->_position, 'center');
 	}
 
 	/**
@@ -90,7 +90,7 @@ class DrawTextAlignTest extends PHPUnit_Framework_TestCase {
 	public function alignsHorizontalTextLefted() {
 		$this->_mockPdfToXPosition($this->_position->x());
 		
-		$this->_text->horizontal($this->_pdf, $this->_string, $this->_size, $this->_position, 'left');
+		$this->_text->horizontal($this->_string, $this->_size, $this->_position, 'left');
 	}
 
 	/**
@@ -100,7 +100,7 @@ class DrawTextAlignTest extends PHPUnit_Framework_TestCase {
 		$checkXPosition = $this->_position->x() - $this->_virtualWidth;
 		$this->_mockPdfToXPosition($checkXPosition);
 		
-		$this->_text->horizontal($this->_pdf, $this->_string, $this->_size, $this->_position, 'right');
+		$this->_text->horizontal($this->_string, $this->_size, $this->_position, 'right');
 	}
 
 	private function _mockPdfToYPosition($yPos) {
@@ -116,7 +116,7 @@ class DrawTextAlignTest extends PHPUnit_Framework_TestCase {
 		$checkYPosition = $this->_position->y() - ($this->_virtualWidth / 2);
 		$this->_mockPdfToYPosition($checkYPosition);
 
-		$this->_text->vertical($this->_pdf, $this->_string, $this->_size, $this->_position, 'center');
+		$this->_text->vertical($this->_string, $this->_size, $this->_position, 'center');
 	}
 
 	/**
@@ -125,7 +125,7 @@ class DrawTextAlignTest extends PHPUnit_Framework_TestCase {
 	public function alignsVerticalTextLefted() {
 		$this->_mockPdfToYPosition($this->_position->y());
 		
-		$this->_text->vertical($this->_pdf, $this->_string, $this->_size, $this->_position, 'left');
+		$this->_text->vertical($this->_string, $this->_size, $this->_position, 'left');
 	}
 
 	/**
@@ -135,7 +135,7 @@ class DrawTextAlignTest extends PHPUnit_Framework_TestCase {
 		$checkYPosition = $this->_position->y() - $this->_virtualWidth;
 		$this->_mockPdfToYPosition($checkYPosition);
 		
-		$this->_text->vertical($this->_pdf, $this->_string, $this->_size, $this->_position, 'right');
+		$this->_text->vertical($this->_string, $this->_size, $this->_position, 'right');
 	}
 }
 

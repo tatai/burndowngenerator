@@ -26,7 +26,7 @@ class DrawTextTest extends PHPUnit_Framework_TestCase {
 	
 	public function setUp() {
 		$this->_pdf = $this->getMock('MetricsPdf', array(), array('a4', 'landscape'));
-		$this->_text = new DrawText();
+		$this->_text = new DrawText($this->_pdf);
 		$this->_string = 'aaaa';
 		$this->_size = 10;
 	}
@@ -43,7 +43,7 @@ class DrawTextTest extends PHPUnit_Framework_TestCase {
 		$position->expects($this->once())
 			->method('y');
 			
-		$this->_text->horizontal($this->_pdf, $this->_string, $this->_size, $position);
+		$this->_text->horizontal($this->_string, $this->_size, $position);
 	}
 	
 	/**
@@ -58,7 +58,7 @@ class DrawTextTest extends PHPUnit_Framework_TestCase {
 		$position->expects($this->once())
 			->method('y');
 			
-		$this->_text->vertical($this->_pdf, $this->_string, $this->_size, $position);
+		$this->_text->vertical($this->_string, $this->_size, $position);
 	}
 	
 	/**
@@ -70,7 +70,7 @@ class DrawTextTest extends PHPUnit_Framework_TestCase {
 		$this->_pdf->expects($this->once())
 			->method('getTextWidth');
 		
-		$this->_text->vertical($this->_pdf, $this->_string, $this->_size, $position);
+		$this->_text->vertical($this->_string, $this->_size, $position);
 	}
 
 	/**
@@ -82,7 +82,7 @@ class DrawTextTest extends PHPUnit_Framework_TestCase {
 		$this->_pdf->expects($this->once())
 			->method('addTextWrap');
 
-		$this->_text->vertical($this->_pdf, $this->_string, $this->_size, $position);
+		$this->_text->vertical($this->_string, $this->_size, $position);
 	}
 }
 

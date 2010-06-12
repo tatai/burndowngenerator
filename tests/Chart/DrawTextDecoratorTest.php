@@ -61,7 +61,7 @@ class DrawTextDecoratorTest extends PHPUnit_Framework_TestCase {
 	
 	public function setUp() {
 		$this->_pdf = $this->getMock('MetricsPdf', array(), array('a4', 'landscape'));
-		$this->_text = new DrawText();
+		$this->_text = new DrawText($this->_pdf);
 		$this->_string = 'aaaa';
 		$this->_size = 10;
 		$this->_position = new Point(10, 25);
@@ -76,7 +76,7 @@ class DrawTextDecoratorTest extends PHPUnit_Framework_TestCase {
 		$this->_decorator->expects($this->once())
 			->method('draw');
 
-		$this->_text->horizontal($this->_pdf, $this->_string, $this->_size, $this->_position, $this->_align, $this->_decorator);
+		$this->_text->horizontal($this->_string, $this->_size, $this->_position, $this->_align, $this->_decorator);
 	}
 	
 	/**
@@ -86,7 +86,7 @@ class DrawTextDecoratorTest extends PHPUnit_Framework_TestCase {
 		$this->_decorator->expects($this->once())
 			->method('draw');
 
-		$this->_text->vertical($this->_pdf, $this->_string, $this->_size, $this->_position, $this->_align, $this->_decorator);
+		$this->_text->vertical($this->_string, $this->_size, $this->_position, $this->_align, $this->_decorator);
 	}
 }
 

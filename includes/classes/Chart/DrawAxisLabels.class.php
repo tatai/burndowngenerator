@@ -25,12 +25,6 @@ class DrawAxisLabels {
 	
 	/**
 	 * 
-	 * @var MetricsPdf
-	 */
-	private $_pdf = null;
-	
-	/**
-	 * 
 	 * @var int
 	 */
 	private $_start = null;
@@ -54,8 +48,7 @@ class DrawAxisLabels {
 	 * @param int $start
 	 * @param int $end
 	 */
-	public function __construct(MetricsPdf $pdf, DrawText $drawText, $start, $increment) {
-		$this->_pdf = $pdf;
+	public function __construct(DrawText $drawText, $start, $increment) {
 		$this->_drawText = $drawText;
 		$this->_start = $start;
 		$this->_increment = $increment;
@@ -64,7 +57,7 @@ class DrawAxisLabels {
 	public function next(Point $at, $align = 'center') {
 		$this->_calculateNextCurrentValue();
 
-		$this->_drawText->horizontal($this->_pdf, $this->last(), 4, $at, $align);
+		$this->_drawText->horizontal($this->last(), 4, $at, $align);
 	}
 	
 	public function last() {

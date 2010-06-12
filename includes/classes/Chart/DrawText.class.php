@@ -17,18 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class DrawText {
+	private $_pdf = null;
 
-	public function __construct() {
-	
+	public function __construct(MetricsPdf $pdf) {
+		$this->_pdf = $pdf;
 	}
 
-	public function horizontal(MetricsPdf &$pdf, $text, $size, Point $position, $align = 'left', $decorator = null) {
-		$width = $pdf->getTextWidth($size, $text);
+	public function horizontal($text, $size, Point $position, $align = 'left', $decorator = null) {
+		$width = $this->_pdf->getTextWidth($size, $text);
 		
 		$x = $this->_calculateTextPosition($position, 'x', $align, $width);
 		$y = $position->y();
 		
-		$pdf->addTextWrap(
+		$this->_pdf->addTextWrap(
 			$x,
 			$y,
 			$width,
@@ -39,17 +40,17 @@ class DrawText {
 		if($decorator instanceof ITextDecorator) {
 			$upperLeft = new Point($x, $y);
 			$lowerRight = new Point($x + $width, $y + $size);
-			$this->_callDecorator($pdf, $decorator, $upperLeft, $lowerRight);
+			$this->_callDecorator($this->_pdf, $decorator, $upperLeft, $lowerRight);
 		}
 	}
 	
-	public function vertical(MetricsPdf &$pdf, $text, $size, Point $position, $align = 'left', $decorator = null) {
-		$width = $pdf->getTextWidth($size, $text);
+	public function vertical($text, $size, Point $position, $align = 'left', $decorator = null) {
+		$width = $this->_pdf->getTextWidth($size, $text);
 		
 		$x = $position->x();
 		$y = $this->_calculateTextPosition($position, 'y', $align, $width);
 		
-		$pdf->addTextWrap(
+		$this->_pdf->addTextWrap(
 			$x,
 			$y,
 			$width,
@@ -62,7 +63,7 @@ class DrawText {
 		if($decorator instanceof ITextDecorator) {
 			$upperLeft = new Point($x, $y);
 			$lowerRight = new Point($x + $width, $y + $size);
-			$this->_callDecorator($pdf, $decorator, $upperLeft, $lowerRight);
+			$this->_callDecorator($this->_pdf, $decorator, $upperLeft, $lowerRight);
 		}
 	}
 	

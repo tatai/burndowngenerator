@@ -44,7 +44,7 @@ class DrawAxisLabelsTest extends PHPUnit_Framework_TestCase {
 		$pdf = $this->getMock('MetricsPdf', array(), array(
 			'a4', 
 			'landscape'));
-		$this->_text = $this->getMock('DrawText');
+		$this->_text = $this->getMock('DrawText', array(), array($pdf));
 		$this->_start = 3;
 		$this->_increment = 2;
 
@@ -52,7 +52,7 @@ class DrawAxisLabelsTest extends PHPUnit_Framework_TestCase {
 			1, 
 			2));
 		
-		$this->_labels = new DrawAxisLabels($pdf, $this->_text, $this->_start, $this->_increment);
+		$this->_labels = new DrawAxisLabels($this->_text, $this->_start, $this->_increment);
 	}
 
 	/**
@@ -85,7 +85,7 @@ class DrawAxisLabelsTest extends PHPUnit_Framework_TestCase {
 	public function textIsDrawnInGivenPoint() {
 		$calls = rand(1, 10);
 		
-		$this->_text->expects($this->exactly($calls))->method('horizontal')->with($this->anything(), $this->anything(), $this->anything(), $this->_point);
+		$this->_text->expects($this->exactly($calls))->method('horizontal')->with($this->anything(), $this->anything(), $this->_point);
 		for($i = 0; $i < $calls; $i++) {
 			$this->_labels->next($this->_point);
 		}
@@ -99,7 +99,7 @@ class DrawAxisLabelsTest extends PHPUnit_Framework_TestCase {
 		
 		$align = 'right';
 		
-		$this->_text->expects($this->exactly($calls))->method('horizontal')->with($this->anything(), $this->anything(), $this->anything(), $this->anything(), $align);
+		$this->_text->expects($this->exactly($calls))->method('horizontal')->with($this->anything(), $this->anything(), $this->anything(), $align);
 		for($i = 0; $i < $calls; $i++) {
 			$this->_labels->next($this->_point, $align);
 		}

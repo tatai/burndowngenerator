@@ -58,7 +58,7 @@ class BurndownSpeedTest extends PHPUnit_Framework_TestCase {
 			'a4', 
 			'landscape'));
 		$this->_lineStyleChanger = $this->getMock('LineStyleChanger');
-		$this->_text = $this->getMock('DrawText');
+		$this->_text = $this->getMock('DrawText', array(), array($this->_pdf));
 		$this->_speed = new BurndownSpeed($this->_pdf, $this->_lineStyleChanger, $this->_text);
 		
 		$this->_margins = new BurndownMargins(0, 0, 0, 0);

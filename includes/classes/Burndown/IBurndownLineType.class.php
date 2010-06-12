@@ -17,5 +17,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 interface IBurndownLineType {
-	public function draw(MetricsPdf &$pdf);
+	public function draw(MetricsPdf $pdf);
 }

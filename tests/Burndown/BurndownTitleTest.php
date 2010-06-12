@@ -20,11 +20,6 @@ require_once (dirname(__FILE__) . '/../test_startup.php');
 
 class BurndownTitleTest extends PHPUnit_Framework_TestCase {
 	/**
-	 * @var MetricsPdf
-	 */
-	private $_pdf = null;
-	
-	/**
 	 * 
 	 * @var DrawText
 	 */
@@ -37,12 +32,12 @@ class BurndownTitleTest extends PHPUnit_Framework_TestCase {
 	private $_title = null;
 
 	public function setUp() {
-		$this->_pdf = $this->getMock('MetricsPdf', array(), array(
+		$pdf = $this->getMock('MetricsPdf', array(), array(
 			'a4', 
 			'landscape'));
-		$this->_text = $this->getMock('DrawText');
+		$this->_text = $this->getMock('DrawText', array(), array($pdf));
 		$margins = new BurndownMargins(1, 2, 3, 4);
-		$this->_title = new BurndownTitle($this->_pdf, $this->_text, $margins);
+		$this->_title = new BurndownTitle($pdf, $this->_text, $margins);
 	}
 
 	/**
@@ -52,7 +47,7 @@ class BurndownTitleTest extends PHPUnit_Framework_TestCase {
 		$text = 'Foo text';
 		$this->_text->expects($this->once())
 			->method('horizontal')
-			->with($this->_pdf, $text, $this->anything(), $this->anything(), $this->anything());
+			->with($text, $this->anything(), $this->anything(), $this->anything());
 
 		$this->_title->draw($text);
 	}
@@ -64,7 +59,7 @@ class BurndownTitleTest extends PHPUnit_Framework_TestCase {
 		$title = 'Burndown online generator';
 		$this->_text->expects($this->once())
 			->method('horizontal')
-			->with($this->_pdf, $title, $this->anything(), $this->anything(), $this->anything());
+			->with($title, $this->anything(), $this->anything(), $this->anything());
 
 		$this->_title->draw();
 	}
@@ -76,7 +71,7 @@ class BurndownTitleTest extends PHPUnit_Framework_TestCase {
 		$title = 'Burndown online generator';
 		$this->_text->expects($this->once())
 			->method('horizontal')
-			->with($this->_pdf, $title, $this->anything(), $this->anything(), $this->anything());
+			->with($title, $this->anything(), $this->anything(), $this->anything());
 
 		$this->_title->draw('');
 	}

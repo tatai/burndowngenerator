@@ -26,7 +26,7 @@ class TextBorder implements ITextDecorator {
 		}
 	}
 	
-	public function draw(MetricsPdf &$pdf, Point $upperLeft, Point $lowerRight) {
+	public function draw(MetricsPdf $pdf, Point $upperLeft, Point $lowerRight) {
 		$pdf->rectangle(
 			$upperLeft->x() - $this->_padding,
 			$upperLeft->y() - $this->_padding,
