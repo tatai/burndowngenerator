@@ -17,5 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 interface IAxisElements {
+
 	public function tick(Point $at, $size);
+	public function grid(Point $at, $size);
 }

@@ -45,7 +45,7 @@ class Burndown {
 	 * @var DrawLine
 	 */
 	private $_drawLine = null;
-
+	
 	/**
 	 * Margins in pdf drawing
 	 * 
@@ -53,18 +53,7 @@ class Burndown {
 	 */
 	private $_margins = null;
 	
-	private
-		$_points = null,
-		$_days = null,
-		$_tick_size = null,
-		$_title = null,
-		$_hide_speed = null,
-		$_hide_grid = null,
-		$_burndown_color = null,
-		$_xlabel = null,
-		$_ylabel = null,
-		$_chart_type = null
-		;
+	private $_points = null, $_days = null, $_tick_size = null, $_title = null, $_hide_speed = null, $_hide_grid = null, $_burndown_color = null, $_xlabel = null, $_ylabel = null, $_chart_type = null;
 
 	public function __construct($pdf, $points, $days) {
 		$this->_pdf = $pdf;
@@ -73,9 +62,9 @@ class Burndown {
 		$this->_text = new DrawText();
 		$this->_styleChanger = new LineStyleChanger();
 		$this->_drawLine = new DrawLine($this->_pdf, $this->_styleChanger);
-
+		
 		$this->_margins = new BurndownMargins(20, 25, 20, 20);
-
+		
 		$this->_tick_size = 4;
 		$this->_hide_speed = false;
 		$this->_hide_grid = false;
@@ -84,7 +73,7 @@ class Burndown {
 	}
 
 	public function setOptions($options) {
-		foreach($options AS $k => $v) {
+		foreach($options as $k => $v) {
 			$k = '_' . $k;
 			$this->$k = $v;
 		}
@@ -92,20 +81,20 @@ class Burndown {
 
 	public function output() {
 		$this->_log();
-
+		
 		$this->_drawTitle();
-
+		
 		$this->_drawXAxis();
 		$this->_drawYAxis();
-
+		
 		$this->_drawBurndownLine();
-
+		
 		if(!$this->_hide_speed) {
 			$this->_drawSpeed();
 		}
-
+		
 		$this->_drawAds();
-
+		
 		$this->_pdf->ezStream();
 	}
 
@@ -116,15 +105,15 @@ class Burndown {
 
 	private function _drawXAxis() {
 		$this->_drawXAxisLine();
-
+		
 		$xAxisSplit = $this->_calculateXAxisSplit();
 		$this->_drawXAxisTicks($xAxisSplit);
 		$this->_drawXAxisValues($xAxisSplit);
-
+		
 		if(!$this->_hide_grid) {
 			$this->_drawXAxisGrid($xAxisSplit);
 		}
-
+		
 		$this->_drawXAxisLabel();
 	}
 
@@ -143,7 +132,7 @@ class Burndown {
 
 	private function _drawXAxisTicks($split) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
-
+		
 		$start = new Point($this->_margins->left(), $this->_margins->bottom());
 		$end = new Point($this->_pdf->getPageWidth() - $this->_margins->right(), $this->_margins->bottom());
 		$line = new Line($start, $end);
@@ -153,7 +142,7 @@ class Burndown {
 		$axisTicks->draw($axisSplitter, new AxisHorizontalElements(), $this->_tick_size);
 		//$axisTicks->draw($split, $this->_tick_size, new Line($start, $end));
 	}
-	
+
 	private function _drawXAxisGrid($split) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinDashed());
 		for($i = 1; $i < $this->_days; $i++) {
@@ -164,33 +153,37 @@ class Burndown {
 			$this->_drawLine->draw($line);
 		}
 	}
-	
+
 	private function _drawXAxisValues($split) {
 		$axisTicks = new DrawAxisLabels($this->_pdf, $this->_text, 0, 1);
 		
 		for($i = 0; $i < $this->_days; $i++) {
-			$position = new Point(
-				$this->_margins->left() + $split * $i,
-				$this->_margins->bottom() - $this->_tick_size / 2 - 4
-			);
+			$position = new Point($this->_margins->left() + $split * $i, $this->_margins->bottom() - $this->_tick_size / 2 - 4);
 			$axisTicks->next($position);
 		}
 	}
 
 	private function _drawYAxis() {
 		$this->_drawYAxisLine();
-
+		
 		$scale = $this->_calculateYAxisProperties();
 		
 		$yAxisSplit = $scale->distanceBetweenTicks();
 		$yPoints = $scale->numberTicks();
 		$factor = $scale->pointsBetweenTicks();
-		
-		$this->_drawYAxisTicks($yAxisSplit);
-		$this->_drawYAxisValues($yAxisSplit, $yPoints, $factor);
 
+		
+		$start = new Point($this->_margins->left(), $this->_margins->bottom());
+		$end = new Point($this->_margins->left(), $this->_pdf->getPageHeight() - $this->_margins->top());
+		$line = new Line($start, $end);
+		$splitter = new AxisSplitter($yAxisSplit, $line);
+		
+		
+		$this->_drawYAxisTicks($splitter);
+		$this->_drawYAxisValues($yAxisSplit, $yPoints, $factor);
+		
 		if(!$this->_hide_grid) {
-			$this->_drawYAxisGrid($yAxisSplit, $yPoints);
+			$this->_drawYAxisGrid($splitter, $yPoints);
 		}
 		
 		$this->_drawYAxisLabel();
@@ -213,51 +206,38 @@ class Burndown {
 		$axisSize = $this->_pdf->getPageHeight() - $this->_margins->top() - $this->_margins->bottom();
 		$minSeparation = 5; // millimeters
 		
+
 		return new ScaleBeautifier($axisSize, $this->_points, $minSeparation, Scale::$BASIC);
 	}
 
-	private function _drawYAxisTicks($split) {
+	private function _drawYAxisTicks(AxisSplitter $splitter) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
-
-		$start = new Point($this->_margins->left(), $this->_margins->bottom());
-		$end = new Point($this->_margins->left(), $this->_pdf->getPageHeight() - $this->_margins->top());
-		$line = new Line($start, $end);
-		$axisSplitter = new AxisSplitter($split, $line);
 		
 		$axisTicks = new DrawAxisTicks($this->_drawLine);
-		$axisTicks->draw($axisSplitter, new AxisVerticalElements(), $this->_tick_size);
+		$axisTicks->draw($splitter, new AxisVerticalElements(), $this->_tick_size);
 	}
-
-	private function _drawYAxisGrid($split, $points) {
+	
+	private function _drawYAxisGrid(AxisSplitter $splitter) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinDashed());
-		for($i = 1; $i < $points; $i++) {
-			$from = new Point($this->_margins->left() + ($this->_tick_size / 2), $this->_margins->bottom() + $split * $i);
-			$to = new Point($this->_pdf->getPageWidth() - $this->_margins->right(), $this->_margins->bottom() + $split * $i);
-			
-			$line = new Line($from, $to);
-			$this->_drawLine->draw($line);
-		}
+		
+		$gridSize = $this->_pdf->getPageWidth() - $this->_margins->right() - $this->_margins->left() - ($this->_tick_size / 2);
+		$axisGrid = new DrawAxisGrid($this->_drawLine);
+		$axisGrid->draw($splitter, new AxisVerticalElements(), $gridSize);
 	}
 
 	private function _drawYAxisValues($split, $points, $factor) {
 		$axisTicks = new DrawAxisLabels($this->_pdf, $this->_text, 0, $factor);
 		for($i = 0; $i < $points; $i++) {
-			$position = new Point(
-				$this->_margins->left() - ($this->_tick_size / 2) - 2,
-				$this->_margins->bottom() + ($split * $i) - 1
-			);
+			$position = new Point($this->_margins->left() - ($this->_tick_size / 2) - 2, $this->_margins->bottom() + ($split * $i) - 1);
 			$axisTicks->next($position, 'right');
 		}
 	}
-	
+
 	private function _drawYAxisLabel() {
 		$text = trim($this->_ylabel);
 		if(strlen($text) > 0) {
 			$size = 5;
-			$position = new Point(
-				$this->_margins->left() - 7 - $size,
-				$this->_pdf->getPageHeight() / 2
-			);
+			$position = new Point($this->_margins->left() - 7 - $size, $this->_pdf->getPageHeight() / 2);
 			$this->_text->vertical($this->_pdf, $text, $size, $position, 'center');
 		}
 	}
@@ -266,10 +246,7 @@ class Burndown {
 		$text = trim($this->_xlabel);
 		if(strlen($text) > 0) {
 			$size = 5;
-			$position = new Point(
-				$this->_pdf->getPageWidth() / 2,
-				$this->_margins->bottom() - 10 - $size
-			);
+			$position = new Point($this->_pdf->getPageWidth() / 2, $this->_margins->bottom() - 10 - $size);
 			$this->_text->horizontal($this->_pdf, $text, $size, $position, 'center');
 		}
 	}
@@ -281,7 +258,7 @@ class Burndown {
 
 	private function _drawBurndownLine() {
 		$color = $this->_convertRGBToColorObject($this->_burndown_color);
-
+		
 		$upperLeft = new Point($this->_margins->left(), $this->_pdf->getPageHeight() - $this->_margins->top());
 		$lowerRight = new Point($this->_pdf->getPageWidth() - $this->_margins->right(), $this->_margins->bottom());
 		
@@ -302,32 +279,28 @@ class Burndown {
 	private function _drawAds() {
 		$size = 3;
 		$text = 'http://www.burndowngenerator.com';
-		$position = new Point(
-			$this->_pdf->getPageWidth() - $this->_margins->right(),
-			10
-		);
+		$position = new Point($this->_pdf->getPageWidth() - $this->_margins->right(), 10);
 		$this->_text->horizontal($this->_pdf, $text, $size, $position, 'right');
 	}
 
 	private function _log() {
 		$fd = fopen(dirname(__FILE__) . '/../../log.burndown.txt', 'a');
 		$data = array(
-			$_SERVER['REMOTE_ADDR'],
-			date('Y-m-d H:i:s'),
-			$this->_points,
-			$this->_days,
-			$this->_title,
-			($this->_hide_grid) ? 'N' : 'Y',
-			($this->_hide_speed) ? 'N' : 'Y',
-			$_SERVER['HTTP_USER_AGENT'],
-			$this->_xlabel,
-			$this->_ylabel,
-			$this->_burndown_color,
-			$this->_chart_type
-		);
-
+			$_SERVER['REMOTE_ADDR'], 
+			date('Y-m-d H:i:s'), 
+			$this->_points, 
+			$this->_days, 
+			$this->_title, 
+			($this->_hide_grid) ? 'N' : 'Y', 
+			($this->_hide_speed) ? 'N' : 'Y', 
+			$_SERVER['HTTP_USER_AGENT'], 
+			$this->_xlabel, 
+			$this->_ylabel, 
+			$this->_burndown_color, 
+			$this->_chart_type);
+		
 		@fwrite($fd, implode("\t", $data) . "\n");
-
+		
 		fclose($fd);
 	}
 }

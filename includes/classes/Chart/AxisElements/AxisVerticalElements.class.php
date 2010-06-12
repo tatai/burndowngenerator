@@ -17,8 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class AxisVerticalElements implements IAxisElements {
+
 	public function tick(Point $at, $size) {
 		$midSize = $size / 2;
 		return new Line(new Point($at->x() - $midSize, $at->y()), new Point($at->x() + $midSize, $at->y()));
+	}
+
+	public function grid(Point $at, $size) {
+		return new Line(new Point($at->x(), $at->y()), new Point($at->x() + $size, $at->y()));
 	}
 }

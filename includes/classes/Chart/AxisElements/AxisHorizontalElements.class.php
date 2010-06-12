@@ -21,4 +21,8 @@ class AxisHorizontalElements implements IAxisElements {
 		$midSize = $size / 2;
 		return new Line(new Point($at->x(), $at->y() - $midSize), new Point($at->x(), $at->y() + $midSize));
 	}
+	
+	public function grid(Point $at, $size) {
+		return new Line(new Point($at->x(), $at->y()), new Point($at->x(), $at->y() + $size));
+	}
 }

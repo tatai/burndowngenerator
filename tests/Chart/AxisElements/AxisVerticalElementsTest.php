@@ -20,17 +20,39 @@ require_once (dirname(__FILE__) . '/../../test_startup.php');
 
 class AxisVerticalElementsTest extends PHPUnit_Framework_TestCase {
 	/**
+	 * 
+	 * @var AxisVerticalElements
+	 */
+	private $_elements = null;
+	
+	public function setUp() {
+		$this->_elements = new AxisVerticalElements();
+	}
+
+	/**
 	 * @test
 	 */
 	public function tickIsCorrectlyDrawn() {
-		$elements = new AxisVerticalElements();
 		$size = 4;
-
+		
 		$point = new Point(3, 4);
 		$result = new Line(new Point(1, 4), new Point(5, 4));
-
-		$this->assertEquals($result, $elements->tick($point, $size));
+		
+		$this->assertEquals($result, $this->_elements->tick($point, $size));
 	}
+
+	/**
+	 * @test
+	 */
+	public function gridIsCorrectlyDrawn() {
+		$size = 16;
+		
+		$point = new Point(3, 4);
+		$result = new Line(new Point(3, 4), new Point(19, 4));
+		
+		$this->assertEquals($result, $this->_elements->grid($point, $size));
+	}
+
 }
 
 require_once (dirname(__FILE__) . '/../../test_shutdown.php');

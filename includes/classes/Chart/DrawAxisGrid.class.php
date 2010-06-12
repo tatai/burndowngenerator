@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class DrawAxisTicks {
+class DrawAxisGrid {
 	/**
 	 * 
 	 * @var DrawLine
@@ -31,14 +31,16 @@ class DrawAxisTicks {
 		$this->_draw_line = $drawLine;
 	}
 
-	public function draw(AxisSplitter $splitter, IAxisElements $axisElements, $tickSize) {
+	public function draw(AxisSplitter $splitter, IAxisElements $axisElements, $gridSize) {
 		$splitter->rewind();
 
 		for($i = 0; $i < $splitter->splits(); $i++) {
 			$at = $splitter->next();
 
-			$tick = $axisElements->tick($at, $tickSize);
-			$this->_draw_line->draw($tick);
+			if($i > 0) {
+				$grid = $axisElements->grid($at, $gridSize);
+				$this->_draw_line->draw($grid);
+			}
 		}
 	}
 }

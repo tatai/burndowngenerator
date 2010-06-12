@@ -18,7 +18,7 @@
  */
 require_once (dirname(__FILE__) . '/../test_startup.php');
 
-class DrawAxisTicksTest extends PHPUnit_Framework_TestCase {
+class DrawAxisGridTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * 
 	 * @var DrawLine
@@ -27,9 +27,9 @@ class DrawAxisTicksTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * 
-	 * @var DrawAxisTicks
+	 * @var DrawAxisGrid
 	 */
-	private $_draw_axis_ticks = null;
+	private $_draw_axis_grid = null;
 
 	public function setUp() {
 		$pdf = $this->getMock('MetricsPdf', array(), array(
@@ -41,26 +41,26 @@ class DrawAxisTicksTest extends PHPUnit_Framework_TestCase {
 			$pdf, 
 			$styleChanger));
 		
-		$this->_draw_axis_ticks = new DrawAxisTicks($this->_draw_line);
+		$this->_draw_axis_grid = new DrawAxisGrid($this->_draw_line);
 	}
 	
 	/**
 	 * @test
 	 */
-	public function createsTicksWithinLine() {
+	public function createGridInEachTickExceptForZero() {
 		$ticks = 4;
-		$tickSize = 4;
+		$gridSize = 4;
 
-		$splits = $this->getMock('AxisSplitter', array(), array(1, new Line(new Point(2, 4), new Point(8.5, 4))));
+		$splitter = $this->getMock('AxisSplitter', array(), array(1, new Line(new Point(2, 4), new Point(8.5, 4))));
 		$axisElements = $this->getMock('IAxisElements');
-		$axisElements->expects($this->exactly($ticks))->method('tick')->will($this->returnValue(new Line(new Point(1, 2), new Point(6, 7))));
+		$axisElements->expects($this->exactly($ticks - 1))->method('grid')->will($this->returnValue(new Line(new Point(1, 2), new Point(6, 7))));
 
-		$splits->expects($this->any())->method('splits')->will($this->returnValue($ticks));
-		$splits->expects($this->any())->method('next')->will($this->returnValue(new Point(1, 2)));
+		$splitter->expects($this->any())->method('splits')->will($this->returnValue($ticks));
+		$splitter->expects($this->any())->method('next')->will($this->returnValue(new Point(1, 2)));
 
-		$this->_draw_line->expects($this->exactly($ticks))->method('draw');
+		$this->_draw_line->expects($this->exactly($ticks - 1))->method('draw');
 
-		$this->_draw_axis_ticks->draw($splits, $axisElements, $tickSize);
+		$this->_draw_axis_grid->draw($splitter, $axisElements, $gridSize);
 	}
 
 	/**
@@ -73,30 +73,7 @@ class DrawAxisTicksTest extends PHPUnit_Framework_TestCase {
 		$splitter->expects($this->once())->method('splits')->will($this->returnValue(0));
 		$splitter->expects($this->once())->method('rewind');
 
-		$this->_draw_axis_ticks->draw($splitter, $axisElements, 10);
-	}
-
-	/**
-	 * @TODO: impossible to make this work with PHPUnit 3.4.1
-	 */
-	public function twoTicksMeansOneTickAtStartPointAndOneAtTheEnd() {
-		$ticks = 2;
-		$tickSize = 3;
-
-		$startTick = new Line(
-			new Point($this->_start_point->x(), $this->_start_point->y() - $tickSize / 2),
-			new Point($this->_start_point->x(), $this->_start_point->y() + $tickSize / 2)
-		);
-		
-		$endTick = new Line(
-			new Point($this->_end_point->x(), $this->_end_point->y() - $tickSize / 2),
-			new Point($this->_end_point->x(), $this->_end_point->y() + $tickSize / 2)
-		);
-		
-		$this->_draw_line->expects($this->once())->method('draw')->with($startTick);
-		$this->_draw_line->expects($this->once())->method('draw')->with($endTick);
-		
-		$this->_draw_axis_ticks->draw($ticks, $tickSize, $this->_line);
+		$this->_draw_axis_grid->draw($splitter, $axisElements, 10);
 	}
 }
 
