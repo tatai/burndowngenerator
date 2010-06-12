@@ -17,12 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class AxisHorizontalElements implements IAxisElements {
+
 	public function tick(Point $at, $size) {
 		$midSize = $size / 2;
 		return new Line(new Point($at->x(), $at->y() - $midSize), new Point($at->x(), $at->y() + $midSize));
 	}
-	
+
 	public function grid(Point $at, $size) {
 		return new Line(new Point($at->x(), $at->y()), new Point($at->x(), $at->y() + $size));
+	}
+
+	public function label(DrawText $drawText, $text, $at, $size) {
+		$position = new Point($at->x(), $at->y() - $size - 2);
+
+		$drawText->horizontal($text, $size, $position, 'center');
 	}
 }

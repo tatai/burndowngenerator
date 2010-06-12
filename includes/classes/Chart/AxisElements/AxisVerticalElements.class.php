@@ -26,4 +26,10 @@ class AxisVerticalElements implements IAxisElements {
 	public function grid(Point $at, $size) {
 		return new Line(new Point($at->x(), $at->y()), new Point($at->x() + $size, $at->y()));
 	}
+
+	public function label(DrawText $drawText, $text, $at, $size) {
+		$position = new Point($at->x() - 3, $at->y() - $size / 3);
+
+		$drawText->horizontal($text, $size, $position, 'right');
+	}
 }

@@ -23,86 +23,73 @@ class DrawAxisLabelsTest extends PHPUnit_Framework_TestCase {
 	 * 
 	 * @var DrawText
 	 */
-	private $_text = null;
-	
+	private $_draw_text = null;
+
 	/**
 	 * 
 	 * @var DrawAxisLabels
 	 */
-	private $_labels = null;
+	private $_draw_axis_labels = null;
 	
 	/**
 	 * 
-	 * @var Point
+	 * @var IAxisElements
 	 */
-	private $_point = null;
+	private $_axisElements = null;
 	
-	private $_start = null;
-	private $_increment = null;
+	/**
+	 * 
+	 * @var AxisSplitter
+	 */
+	private $_splitter = null;
 
 	public function setUp() {
 		$pdf = $this->getMock('MetricsPdf', array(), array(
 			'a4', 
 			'landscape'));
-		$this->_text = $this->getMock('DrawText', array(), array($pdf));
-		$this->_start = 3;
-		$this->_increment = 2;
-
-		$this->_point = $this->getMock('Point', array(), array(
-			1, 
-			2));
+		$styleChanger = new LineStyleChanger();
 		
-		$this->_labels = new DrawAxisLabels($this->_text, $this->_start, $this->_increment);
+		$this->_draw_line = $this->getMock('DrawText', array(), array($pdf));
+		
+		$this->_draw_axis_labels = new DrawAxisLabels($this->_draw_line);
+		
+		$this->_axisElements = $this->getMock('IAxisElements');
+		$this->_splitter = $this->getMock('AxisSplitter', array(), array(1, new Line(new Point(2, 4), new Point(8.5, 4))));
 	}
 
 	/**
 	 * @test
 	 */
-	public function eachTimeNextMethodIsCalledTextIsDrawn() {
-		$calls = rand(1, 10);
+	public function createAsManyLabelsAsTicks() {
+		$ticks = 4;
+
+		$this->_splitter->expects($this->any())->method('splits')->will($this->returnValue($ticks));
+		$this->_splitter->expects($this->exactly($ticks))->method('next');
 		
-		$this->_text->expects($this->exactly($calls))->method('horizontal');
-		for($i = 0; $i < $calls; $i++) {
-			$this->_labels->next($this->_point);
-		}
+		$this->_draw_axis_labels->draw($this->_splitter, $this->_axisElements, 4, 0, 1);
 	}
 
 	/**
 	 * @test
 	 */
-	public function startValueAndIncrementIsUsedAsText() {
-		$calls = 4;
+	public function createLabelInEachTick() {
+		$ticks = 4;
+
+		$this->_splitter->expects($this->any())->method('splits')->will($this->returnValue($ticks));
+		$this->_splitter->expects($this->exactly($ticks))->method('next');
+		$this->_axisElements->expects($this->exactly($ticks))->method('label');
 		
-		for($i = 0; $i < $calls; $i++) {
-			$this->_labels->next($this->_point);
-			$this->assertEquals($this->_start + $this->_increment * $i, $this->_labels->last());
-		}
+		$this->_draw_axis_labels->draw($this->_splitter, $this->_axisElements, 4, 0, 1);
 	}
 
 	/**
 	 * @test
 	 */
-	public function textIsDrawnInGivenPoint() {
-		$calls = rand(1, 10);
-		
-		$this->_text->expects($this->exactly($calls))->method('horizontal')->with($this->anything(), $this->anything(), $this->_point);
-		for($i = 0; $i < $calls; $i++) {
-			$this->_labels->next($this->_point);
-		}
-	}
-	
-	/**
-	 * @test
-	 */
-	public function textCorrectlyAligned() {
-		$calls = rand(1, 10);
-		
-		$align = 'right';
-		
-		$this->_text->expects($this->exactly($calls))->method('horizontal')->with($this->anything(), $this->anything(), $this->anything(), $align);
-		for($i = 0; $i < $calls; $i++) {
-			$this->_labels->next($this->_point, $align);
-		}
+	public function whenDrawMethodIsCalledRewindMade() {
+		$this->_splitter->expects($this->once())->method('splits')->will($this->returnValue(0));
+		$this->_splitter->expects($this->once())->method('rewind');
+
+		$this->_draw_axis_labels->draw($this->_splitter, $this->_axisElements, 4, 0, 1);
 	}
 }
 

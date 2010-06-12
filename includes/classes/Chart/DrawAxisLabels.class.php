@@ -48,23 +48,18 @@ class DrawAxisLabels {
 	 * @param int $start
 	 * @param int $end
 	 */
-	public function __construct(DrawText $drawText, $start, $increment) {
+	public function __construct(DrawText $drawText) {
 		$this->_drawText = $drawText;
-		$this->_start = $start;
-		$this->_increment = $increment;
 	}
-	
-	public function next(Point $at, $align = 'center') {
-		$this->_calculateNextCurrentValue();
 
-		$this->_drawText->horizontal($this->last(), 4, $at, $align);
-	}
-	
-	public function last() {
-		return $this->_current;
-	}
-	
-	private function _calculateNextCurrentValue() {
-		$this->_current = is_null($this->_current) ? $this->_start : $this->_current + $this->_increment;
+	public function draw(AxisSplitter $splitter, IAxisElements $axisElements, $size, $start, $increment) {
+		$splitter->rewind();
+		
+		for($i = 0; $i < $splitter->splits(); $i++) {
+			$at = $splitter->next();
+			
+			$text = $start + $increment * $i;
+			$axisElements->label($this->_drawText, $text, $at, $size);
+		}
 	}
 }

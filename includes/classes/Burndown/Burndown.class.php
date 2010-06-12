@@ -53,7 +53,17 @@ class Burndown {
 	 */
 	private $_margins = null;
 	
-	private $_points = null, $_days = null, $_tick_size = null, $_title = null, $_hide_speed = null, $_hide_grid = null, $_burndown_color = null, $_xlabel = null, $_ylabel = null, $_chart_type = null;
+	private
+		$_points = null,
+		$_days = null,
+		$_tick_size = null,
+		$_title = null,
+		$_hide_speed = null,
+		$_hide_grid = null,
+		$_burndown_color = null,
+		$_xlabel = null,
+		$_ylabel = null,
+		$_chart_type = null;
 
 	public function __construct($pdf, $points, $days) {
 		$this->_pdf = $pdf;
@@ -114,7 +124,7 @@ class Burndown {
 		$splitter = new AxisSplitter($xAxisSplit, $line);
 		
 		$this->_drawXAxisTicks($splitter);
-		$this->_drawXAxisValues($xAxisSplit);
+		$this->_drawXAxisValues($splitter);
 		
 		if(!$this->_hide_grid) {
 			$this->_drawXAxisGrid($splitter);
@@ -151,13 +161,9 @@ class Burndown {
 		$axisGrid->draw($splitter, new AxisHorizontalElements(), $gridSize);
 	}
 
-	private function _drawXAxisValues($split) {
-		$axisTicks = new DrawAxisLabels($this->_text, 0, 1);
-		
-		for($i = 0; $i < $this->_days; $i++) {
-			$position = new Point($this->_margins->left() + $split * $i, $this->_margins->bottom() - $this->_tick_size / 2 - 4);
-			$axisTicks->next($position);
-		}
+	private function _drawXAxisValues(AxisSplitter $splitter) {
+		$axisLabels = new DrawAxisLabels($this->_text);
+		$axisLabels->draw($splitter, new AxisHorizontalElements(), 4, 0, 1);
 	}
 
 	private function _drawYAxis() {
@@ -177,7 +183,7 @@ class Burndown {
 		
 		
 		$this->_drawYAxisTicks($splitter);
-		$this->_drawYAxisValues($yAxisSplit, $yPoints, $factor);
+		$this->_drawYAxisValues($splitter, $factor);
 		
 		if(!$this->_hide_grid) {
 			$this->_drawYAxisGrid($splitter, $yPoints);
@@ -222,12 +228,9 @@ class Burndown {
 		$axisGrid->draw($splitter, new AxisVerticalElements(), $gridSize);
 	}
 
-	private function _drawYAxisValues($split, $points, $factor) {
-		$axisTicks = new DrawAxisLabels($this->_text, 0, $factor);
-		for($i = 0; $i < $points; $i++) {
-			$position = new Point($this->_margins->left() - ($this->_tick_size / 2) - 2, $this->_margins->bottom() + ($split * $i) - 1);
-			$axisTicks->next($position, 'right');
-		}
+	private function _drawYAxisValues(AxisSplitter $splitter, $factor) {
+		$axisLabels = new DrawAxisLabels($this->_text);
+		$axisLabels->draw($splitter, new AxisVerticalElements(), 4, 0, $factor);
 	}
 
 	private function _drawYAxisLabel() {

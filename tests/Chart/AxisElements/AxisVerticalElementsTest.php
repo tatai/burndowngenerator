@@ -52,7 +52,6 @@ class AxisVerticalElementsTest extends PHPUnit_Framework_TestCase {
 		
 		$this->assertEquals($result, $this->_elements->grid($point, $size));
 	}
-
 }
 
 require_once (dirname(__FILE__) . '/../../test_shutdown.php');

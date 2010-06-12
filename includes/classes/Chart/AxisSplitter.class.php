@@ -45,6 +45,10 @@ class AxisSplitter {
 		return $this->_splits;
 	}
 
+	/**
+	 *
+	 * @return Point|NULL
+	 */
 	public function next() {
 		if($this->_current < $this->splits()) {
 			$at = new Point(
