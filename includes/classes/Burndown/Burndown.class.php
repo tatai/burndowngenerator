@@ -107,11 +107,17 @@ class Burndown {
 		$this->_drawXAxisLine();
 		
 		$xAxisSplit = $this->_calculateXAxisSplit();
-		$this->_drawXAxisTicks($xAxisSplit);
+		
+		$start = new Point($this->_margins->left(), $this->_margins->bottom());
+		$end = new Point($this->_pdf->getPageWidth() - $this->_margins->left() , $this->_margins->bottom());
+		$line = new Line($start, $end);
+		$splitter = new AxisSplitter($xAxisSplit, $line);
+		
+		$this->_drawXAxisTicks($splitter);
 		$this->_drawXAxisValues($xAxisSplit);
 		
 		if(!$this->_hide_grid) {
-			$this->_drawXAxisGrid($xAxisSplit);
+			$this->_drawXAxisGrid($splitter);
 		}
 		
 		$this->_drawXAxisLabel();
@@ -130,28 +136,19 @@ class Burndown {
 		return ($this->_pdf->getPageWidth() - $this->_margins->right() - $this->_margins->left()) / ($this->_days - 1);
 	}
 
-	private function _drawXAxisTicks($split) {
+	private function _drawXAxisTicks(AxisSplitter $splitter) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
 		
-		$start = new Point($this->_margins->left(), $this->_margins->bottom());
-		$end = new Point($this->_pdf->getPageWidth() - $this->_margins->right(), $this->_margins->bottom());
-		$line = new Line($start, $end);
-		$axisSplitter = new AxisSplitter($split, $line);
-		
 		$axisTicks = new DrawAxisTicks($this->_drawLine);
-		$axisTicks->draw($axisSplitter, new AxisHorizontalElements(), $this->_tick_size);
-		//$axisTicks->draw($split, $this->_tick_size, new Line($start, $end));
+		$axisTicks->draw($splitter, new AxisHorizontalElements(), $this->_tick_size);
 	}
 
-	private function _drawXAxisGrid($split) {
+	private function _drawXAxisGrid(AxisSplitter $splitter) {
 		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinDashed());
-		for($i = 1; $i < $this->_days; $i++) {
-			$from = new Point($this->_margins->left() + $split * $i, $this->_margins->bottom() + ($this->_tick_size / 2));
-			$to = new Point($this->_margins->left() + $split * $i, $this->_pdf->getPageHeight() - $this->_margins->top());
-			
-			$line = new Line($from, $to);
-			$this->_drawLine->draw($line);
-		}
+
+		$gridSize = $this->_pdf->getPageHeight() - $this->_margins->top() - $this->_margins->bottom() - ($this->_tick_size / 2);
+		$axisGrid = new DrawAxisGrid($this->_drawLine);
+		$axisGrid->draw($splitter, new AxisHorizontalElements(), $gridSize);
 	}
 
 	private function _drawXAxisValues($split) {
