@@ -18,7 +18,7 @@
  */
 require_once (dirname(__FILE__) . '/../test_startup.php');
 
-class DrawAxisLabelsTest extends PHPUnit_Framework_TestCase {
+class DrawAxisValuesTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * 
 	 * @var DrawText
@@ -27,9 +27,9 @@ class DrawAxisLabelsTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * 
-	 * @var DrawAxisLabels
+	 * @var DrawAxisValues
 	 */
-	private $_draw_axis_labels = null;
+	private $_draw_axis_values = null;
 	
 	/**
 	 * 
@@ -51,7 +51,7 @@ class DrawAxisLabelsTest extends PHPUnit_Framework_TestCase {
 		
 		$this->_draw_line = $this->getMock('DrawText', array(), array($pdf));
 		
-		$this->_draw_axis_labels = new DrawAxisLabels($this->_draw_line);
+		$this->_draw_axis_values = new DrawAxisValues($this->_draw_line);
 		
 		$this->_axisElements = $this->getMock('IAxisElements');
 		$this->_splitter = $this->getMock('AxisSplitter', array(), array(1, new Line(new Point(2, 4), new Point(8.5, 4))));
@@ -66,7 +66,7 @@ class DrawAxisLabelsTest extends PHPUnit_Framework_TestCase {
 		$this->_splitter->expects($this->any())->method('splits')->will($this->returnValue($ticks));
 		$this->_splitter->expects($this->exactly($ticks))->method('next');
 		
-		$this->_draw_axis_labels->draw($this->_splitter, $this->_axisElements, 4, 0, 1);
+		$this->_draw_axis_values->draw($this->_splitter, $this->_axisElements, 4, 0, 1);
 	}
 
 	/**
@@ -79,7 +79,7 @@ class DrawAxisLabelsTest extends PHPUnit_Framework_TestCase {
 		$this->_splitter->expects($this->exactly($ticks))->method('next');
 		$this->_axisElements->expects($this->exactly($ticks))->method('label');
 		
-		$this->_draw_axis_labels->draw($this->_splitter, $this->_axisElements, 4, 0, 1);
+		$this->_draw_axis_values->draw($this->_splitter, $this->_axisElements, 4, 0, 1);
 	}
 
 	/**
@@ -89,7 +89,7 @@ class DrawAxisLabelsTest extends PHPUnit_Framework_TestCase {
 		$this->_splitter->expects($this->once())->method('splits')->will($this->returnValue(0));
 		$this->_splitter->expects($this->once())->method('rewind');
 
-		$this->_draw_axis_labels->draw($this->_splitter, $this->_axisElements, 4, 0, 1);
+		$this->_draw_axis_values->draw($this->_splitter, $this->_axisElements, 4, 0, 1);
 	}
 }
 

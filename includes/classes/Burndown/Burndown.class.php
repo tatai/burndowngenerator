@@ -162,8 +162,8 @@ class Burndown {
 	}
 
 	private function _drawXAxisValues(AxisSplitter $splitter) {
-		$axisLabels = new DrawAxisLabels($this->_text);
-		$axisLabels->draw($splitter, new AxisHorizontalElements(), 4, 0, 1);
+		$axisValues = new DrawAxisValues($this->_text);
+		$axisValues->draw($splitter, new AxisHorizontalElements(), 4, 0, 1);
 	}
 
 	private function _drawYAxis() {
@@ -229,8 +229,8 @@ class Burndown {
 	}
 
 	private function _drawYAxisValues(AxisSplitter $splitter, $factor) {
-		$axisLabels = new DrawAxisLabels($this->_text);
-		$axisLabels->draw($splitter, new AxisVerticalElements(), 4, 0, $factor);
+		$axisValues = new DrawAxisValues($this->_text);
+		$axisValues->draw($splitter, new AxisVerticalElements(), 4, 0, $factor);
 	}
 
 	private function _drawYAxisLabel() {
