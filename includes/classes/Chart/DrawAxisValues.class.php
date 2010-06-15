@@ -52,14 +52,14 @@ class DrawAxisValues {
 		$this->_drawText = $drawText;
 	}
 
-	public function draw(AxisSplitter $splitter, IAxisElements $axisElements, $size, $start, $increment) {
+	public function draw(AxisSplitter $splitter, IAxisElements $axisElements) {
 		$splitter->rewind();
 		
 		for($i = 0; $i < $splitter->splits(); $i++) {
 			$at = $splitter->next();
 			
-			$text = $start + $increment * $i;
-			$axisElements->label($this->_drawText, $text, $at, $size);
+			$text = $axisElements->tickStart() + $axisElements->tickIncrement() * $i;
+			$axisElements->label($this->_drawText, $text, $at, $axisElements->textSize());
 		}
 	}
 }

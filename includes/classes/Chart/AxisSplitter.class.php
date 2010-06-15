@@ -44,6 +44,14 @@ class AxisSplitter {
 	public function splits() {
 		return $this->_splits;
 	}
+	
+	/**
+	 *
+	 * @return Line
+	 */
+	public function line() {
+		return $this->_line;
+	}
 
 	/**
 	 *

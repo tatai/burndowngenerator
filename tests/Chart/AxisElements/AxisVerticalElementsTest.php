@@ -26,7 +26,7 @@ class AxisVerticalElementsTest extends PHPUnit_Framework_TestCase {
 	private $_elements = null;
 	
 	public function setUp() {
-		$this->_elements = new AxisVerticalElements();
+		$this->_elements = new AxisVerticalElements(7, 2, 6);
 	}
 
 	/**

@@ -53,39 +53,35 @@ class Burndown {
 	 */
 	private $_margins = null;
 	
-	private
-		$_points = null,
-		$_days = null,
-		$_tick_size = null,
-		$_title = null,
-		$_hide_speed = null,
-		$_hide_grid = null,
-		$_burndown_color = null,
-		$_xlabel = null,
-		$_ylabel = null,
-		$_chart_type = null;
-
+	/**
+	 * 
+	 * @var Configuration
+	 */
+	private $_config = null;
+	
 	public function __construct($pdf, $points, $days) {
+		$this->_config = new Configuration();
+
 		$this->_pdf = $pdf;
-		$this->_points = $points;
-		$this->_days = $days;
+		$this->_config->set('points', $points);
+		$this->_config->set('days', $days);
+
+		$this->_config->set('tick_size', 4);
+		$this->_config->set('hide_speed', false);
+		$this->_config->set('hide_grid', false);
+		$this->_config->set('burndown_color', '#000000');
+		$this->_config->set('chart_type', 'burndown');
+
 		$this->_text = new DrawText($this->_pdf);
 		$this->_styleChanger = new LineStyleChanger();
 		$this->_drawLine = new DrawLine($this->_pdf, $this->_styleChanger);
 		
 		$this->_margins = new BurndownMargins(20, 25, 20, 20);
-		
-		$this->_tick_size = 4;
-		$this->_hide_speed = false;
-		$this->_hide_grid = false;
-		$this->_burndown_color = '#000000';
-		$this->_chart_type = 'burndown';
 	}
 
 	public function setOptions($options) {
 		foreach($options as $k => $v) {
-			$k = '_' . $k;
-			$this->$k = $v;
+			$this->_config->set($k, $v);
 		}
 	}
 
@@ -99,7 +95,7 @@ class Burndown {
 		
 		$this->_drawBurndownLine();
 		
-		if(!$this->_hide_speed) {
+		if(!$this->_config->get('hide_speed')) {
 			$this->_drawSpeed();
 		}
 		
@@ -110,160 +106,75 @@ class Burndown {
 
 	private function _drawTitle() {
 		$title = new BurndownTitle($this->_pdf, $this->_text, $this->_margins);
-		$title->draw($this->_title);
+		$title->draw($this->_config->get('title'));
 	}
 
 	private function _drawXAxis() {
-		$this->_drawXAxisLine();
-		
-		$xAxisSplit = $this->_calculateXAxisSplit();
+		list($xAxisSplit, $factor) = $this->_getXSplitAndFactor();
 		
 		$start = new Point($this->_margins->left(), $this->_margins->bottom());
-		$end = new Point($this->_pdf->getPageWidth() - $this->_margins->left() , $this->_margins->bottom());
+		$end = new Point($this->_pdf->getPageWidth() - $this->_margins->left(), $this->_margins->bottom());
 		$line = new Line($start, $end);
+
 		$splitter = new AxisSplitter($xAxisSplit, $line);
 		
-		$this->_drawXAxisTicks($splitter);
-		$this->_drawXAxisValues($splitter);
+		$axisElements = new AxisHorizontalElements(4, 0, $factor);
 		
-		if(!$this->_hide_grid) {
-			$this->_drawXAxisGrid($splitter);
-		}
+		$gridLineSize = $this->_pdf->getPageHeight() - $this->_margins->top() - $this->_margins->bottom();
 		
-		$this->_drawXAxisLabel();
+		$axis = new BurndownAxis($this->_pdf, $this->_margins, $this->_drawLine, $this->_text, $this->_styleChanger);
+		$axis->draw($splitter, $axisElements, $this->_config->get('tick_size'), $this->_config->get('xlabel'), !$this->_config->get('hide_grid'), $gridLineSize);
 	}
 
-	private function _drawXAxisLine() {
-		// Horizontal line
-		$from = new Point($this->_margins->left(), $this->_margins->bottom());
-		$to = new Point($this->_pdf->getPageWidth() - $this->_margins->right(), $this->_margins->bottom());
-		
-		$line = new Line($from, $to);
-		$this->_drawLine->draw($line, LineStyleFactory::thinContinuous());
-	}
-
-	private function _calculateXAxisSplit() {
-		return ($this->_pdf->getPageWidth() - $this->_margins->right() - $this->_margins->left()) / ($this->_days - 1);
-	}
-
-	private function _drawXAxisTicks(AxisSplitter $splitter) {
-		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
-		
-		$axisTicks = new DrawAxisTicks($this->_drawLine);
-		$axisTicks->draw($splitter, new AxisHorizontalElements(), $this->_tick_size);
-	}
-
-	private function _drawXAxisGrid(AxisSplitter $splitter) {
-		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinDashed());
-
-		$gridSize = $this->_pdf->getPageHeight() - $this->_margins->top() - $this->_margins->bottom() - ($this->_tick_size / 2);
-		$axisGrid = new DrawAxisGrid($this->_drawLine);
-		$axisGrid->draw($splitter, new AxisHorizontalElements(), $gridSize);
-	}
-
-	private function _drawXAxisValues(AxisSplitter $splitter) {
-		$axisValues = new DrawAxisValues($this->_text);
-		$axisValues->draw($splitter, new AxisHorizontalElements(), 4, 0, 1);
+	private function _getXSplitAndFactor() {
+		return array(
+			($this->_pdf->getPageWidth() - $this->_margins->right() - $this->_margins->left()) / ($this->_config->get('days') - 1),
+			1
+		);
 	}
 
 	private function _drawYAxis() {
-		$this->_drawYAxisLine();
-		
-		$scale = $this->_calculateYAxisProperties();
-		
-		$yAxisSplit = $scale->distanceBetweenTicks();
-		$yPoints = $scale->numberTicks();
-		$factor = $scale->pointsBetweenTicks();
-
+		list($yAxisSplit, $factor) = $this->_getYSplitAndFactor();
 		
 		$start = new Point($this->_margins->left(), $this->_margins->bottom());
 		$end = new Point($this->_margins->left(), $this->_pdf->getPageHeight() - $this->_margins->top());
 		$line = new Line($start, $end);
+
 		$splitter = new AxisSplitter($yAxisSplit, $line);
 		
+		$axisElements = new AxisVerticalElements(4, 0, $factor);
 		
-		$this->_drawYAxisTicks($splitter);
-		$this->_drawYAxisValues($splitter, $factor);
+		$gridLineSize = $this->_pdf->getPageWidth() - $this->_margins->right() - $this->_margins->left() - ($this->_config->get('tick_size') / 2);
 		
-		if(!$this->_hide_grid) {
-			$this->_drawYAxisGrid($splitter, $yPoints);
-		}
-		
-		$this->_drawYAxisLabel();
-	}
-
-	private function _drawYAxisLine() {
-		// Vertical line
-		$from = new Point($this->_margins->left(), $this->_margins->bottom());
-		$to = new Point($this->_margins->left(), $this->_pdf->getPageHeight() - $this->_margins->top());
-		
-		$line = new Line($from, $to);
-		$this->_drawLine->draw($line, LineStyleFactory::thinContinuous());
-	}
-
-	/**
-	 *
-	 * @return ScaleBeautifier
-	 */
-	private function _calculateYAxisProperties() {
-		$axisSize = $this->_pdf->getPageHeight() - $this->_margins->top() - $this->_margins->bottom();
-		$minSeparation = 5; // millimeters
-		
-
-		return new ScaleBeautifier($axisSize, $this->_points, $minSeparation, Scale::$BASIC);
-	}
-
-	private function _drawYAxisTicks(AxisSplitter $splitter) {
-		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinContinuous());
-		
-		$axisTicks = new DrawAxisTicks($this->_drawLine);
-		$axisTicks->draw($splitter, new AxisVerticalElements(), $this->_tick_size);
+		$axis = new BurndownAxis($this->_pdf, $this->_margins, $this->_drawLine, $this->_text, $this->_styleChanger);
+		$axis->draw($splitter, $axisElements, $this->_config->get('tick_size'), $this->_config->get('ylabel'), !$this->_config->get('hide_grid'), $gridLineSize);
 	}
 	
-	private function _drawYAxisGrid(AxisSplitter $splitter) {
-		$this->_styleChanger->change($this->_pdf, LineStyleFactory::thinDashed());
+	private function _getYSplitAndFactor() {
+		$axisSize = $this->_pdf->getPageHeight() - $this->_margins->top() - $this->_margins->bottom();
+		$minSeparation = 5; // millimeters
+
+		$scale = new ScaleBeautifier($axisSize, $this->_config->get('points'), $minSeparation, Scale::$BASIC);
 		
-		$gridSize = $this->_pdf->getPageWidth() - $this->_margins->right() - $this->_margins->left() - ($this->_tick_size / 2);
-		$axisGrid = new DrawAxisGrid($this->_drawLine);
-		$axisGrid->draw($splitter, new AxisVerticalElements(), $gridSize);
-	}
-
-	private function _drawYAxisValues(AxisSplitter $splitter, $factor) {
-		$axisValues = new DrawAxisValues($this->_text);
-		$axisValues->draw($splitter, new AxisVerticalElements(), 4, 0, $factor);
-	}
-
-	private function _drawYAxisLabel() {
-		$text = trim($this->_ylabel);
-		if(strlen($text) > 0) {
-			$size = 5;
-			$position = new Point($this->_margins->left() - 7 - $size, $this->_pdf->getPageHeight() / 2);
-			$this->_text->vertical($text, $size, $position, 'center');
-		}
-	}
-
-	private function _drawXAxisLabel() {
-		$text = trim($this->_xlabel);
-		if(strlen($text) > 0) {
-			$size = 5;
-			$position = new Point($this->_pdf->getPageWidth() / 2, $this->_margins->bottom() - 10 - $size);
-			$this->_text->horizontal($text, $size, $position, 'center');
-		}
+		return array(
+			$scale->distanceBetweenTicks(),
+			$scale->pointsBetweenTicks()
+		);
 	}
 
 	private function _drawSpeed() {
 		$speed = new BurndownSpeed($this->_pdf, $this->_styleChanger, $this->_text);
-		$speed->draw($this->_points, $this->_margins);
+		$speed->draw($this->_config->get('points'), $this->_margins);
 	}
 
 	private function _drawBurndownLine() {
-		$color = $this->_convertRGBToColorObject($this->_burndown_color);
+		$color = $this->_convertRGBToColorObject($this->_config->get('burndown_color'));
 		
 		$upperLeft = new Point($this->_margins->left(), $this->_pdf->getPageHeight() - $this->_margins->top());
 		$lowerRight = new Point($this->_pdf->getPageWidth() - $this->_margins->right(), $this->_margins->bottom());
 		
 		$line = new BurndownLine($this->_pdf, $this->_styleChanger);
-		if($this->_chart_type == 'burnup') {
+		if($this->_config->get('chart_type') == 'burnup') {
 			$line->draw($color, new BurndownLineUp($upperLeft, $lowerRight));
 		}
 		else {
@@ -288,16 +199,16 @@ class Burndown {
 		$data = array(
 			$_SERVER['REMOTE_ADDR'], 
 			date('Y-m-d H:i:s'), 
-			$this->_points, 
-			$this->_days, 
-			$this->_title, 
-			($this->_hide_grid) ? 'N' : 'Y', 
-			($this->_hide_speed) ? 'N' : 'Y', 
+			$this->_config->get('points'), 
+			$this->_config->get('days'), 
+			$this->_config->get('title'), 
+			($this->_config->get('hide_grid')) ? 'N' : 'Y', 
+			($this->_config->get('hide_speed')) ? 'N' : 'Y', 
 			$_SERVER['HTTP_USER_AGENT'], 
-			$this->_xlabel, 
-			$this->_ylabel, 
-			$this->_burndown_color, 
-			$this->_chart_type);
+			$this->_config->get('xlabel'), 
+			$this->_config->get('ylabel'), 
+			$this->_config->get('burndown_color'), 
+			$this->_config->get('chart_type'));
 		
 		@fwrite($fd, implode("\t", $data) . "\n");
 		

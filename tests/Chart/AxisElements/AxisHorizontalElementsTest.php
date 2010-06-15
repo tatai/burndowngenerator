@@ -26,7 +26,7 @@ class AxisHorizontalElementsTest extends PHPUnit_Framework_TestCase {
 	private $_elements = null;
 	
 	public function setUp() {
-		$this->_elements = new AxisHorizontalElements();
+		$this->_elements = new AxisHorizontalElements(4, 3, 2);
 	}
 
 	/**

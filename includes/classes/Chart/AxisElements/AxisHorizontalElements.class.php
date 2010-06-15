@@ -16,8 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class AxisHorizontalElements implements IAxisElements {
-
+class AxisHorizontalElements extends AxisElementsAbstract {
 	public function tick(Point $at, $size) {
 		$midSize = $size / 2;
 		return new Line(new Point($at->x(), $at->y() - $midSize), new Point($at->x(), $at->y() + $midSize));

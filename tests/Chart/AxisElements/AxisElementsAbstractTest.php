@@ -16,11 +16,33 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-interface IAxisElements {
-	public function tick(Point $at, $size);
-	public function grid(Point $at, $size);
-	public function label(DrawText $drawText, $text, $at, $size);
-	public function textSize();
-	public function tickStart();
-	public function tickIncrement();
+require_once (dirname(__FILE__) . '/../../test_startup.php');
+
+class AxisElementsAbstractTest extends PHPUnit_Framework_TestCase {
+
+	/**
+	 * @test
+	 */
+	public function returnsTextSize() {
+		$elements = new AxisHorizontalElements(4, 2, 6);
+		$this->assertEquals(4, $elements->textSize());
+	}
+
+	/**
+	 * @test
+	 */
+	public function returnsStartValue() {
+		$elements = new AxisHorizontalElements(4, 2, 6);
+		$this->assertEquals(2, $elements->tickStart());
+	}
+
+	/**
+	 * @test
+	 */
+	public function returnsIncrement() {
+		$elements = new AxisHorizontalElements(4, 2, 6);
+		$this->assertEquals(6, $elements->tickIncrement());
+	}
 }
+
+require_once (dirname(__FILE__) . '/../../test_shutdown.php');

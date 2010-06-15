@@ -66,7 +66,7 @@ class DrawAxisValuesTest extends PHPUnit_Framework_TestCase {
 		$this->_splitter->expects($this->any())->method('splits')->will($this->returnValue($ticks));
 		$this->_splitter->expects($this->exactly($ticks))->method('next');
 		
-		$this->_draw_axis_values->draw($this->_splitter, $this->_axisElements, 4, 0, 1);
+		$this->_draw_axis_values->draw($this->_splitter, $this->_axisElements);
 	}
 
 	/**
@@ -79,7 +79,7 @@ class DrawAxisValuesTest extends PHPUnit_Framework_TestCase {
 		$this->_splitter->expects($this->exactly($ticks))->method('next');
 		$this->_axisElements->expects($this->exactly($ticks))->method('label');
 		
-		$this->_draw_axis_values->draw($this->_splitter, $this->_axisElements, 4, 0, 1);
+		$this->_draw_axis_values->draw($this->_splitter, $this->_axisElements);
 	}
 
 	/**
@@ -89,7 +89,7 @@ class DrawAxisValuesTest extends PHPUnit_Framework_TestCase {
 		$this->_splitter->expects($this->once())->method('splits')->will($this->returnValue(0));
 		$this->_splitter->expects($this->once())->method('rewind');
 
-		$this->_draw_axis_values->draw($this->_splitter, $this->_axisElements, 4, 0, 1);
+		$this->_draw_axis_values->draw($this->_splitter, $this->_axisElements);
 	}
 }
 

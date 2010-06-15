@@ -16,11 +16,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-interface IAxisElements {
-	public function tick(Point $at, $size);
-	public function grid(Point $at, $size);
-	public function label(DrawText $drawText, $text, $at, $size);
-	public function textSize();
-	public function tickStart();
-	public function tickIncrement();
+abstract class AxisElementsAbstract implements IAxisElements {
+	private $_text_size = null;
+	private $_tick_start = null;
+	private $_tick_increment = null;
+	
+	public function __construct($textSize, $tickStart, $tickIncrement) {
+		$this->_text_size = $textSize;
+		$this->_tick_start = $tickStart;
+		$this->_tick_increment = $tickIncrement;
+	}
+
+	public function textSize() {
+		return $this->_text_size;
+	}
+
+	public function tickStart() {
+		return $this->_tick_start;
+	}
+
+	public function tickIncrement() {
+		return $this->_tick_increment;
+	}
 }

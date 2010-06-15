@@ -16,8 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class AxisVerticalElements implements IAxisElements {
-
+class AxisVerticalElements extends AxisElementsAbstract {
 	public function tick(Point $at, $size) {
 		$midSize = $size / 2;
 		return new Line(new Point($at->x() - $midSize, $at->y()), new Point($at->x() + $midSize, $at->y()));

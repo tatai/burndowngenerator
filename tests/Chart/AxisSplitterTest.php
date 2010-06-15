@@ -75,6 +75,13 @@ class AxisSplitterTest extends PHPUnit_Framework_TestCase {
 		$this->_axisSplitter->rewind();
 		$this->pointsAreCalculatedCorrectly();
 	}
+	
+	/**
+	 * @test
+	 */
+	public function lineIsReturned() {
+		$this->assertEquals($this->_line, $this->_axisSplitter->line());
+	}
 }
 
 require_once (dirname(__FILE__) . '/../test_shutdown.php');
