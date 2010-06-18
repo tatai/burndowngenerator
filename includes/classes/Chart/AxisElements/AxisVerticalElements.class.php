@@ -17,6 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class AxisVerticalElements extends AxisElementsAbstract {
+
+	public function __construct($textSize, $tickStart, $tickIncrement, Point $labelPosition) {
+		parent::__construct($textSize, $tickStart, $tickIncrement, $labelPosition, 'vertical');
+	}
+
 	public function tick(Point $at, $size) {
 		$midSize = $size / 2;
 		return new Line(new Point($at->x() - $midSize, $at->y()), new Point($at->x() + $midSize, $at->y()));
@@ -26,9 +31,9 @@ class AxisVerticalElements extends AxisElementsAbstract {
 		return new Line(new Point($at->x(), $at->y()), new Point($at->x() + $size, $at->y()));
 	}
 
-	public function label(DrawText $drawText, $text, $at, $size) {
+	public function value(DrawText $drawText, $text, $at, $size) {
 		$position = new Point($at->x() - 3, $at->y() - $size / 3);
-
+		
 		$drawText->horizontal($text, $size, $position, 'right');
 	}
 }

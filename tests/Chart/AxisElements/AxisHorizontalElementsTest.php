@@ -24,9 +24,9 @@ class AxisHorizontalElementsTest extends PHPUnit_Framework_TestCase {
 	 * @var AxisHorizontalElements
 	 */
 	private $_elements = null;
-	
+
 	public function setUp() {
-		$this->_elements = new AxisHorizontalElements(4, 3, 2);
+		$this->_elements = new AxisHorizontalElements(4, 3, 2, new Point(4, 7));
 	}
 
 	/**
@@ -51,6 +51,27 @@ class AxisHorizontalElementsTest extends PHPUnit_Framework_TestCase {
 		$result = new Line(new Point(3, 4), new Point(3, 20));
 		
 		$this->assertEquals($result, $this->_elements->grid($point, $size));
+	}
+
+	/**
+	 * @test
+	 */
+	public function valueIsCorrectlyDrawn() {
+		$text = 'aaaa';
+		$size = 12;
+		$pdf = $this->getMock('MetricsPdf', array(), array('a4', 'landscape'));
+
+		$drawText = $this->getMock('DrawText', array(), array($pdf));
+		$drawText->expects($this->once())->method('horizontal')->with($text, $size, $this->anything(), 'center');
+		
+		$this->_elements->value($drawText, $text, new Point(rand(1, 20), rand(1, 20)), $size);
+	}
+
+	/**
+	 * @test
+	 */
+	public function returnsLabelDirection() {
+		$this->assertEquals('horizontal', $this->_elements->labelDirection());
 	}
 }
 

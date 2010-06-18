@@ -19,8 +19,10 @@
 interface IAxisElements {
 	public function tick(Point $at, $size);
 	public function grid(Point $at, $size);
-	public function label(DrawText $drawText, $text, $at, $size);
+	public function value(DrawText $drawText, $text, $at, $size);
 	public function textSize();
 	public function tickStart();
 	public function tickIncrement();
+	public function labelPosition();
+	public function labelDirection();
 }

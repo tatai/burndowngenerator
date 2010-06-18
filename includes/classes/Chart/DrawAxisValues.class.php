@@ -59,7 +59,7 @@ class DrawAxisValues {
 			$at = $splitter->next();
 			
 			$text = $axisElements->tickStart() + $axisElements->tickIncrement() * $i;
-			$axisElements->label($this->_drawText, $text, $at, $axisElements->textSize());
+			$axisElements->value($this->_drawText, $text, $at, $axisElements->textSize());
 		}
 	}
 }

@@ -16,46 +16,36 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once (dirname(__FILE__) . '/../../test_startup.php');
-
-class AxisElementsAbstractTest extends PHPUnit_Framework_TestCase {
+class DrawAxisLabel {
 	/**
 	 * 
-	 * @var AxisHorizontalElements
+	 * @var DrawText
 	 */
-	private $_elements = null;
+	private $_drawText = null;
 	
-	public function setUp() {
-		$this->_elements = new AxisHorizontalElements(4, 2, 6, new Point(3, 5));
+	/**
+	 * 
+	 * @param MetricsPdf $pdf
+	 * @param DrawText $drawText
+	 * @param int $start
+	 * @param int $end
+	 */
+	public function __construct(DrawText $drawText) {
+		$this->_drawText = $drawText;
 	}
 
-	/**
-	 * @test
-	 */
-	public function returnsTextSize() {
-		$this->assertEquals(4, $this->_elements->textSize());
-	}
+	public function draw(IAxisElements $axisElements, $label) {
+		$position = $axisElements->labelPosition();
+		$direction = $axisElements->labelDirection();
 
-	/**
-	 * @test
-	 */
-	public function returnsStartValue() {
-		$this->assertEquals(2, $this->_elements->tickStart());
-	}
+		if($direction != 'vertical' && $direction != 'horizontal') {
+			return false;
+		}
 
-	/**
-	 * @test
-	 */
-	public function returnsIncrement() {
-		$this->assertEquals(6, $this->_elements->tickIncrement());
-	}
-
-	/**
-	 * @test
-	 */
-	public function returnsLabelPosition() {
-		$this->assertEquals(new Point(3, 5), $this->_elements->labelPosition());
+		$text = trim($label);
+		if(strlen($text) > 0) {
+			$size = 5;
+			$this->_drawText->$direction($text, $size, $position, 'center');
+		}
 	}
 }
-
-require_once (dirname(__FILE__) . '/../../test_shutdown.php');

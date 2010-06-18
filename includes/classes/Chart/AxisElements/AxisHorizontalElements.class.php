@@ -17,6 +17,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class AxisHorizontalElements extends AxisElementsAbstract {
+	/**
+	 * 
+	 * @param int $textSize
+	 * @param float $tickStart
+	 * @param float $tickIncrement
+	 * @param Point $labelPosition
+	 */
+	public function __construct($textSize, $tickStart, $tickIncrement, Point $labelPosition) {
+		parent::__construct($textSize, $tickStart, $tickIncrement, $labelPosition, 'horizontal');
+	}
+	
 	public function tick(Point $at, $size) {
 		$midSize = $size / 2;
 		return new Line(new Point($at->x(), $at->y() - $midSize), new Point($at->x(), $at->y() + $midSize));
@@ -26,7 +37,7 @@ class AxisHorizontalElements extends AxisElementsAbstract {
 		return new Line(new Point($at->x(), $at->y()), new Point($at->x(), $at->y() + $size));
 	}
 
-	public function label(DrawText $drawText, $text, $at, $size) {
+	public function value(DrawText $drawText, $text, $at, $size) {
 		$position = new Point($at->x(), $at->y() - $size - 2);
 
 		$drawText->horizontal($text, $size, $position, 'center');

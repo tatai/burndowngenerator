@@ -20,11 +20,19 @@ abstract class AxisElementsAbstract implements IAxisElements {
 	private $_text_size = null;
 	private $_tick_start = null;
 	private $_tick_increment = null;
-	
-	public function __construct($textSize, $tickStart, $tickIncrement) {
+	/**
+	 * 
+	 * @var Point
+	 */
+	private $_label_position = null;
+	private $_label_direction = null;
+
+	public function __construct($textSize, $tickStart, $tickIncrement, Point $labelPosition, $labelDirection) {
 		$this->_text_size = $textSize;
 		$this->_tick_start = $tickStart;
 		$this->_tick_increment = $tickIncrement;
+		$this->_label_position = $labelPosition;
+		$this->_label_direction = $labelDirection;
 	}
 
 	public function textSize() {
@@ -37,5 +45,17 @@ abstract class AxisElementsAbstract implements IAxisElements {
 
 	public function tickIncrement() {
 		return $this->_tick_increment;
+	}
+
+	public function labelPosition() {
+		return $this->_label_position;
+	}
+
+	protected function setLabelDirection($direction) {
+		$this->_label_direction = $direction;
+	}
+
+	public function labelDirection() {
+		return $this->_label_direction;
 	}
 }

@@ -62,17 +62,17 @@ class BurndownAxis {
 		$this->_styleChanger = $styleChanger;
 	}
 
-	public function draw(AxisSplitter $splitter, IAxisElements $axisElements, $tickSize, $label, $showGrid = true, $gridSize = 0) {
+	public function draw(AxisSplitter $splitter, IAxisElements $axisElements, $label, $tickSize, $showGrid = true, $gridSize = 0) {
 		$this->_drawAxisLine($splitter->line());
-
+		
 		$this->_drawAxisTicks($splitter, $axisElements, $tickSize);
 		$this->_drawAxisValues($splitter, $axisElements);
-
+		
 		if($showGrid) {
 			$this->_drawAxisGrid($splitter, $axisElements, $gridSize);
 		}
 		
-		$this->_drawAxisLabel($label);
+		$this->_drawAxisLabel($axisElements, $label);
 	}
 
 	private function _drawAxisLine(Line $line) {
@@ -98,12 +98,8 @@ class BurndownAxis {
 		$axisValues->draw($splitter, $axisElements);
 	}
 
-	private function _drawAxisLabel($xLabel) {
-		$text = trim($xLabel);
-		if(strlen($text) > 0) {
-			$size = 5;
-			$position = new Point($this->_pdf->getPageWidth() / 2, $this->_margins->bottom() - 10 - $size);
-			$this->_drawText->horizontal($text, $size, $position, 'center');
-		}
+	private function _drawAxisLabel(IAxisElements $axisElements, $label) {
+		$axisValues = new DrawAxisLabel($this->_drawText);
+		$axisValues->draw($axisElements, $label);
 	}
 }

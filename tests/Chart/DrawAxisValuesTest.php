@@ -72,12 +72,12 @@ class DrawAxisValuesTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 */
-	public function createLabelInEachTick() {
+	public function createValueInEachTick() {
 		$ticks = 4;
 
 		$this->_splitter->expects($this->any())->method('splits')->will($this->returnValue($ticks));
 		$this->_splitter->expects($this->exactly($ticks))->method('next');
-		$this->_axisElements->expects($this->exactly($ticks))->method('label');
+		$this->_axisElements->expects($this->exactly($ticks))->method('value');
 		
 		$this->_draw_axis_values->draw($this->_splitter, $this->_axisElements);
 	}
