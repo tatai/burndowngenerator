@@ -26,7 +26,7 @@ class BurndownSpeedTest extends PHPUnit_Framework_TestCase {
 	private $_speed = null;
 	
 	/**
-	 * @var MetricsPdf
+	 * @var IPdf
 	 */
 	private $_pdf = null;
 	
@@ -54,9 +54,7 @@ class BurndownSpeedTest extends PHPUnit_Framework_TestCase {
 	private $_points = null;
 
 	public function setUp() {
-		$this->_pdf = $this->getMock('MetricsPdf', array(), array(
-			'a4', 
-			'landscape'));
+		$this->_pdf = $this->getMock('IPdf');
 		$this->_lineStyleChanger = $this->getMock('LineStyleChanger');
 		$this->_text = $this->getMock('DrawText', array(), array($this->_pdf));
 		$this->_speed = new BurndownSpeed($this->_pdf, $this->_lineStyleChanger, $this->_text);

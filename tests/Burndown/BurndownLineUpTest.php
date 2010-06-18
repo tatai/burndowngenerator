@@ -23,9 +23,7 @@ class BurndownLineUpTest extends PHPUnit_Framework_TestCase {
 	 * @test
 	 */
 	public function lineIsDrawnFromLowerLeftToUpperRight() {
-		$pdf = $this->getMock('MetricsPdf', array(), array(
-			'a4', 
-			'landscape'));
+		$pdf = $this->getMock('IPdf');
 		
 		$top = 23;
 		$left = 56;

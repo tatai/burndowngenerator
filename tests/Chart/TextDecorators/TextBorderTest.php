@@ -20,7 +20,7 @@ require_once(dirname(__FILE__) . '/../../test_startup.php');
 
 class TextBorderTest extends PHPUnit_Framework_TestCase {
 	/**
-	 * @var $_pdf MetricsPdf
+	 * @var $_pdf IPdf
 	 */
 	private $_pdf = null;
 	
@@ -35,7 +35,7 @@ class TextBorderTest extends PHPUnit_Framework_TestCase {
 	private $_lowerRight = null;
 	
 	public function setUp() {
-		$this->_pdf = $this->getMock('MetricsPdf', array(), array('a4', 'landscape'));
+		$this->_pdf = $this->getMock('IPdf');
 		$this->_upperLeft = new Point(12, 23);
 		$this->_lowerRight = new Point(17, 42);
 	}

@@ -20,7 +20,7 @@ class Burndown {
 	/**
 	 * PDF Class
 	 * 
-	 * @var MetricsPdf
+	 * @var IPdf
 	 * @private
 	 */
 	private $_pdf = null;

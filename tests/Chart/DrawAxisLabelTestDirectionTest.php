@@ -38,9 +38,7 @@ class DrawAxisLabelTestDirectionTest extends PHPUnit_Framework_TestCase {
 	private $_axis_elements = null;
 
 	public function setUp() {
-		$pdf = $this->getMock('MetricsPdf', array(), array(
-			'a4', 
-			'landscape'));
+		$pdf = $this->getMock('IPdf');
 		
 		$this->_draw_text = $this->getMock('DrawText', array(), array(
 			$pdf));

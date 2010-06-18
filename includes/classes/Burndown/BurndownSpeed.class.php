@@ -18,7 +18,7 @@
  */
 class BurndownSpeed {
 	/**
-	 * @var MetricsPdf
+	 * @var IPdf
 	 */
 	private $_pdf = null;
 	
@@ -34,7 +34,7 @@ class BurndownSpeed {
 	 */
 	private $_text = null;
 	
-	public function __construct(MetricsPdf $pdf, LineStyleChanger &$changer, DrawText &$text) {
+	public function __construct(IPdf $pdf, LineStyleChanger &$changer, DrawText &$text) {
 		$this->_pdf = $pdf;
 		$this->_lineStyleChanger = $changer;
 		$this->_text = $text;

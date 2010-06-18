@@ -59,7 +59,7 @@ class AxisVerticalElementsTest extends PHPUnit_Framework_TestCase {
 	public function valueIsCorrectlyDrawn() {
 		$text = 'aaaa';
 		$size = 12;
-		$pdf = $this->getMock('MetricsPdf', array(), array('a4', 'landscape'));
+		$pdf = $this->getMock('IPdf');
 
 		$drawText = $this->getMock('DrawText', array(), array($pdf));
 		$drawText->expects($this->once())->method('horizontal')->with($text, $size, $this->anything(), 'right');

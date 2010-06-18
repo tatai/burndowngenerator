@@ -25,7 +25,7 @@ class DrawTextTest extends PHPUnit_Framework_TestCase {
 	private $_size = null;
 	
 	public function setUp() {
-		$this->_pdf = $this->getMock('MetricsPdf', array(), array('a4', 'landscape'));
+		$this->_pdf = $this->getMock('IPdf');
 		$this->_text = new DrawText($this->_pdf);
 		$this->_string = 'aaaa';
 		$this->_size = 10;

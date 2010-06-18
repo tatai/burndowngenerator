@@ -18,7 +18,7 @@
  */
 class BurndownXAxis {
 
-	public function draw(MetricsPdf $pdf, BurndownMargins $margins, BurndownAxis $axis, Configuration $config) {
+	public function draw(IPdf $pdf, BurndownMargins $margins, BurndownAxis $axis, Configuration $config) {
 		list($xAxisSplit, $factor) = $this->_getSplitAndFactor($pdf, $margins, $config);
 		
 		$start = new Point($margins->left(), $margins->bottom());
@@ -34,7 +34,7 @@ class BurndownXAxis {
 		$axis->draw($splitter, $axisElements, $config->get('xlabel'), $config->get('tick_size'), !$config->get('hide_grid'), $gridLineSize);
 	}
 
-	private function _getSplitAndFactor(MetricsPdf $pdf, BurndownMargins $margins, Configuration $config) {
+	private function _getSplitAndFactor(IPdf $pdf, BurndownMargins $margins, Configuration $config) {
 		return array(
 			($pdf->getPageWidth() - $margins->right() - $margins->left()) / ($config->get('days') - 1), 
 			1);

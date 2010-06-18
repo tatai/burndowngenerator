@@ -44,9 +44,7 @@ class DrawAxisValuesTest extends PHPUnit_Framework_TestCase {
 	private $_splitter = null;
 
 	public function setUp() {
-		$pdf = $this->getMock('MetricsPdf', array(), array(
-			'a4', 
-			'landscape'));
+		$pdf = $this->getMock('IPdf');
 		$styleChanger = new LineStyleChanger();
 		
 		$this->_draw_line = $this->getMock('DrawText', array(), array($pdf));

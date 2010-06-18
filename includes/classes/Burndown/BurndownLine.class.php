@@ -19,7 +19,7 @@
 class BurndownLine {
 	/**
 	 * 
-	 * @var MetricsPdf
+	 * @var IPdf
 	 */
 	private $_pdf = null;
 	
@@ -29,7 +29,7 @@ class BurndownLine {
 	 */
 	private $_styleChanger = null;
 	
-	public function __construct(MetricsPdf $pdf, LineStyleChanger $styleChanger) {
+	public function __construct(IPdf $pdf, LineStyleChanger $styleChanger) {
 		$this->_pdf = $pdf;
 		$this->_styleChanger = $styleChanger;
 	}

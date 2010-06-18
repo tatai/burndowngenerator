@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class BurndownLineUp extends BurndownLineAbstract {
-	public function draw(MetricsPdf $pdf) {
+	public function draw(IPdf $pdf) {
 		$pdf->line(
 			$this->_upperLeft->x(),
 			$this->_lowerRight->y(),

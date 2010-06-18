@@ -18,7 +18,7 @@
  */
 include(dirname(__FILE__) . '/../pdf/class.ezpdf.php');
 
-class MetricsPdf extends Cezpdf {
+class MetricsPdf extends Cezpdf implements IPdf {
 	protected $_ratio = null;
 
 	public function __construct($paper, $orientation) {

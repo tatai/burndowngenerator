@@ -25,7 +25,7 @@ class DrawAxisLabel {
 	
 	/**
 	 * 
-	 * @param MetricsPdf $pdf
+	 * @param IPdf $pdf
 	 * @param DrawText $drawText
 	 * @param int $start
 	 * @param int $end

@@ -21,7 +21,7 @@ require_once (dirname(__FILE__) . '/../test_startup.php');
 class DrawLineTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * 
-	 * @var MetricsPdf
+	 * @var IPdf
 	 */
 	private $_pdf = null;
 	
@@ -32,9 +32,7 @@ class DrawLineTest extends PHPUnit_Framework_TestCase {
 	private $_styleChanger = null;
 
 	public function setUp() {
-		$this->_pdf = $this->getMock('MetricsPdf', array(), array(
-			'a4', 
-			'landscape'));
+		$this->_pdf = $this->getMock('IPdf');
 		
 		$this->_styleChanger = $this->getMock('LineStyleChanger');
 	}

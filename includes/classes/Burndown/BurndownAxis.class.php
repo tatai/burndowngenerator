@@ -19,7 +19,7 @@
 class BurndownAxis {
 	/**
 	 * 
-	 * @var MetricsPdf
+	 * @var IPdf
 	 */
 	private $_pdf = null;
 	
@@ -49,12 +49,12 @@ class BurndownAxis {
 
 	/**
 	 * 
-	 * @param $pdf MetricsPdf
+	 * @param $pdf IPdf
 	 * @param $margins BurndownMargins
 	 * @param $drawLine DrawLine
 	 * @param $drawText DrawText
 	 */
-	public function __construct(MetricsPdf $pdf, BurndownMargins $margins, DrawLine $drawLine, DrawText $drawText, LineStyleChanger $styleChanger) {
+	public function __construct(IPdf $pdf, BurndownMargins $margins, DrawLine $drawLine, DrawText $drawText, LineStyleChanger $styleChanger) {
 		$this->_pdf = $pdf;
 		$this->_margins = $margins;
 		$this->_drawLine = $drawLine;

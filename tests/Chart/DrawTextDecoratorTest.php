@@ -20,7 +20,7 @@ require_once (dirname(__FILE__) . '/../test_startup.php');
 
 class DrawTextDecoratorTest extends PHPUnit_Framework_TestCase {
 	/**
-	 * @var $_pdf MetricsPdf
+	 * @var $_pdf IPdf
 	 */
 	private $_pdf = null;
 
@@ -60,7 +60,7 @@ class DrawTextDecoratorTest extends PHPUnit_Framework_TestCase {
 	private $_decorator = null;
 	
 	public function setUp() {
-		$this->_pdf = $this->getMock('MetricsPdf', array(), array('a4', 'landscape'));
+		$this->_pdf = $this->getMock('IPdf');
 		$this->_text = new DrawText($this->_pdf);
 		$this->_string = 'aaaa';
 		$this->_size = 10;

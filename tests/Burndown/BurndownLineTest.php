@@ -20,7 +20,7 @@ require_once (dirname(__FILE__) . '/../test_startup.php');
 
 class BurndownLineTest extends PHPUnit_Framework_TestCase {
 	/**
-	 * @var MetricsPdf
+	 * @var IPdf
 	 */
 	private $_pdf = null;
 	
@@ -43,7 +43,7 @@ class BurndownLineTest extends PHPUnit_Framework_TestCase {
 	private $_burndownLineType = null;
 
 	public function setUp() {
-		$this->_pdf = $this->getMock('MetricsPdf', array(), array(
+		$this->_pdf = $this->getMock('IPdf', array(), array(
 			'a4', 
 			'landscape'));
 		$this->_styleChanger = $this->getMock('LineStyleChanger');

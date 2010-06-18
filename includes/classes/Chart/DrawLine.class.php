@@ -19,7 +19,7 @@
 class DrawLine {
 	/**
 	 * 
-	 * @var MetricsPdf
+	 * @var IPdf
 	 */
 	private $_pdf = null;
 	
@@ -29,7 +29,7 @@ class DrawLine {
 	 */
 	private $_styleChanger = null;
 
-	public function __construct(MetricsPdf $pdf, LineStyleChanger $style) {
+	public function __construct(IPdf $pdf, LineStyleChanger $style) {
 		$this->_pdf = $pdf;
 		$this->_styleChanger = $style;
 	}

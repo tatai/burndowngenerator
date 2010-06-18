@@ -26,7 +26,7 @@ class LineStyleChangerTestingStrokeTest extends PHPUnit_Framework_TestCase {
 	
 	public function setUp() {
 		$this->_changer = new LineStyleChanger();
-		$this->_pdf = $this->getMock('MetricsPdf', array(), array('a4', 'landscape'));
+		$this->_pdf = $this->getMock('IPdf');
 		
 		$red = new Decimal(30);
 		$green = new Decimal(20);

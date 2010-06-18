@@ -19,7 +19,7 @@
 class DrawText {
 	private $_pdf = null;
 
-	public function __construct(MetricsPdf $pdf) {
+	public function __construct(IPdf $pdf) {
 		$this->_pdf = $pdf;
 	}
 
@@ -78,7 +78,7 @@ class DrawText {
 		return $position->$axis();
 	}
 
-	private function _callDecorator(MetricsPdf $pdf, ITextDecorator $decorator, Point $upperLeft, Point $lowerRight) {
+	private function _callDecorator(IPdf $pdf, ITextDecorator $decorator, Point $upperLeft, Point $lowerRight) {
 		$decorator->draw($pdf, $upperLeft, $lowerRight);
 	}
 }
