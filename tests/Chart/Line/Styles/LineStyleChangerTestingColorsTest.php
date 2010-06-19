@@ -16,58 +16,43 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once (dirname(__FILE__) . '/../../test_startup.php');
+require_once (dirname(__FILE__) . '/../../../test_startup.php');
 
-class LineStyleChangerTestingStrokeTest extends PHPUnit_Framework_TestCase {
+class LineStyleChangerTestingColorsTest extends PHPUnit_Framework_TestCase {
 	private $_changer = null;
-	private $_stroke = null;
-	private $_color = null;
 	private $_lineStyle = null;
-	
+
 	public function setUp() {
 		$this->_changer = new LineStyleChanger();
 		$this->_pdf = $this->getMock('IPdf');
-		
-		$red = new Decimal(30);
-		$green = new Decimal(20);
-		$blue = new Decimal(100);
-		$color = $this->getMock('Decimal', array(), array(30));
-		$this->_color = $this->getMock('Color', array(), array($color, $color, $color));
 
 		$width = 1;
-		$line = $this->getMock('ILineStroke');
-		$this->_stroke = $this->getMock('LineStroke', array(), array(1, $line));
+		$color = new Color(new Decimal(0), new Decimal(0), new Decimal(0));
 		$this->_lineStyle = new LineStyle(
-			$this->_color,
-			$this->_stroke
+			$color,
+			$this->getMock('LineStroke', array(), array(1, $this->getMock('ILineStroke')))
 		);
 	}
 
 	/**
 	 * @test
 	 */
-	public function changingStroke() {
-		$width = 15;
-		$this->_stroke->expects($this->once())
-			->method('getWidth')
-			->will($this->returnValue($width));
-		
-		$cap = 'cap';
-		$this->_stroke->expects($this->once())
-			->method('getCap')
-			->will($this->returnValue($cap));
-		
-		$dash = array(5);
-		$this->_stroke->expects($this->once())
-			->method('getDash')
-			->will($this->returnValue($dash));
-			
+	public function strokeIsChangedInPdf() {
 		$this->_pdf->expects($this->once())
-			->method('setLineStyle')
-			->with($width, $cap, '', $dash);
+			->method('setStrokeColor');
+
+		$this->_changer->change($this->_pdf, $this->_lineStyle);
+	}
+
+	/**
+	 * @test
+	 */
+	public function lineStyleIsChangedInPdf() {
+		$this->_pdf->expects($this->once())
+			->method('setLineStyle');
 
 		$this->_changer->change($this->_pdf, $this->_lineStyle);
 	}
 }
 
-require_once (dirname(__FILE__) . '/../../test_shutdown.php');
+require_once (dirname(__FILE__) . '/../../../test_shutdown.php');
