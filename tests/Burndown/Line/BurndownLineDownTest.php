@@ -16,25 +16,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once (dirname(__FILE__) . '/../test_startup.php');
+require_once (dirname(__FILE__) . '/../../test_startup.php');
 
-class BurndownLineUpTest extends PHPUnit_Framework_TestCase {
+class BurndownLineDownTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 */
-	public function lineIsDrawnFromLowerLeftToUpperRight() {
+	public function lineIsDrawnFromUpperLeftToLowerRight() {
 		$pdf = $this->getMock('IPdf');
 		
-		$top = 23;
-		$left = 56;
-		$bottom = 92;
-		$right = 115;
+		$top = 45;
+		$left = 28;
+		$bottom = 104;
+		$right = 143;
 	
-		$pdf->expects($this->once())->method('line')->with($left, $bottom, $right, $top);
+		$pdf->expects($this->once())->method('line')->with($left, $top, $right, $bottom);
 
-		$line = new BurndownLineUp(new Point($left, $top), new Point($right, $bottom));
+		$line = new BurndownLineDown(new Point($left, $top), new Point($right, $bottom));
 		$line->draw($pdf);
 	}
 }
 
-require_once (dirname(__FILE__) . '/../test_shutdown.php');
+require_once (dirname(__FILE__) . '/../../test_shutdown.php');
