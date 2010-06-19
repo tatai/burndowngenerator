@@ -12,6 +12,7 @@
 	<li>Bugs
 	<ul>
 		<li><strike>Title does not always show all characters</strike> (fixed in v.1.0.3)</li>
+		<li><strike>Y label should be turned 180º</strike> (fixed in v.1.7.0)</li>
 	</ul>
 	</li>
 	<li>New features
@@ -24,6 +25,8 @@
 		<li>Import/Export preferences</li>
 		<li><strike>Generate burnup</strike> (available since v.1.0.3)</li>
 		<li>Improve design</li>
+		<li><strike>Refactor how chart is generated</strike> (available since v.1.7.0)</li>
+		<li><strike>Add unit testing</strike> (available since v.1.7.0)</li>
 	</ul>
 	</li>
 </ul>
