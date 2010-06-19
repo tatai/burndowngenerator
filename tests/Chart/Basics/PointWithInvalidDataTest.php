@@ -16,35 +16,53 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once(dirname(__FILE__) . '/../test_startup.php');
+require_once(dirname(__FILE__) . '/../../test_startup.php');
 
-class LineTest extends PHPUnit_Framework_TestCase {
+class PointWithInvalidDataTest extends PHPUnit_Framework_TestCase {
+
 	/**
 	 * @test
 	 */
-	public function receivesTwoPointObjects() {
-		$from = $this->_randomPoint();
-		$to = $this->_randomPoint();
-
-		$line = new Line($from, $to);
-		$this->assertTrue($line->from() instanceof Point);
-		$this->assertTrue($line->to() instanceof Point);
-	}
-	
-	private function _randomPoint() {
-		return new Point(rand(1, 100), rand(1,100));
-	}
-	
-	/**
-	 * @test
-	 */
-	public function sizeIsCalculatedFromPoints() {
-		$from = new Point(1, 1);
-		$to = new Point(5, 1);
+	public function whenXIsNonNumericReturnsNotValid() {
+		$x = 'a';
+		$y = 3;
+		$point = new Point($x, $y);
 		
-		$line = new Line($from, $to);
-		$this->assertEquals(4, $line->size());
+		$this->assertFalse($point->isValid());
+	}
+
+	/**
+	 * @test
+	 */
+	public function whenXIsNonNumericValueIsNull() {
+		$x = 'a';
+		$y = 3;
+		$point = new Point($x, $y);
+		
+		$this->assertNull($point->x());
+	}
+
+	/**
+	 * @test
+	 */
+	public function whenYIsNonNumericReturnsNotValid() {
+		$x = 2;
+		$y = 'a';
+		$point = new Point($x, $y);
+		
+		$this->assertFalse($point->isValid());
+	}
+
+	/**
+	 * @test
+	 */
+	public function whenYIsNonNumericValueIsNull() {
+		$x = 2;
+		$y = 'a';
+		$point = new Point($x, $y);
+		
+		$this->assertNull($point->y());
 	}
 }
 
-require_once(dirname(__FILE__) . '/../test_shutdown.php');
+require_once(dirname(__FILE__) . '/../../test_shutdown.php');

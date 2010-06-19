@@ -16,46 +16,35 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once (dirname(__FILE__) . '/../../test_startup.php');
+require_once(dirname(__FILE__) . '/../../test_startup.php');
 
-class AxisElementsAbstractTest extends PHPUnit_Framework_TestCase {
+class LineTest extends PHPUnit_Framework_TestCase {
 	/**
-	 * 
-	 * @var AxisHorizontalElements
+	 * @test
 	 */
-	private $_elements = null;
+	public function receivesTwoPointObjects() {
+		$from = $this->_randomPoint();
+		$to = $this->_randomPoint();
+
+		$line = new Line($from, $to);
+		$this->assertTrue($line->from() instanceof Point);
+		$this->assertTrue($line->to() instanceof Point);
+	}
 	
-	public function setUp() {
-		$this->_elements = new AxisHorizontalElements(4, 2, 6, new Point(3, 5));
+	private function _randomPoint() {
+		return new Point(rand(1, 100), rand(1,100));
 	}
-
+	
 	/**
 	 * @test
 	 */
-	public function returnsTextSize() {
-		$this->assertEquals(4, $this->_elements->textSize());
-	}
-
-	/**
-	 * @test
-	 */
-	public function returnsStartValue() {
-		$this->assertEquals(2, $this->_elements->tickStart());
-	}
-
-	/**
-	 * @test
-	 */
-	public function returnsIncrement() {
-		$this->assertEquals(6, $this->_elements->tickIncrement());
-	}
-
-	/**
-	 * @test
-	 */
-	public function returnsLabelPosition() {
-		$this->assertEquals(new Point(3, 5), $this->_elements->labelPosition());
+	public function sizeIsCalculatedFromPoints() {
+		$from = new Point(1, 1);
+		$to = new Point(5, 1);
+		
+		$line = new Line($from, $to);
+		$this->assertEquals(4, $line->size());
 	}
 }
 
-require_once (dirname(__FILE__) . '/../../test_shutdown.php');
+require_once(dirname(__FILE__) . '/../../test_shutdown.php');

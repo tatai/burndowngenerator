@@ -16,53 +16,31 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once(dirname(__FILE__) . '/../test_startup.php');
+require_once (dirname(__FILE__) . '/../../test_startup.php');
 
-class PointWithInvalidDataTest extends PHPUnit_Framework_TestCase {
-
+class VectorFactoryTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 */
-	public function whenXIsNonNumericReturnsNotValid() {
-		$x = 'a';
-		$y = 3;
-		$point = new Point($x, $y);
+	public function vectorCanBeCreateFromSlopeAndIndependent() {
+		$slope = 4;
+		$independent = 2;
+		$vector = new Vector($slope, $independent);
 		
-		$this->assertFalse($point->isValid());
+		$this->assertTrue($vector->isEqual(VectorFactory::create($slope, $independent)));
 	}
 
 	/**
 	 * @test
 	 */
-	public function whenXIsNonNumericValueIsNull() {
-		$x = 'a';
-		$y = 3;
-		$point = new Point($x, $y);
-		
-		$this->assertNull($point->x());
-	}
+	public function createPerpendicularVectorAtPoint() {
+		$vector = new Vector(4, 2);
+		$at = new Point(1, 1);	
 
-	/**
-	 * @test
-	 */
-	public function whenYIsNonNumericReturnsNotValid() {
-		$x = 2;
-		$y = 'a';
-		$point = new Point($x, $y);
-		
-		$this->assertFalse($point->isValid());
-	}
+		$perpendicular = new Vector(-0.25, 1.25);
 
-	/**
-	 * @test
-	 */
-	public function whenYIsNonNumericValueIsNull() {
-		$x = 2;
-		$y = 'a';
-		$point = new Point($x, $y);
-		
-		$this->assertNull($point->y());
+		$this->assertTrue($perpendicular->isEqual(VectorFactory::perpendicularAtPoint($vector, $at)));
 	}
 }
 
-require_once(dirname(__FILE__) . '/../test_shutdown.php');
+require_once (dirname(__FILE__) . '/../../test_shutdown.php');

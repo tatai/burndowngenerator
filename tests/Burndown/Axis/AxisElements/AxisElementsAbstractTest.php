@@ -16,31 +16,46 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once (dirname(__FILE__) . '/../test_startup.php');
+require_once (dirname(__FILE__) . '/../../../test_startup.php');
 
-class VectorFactoryTest extends PHPUnit_Framework_TestCase {
+class AxisElementsAbstractTest extends PHPUnit_Framework_TestCase {
 	/**
-	 * @test
+	 * 
+	 * @var AxisHorizontalElements
 	 */
-	public function vectorCanBeCreateFromSlopeAndIndependent() {
-		$slope = 4;
-		$independent = 2;
-		$vector = new Vector($slope, $independent);
-		
-		$this->assertTrue($vector->isEqual(VectorFactory::create($slope, $independent)));
+	private $_elements = null;
+	
+	public function setUp() {
+		$this->_elements = new AxisHorizontalElements(4, 2, 6, new Point(3, 5));
 	}
 
 	/**
 	 * @test
 	 */
-	public function createPerpendicularVectorAtPoint() {
-		$vector = new Vector(4, 2);
-		$at = new Point(1, 1);	
+	public function returnsTextSize() {
+		$this->assertEquals(4, $this->_elements->textSize());
+	}
 
-		$perpendicular = new Vector(-0.25, 1.25);
+	/**
+	 * @test
+	 */
+	public function returnsStartValue() {
+		$this->assertEquals(2, $this->_elements->tickStart());
+	}
 
-		$this->assertTrue($perpendicular->isEqual(VectorFactory::perpendicularAtPoint($vector, $at)));
+	/**
+	 * @test
+	 */
+	public function returnsIncrement() {
+		$this->assertEquals(6, $this->_elements->tickIncrement());
+	}
+
+	/**
+	 * @test
+	 */
+	public function returnsLabelPosition() {
+		$this->assertEquals(new Point(3, 5), $this->_elements->labelPosition());
 	}
 }
 
-require_once (dirname(__FILE__) . '/../test_shutdown.php');
+require_once (dirname(__FILE__) . '/../../../test_shutdown.php');

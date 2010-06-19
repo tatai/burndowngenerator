@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once (dirname(__FILE__) . '/../test_startup.php');
+require_once (dirname(__FILE__) . '/../../test_startup.php');
 
 class DrawAxisTicksTest extends PHPUnit_Framework_TestCase {
 	/**
@@ -98,4 +98,4 @@ class DrawAxisTicksTest extends PHPUnit_Framework_TestCase {
 	}
 }
 
-require_once (dirname(__FILE__) . '/../test_shutdown.php');
+require_once (dirname(__FILE__) . '/../../test_shutdown.php');

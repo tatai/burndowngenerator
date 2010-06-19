@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once (dirname(__FILE__) . '/../test_startup.php');
+require_once (dirname(__FILE__) . '/../../test_startup.php');
 
-class LinePerpendicularFromHorizontalTest extends PHPUnit_Framework_TestCase {
+class LinePerpendicularFromVerticalTest extends PHPUnit_Framework_TestCase {
 	private $_from = null;
 	private $_to = null;
 	private $_at = null;
@@ -30,8 +30,8 @@ class LinePerpendicularFromHorizontalTest extends PHPUnit_Framework_TestCase {
 	private $_operations = null;
 
 	public function setUp() {
-		$this->_from = new Point(1, 2);
-		$this->_to = new Point(4, 2);
+		$this->_from = new Point(3, -1);
+		$this->_to = new Point(3, 4);
 		$this->_at = new Point(3, 2);
 		
 		$this->_operations = new LineOperations();
@@ -40,11 +40,11 @@ class LinePerpendicularFromHorizontalTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @test
 	 */
-	public function createPerpendicularLineInPointFromHorizontal0Degrees() {
-		$length = 2;
+	public function createPerpendicularLineInPointFromVertical90Degrees() {
+		$length = 3;
 		
-		$perpendicularFrom = new Point(3, 1);
-		$perpendicularTo = new Point(3, 3);
+		$perpendicularFrom = new Point(1.5, 2);
+		$perpendicularTo = new Point(4.5, 2);
 		
 		$line = new Line($this->_from, $this->_to);
 		
@@ -52,15 +52,15 @@ class LinePerpendicularFromHorizontalTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($perpendicularFrom, $perpendicular->from());
 		$this->assertEquals($perpendicularTo, $perpendicular->to());
 	}
-	
+
 	/**
 	 * @test
 	 */
-	public function createPerpendicularLineInPointFromHorizontal180Degrees() {
-		$length = 2;
+	public function createPerpendicularLineInPointFromVertical180Degrees() {
+		$length = 3;
 		
-		$perpendicularFrom = new Point(3, 3);
-		$perpendicularTo = new Point(3, 1);
+		$perpendicularFrom = new Point(4.5, 2);
+		$perpendicularTo = new Point(1.5, 2);
 		
 		$line = new Line($this->_to, $this->_from);
 		
@@ -70,4 +70,4 @@ class LinePerpendicularFromHorizontalTest extends PHPUnit_Framework_TestCase {
 	}
 }
 
-require_once (dirname(__FILE__) . '/../test_shutdown.php');
+require_once (dirname(__FILE__) . '/../../test_shutdown.php');
