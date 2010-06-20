@@ -2,25 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 	<loc>http://www.burndowngenerator.com/</loc>
-	<lastmod>2010-04-11</lastmod>
+	<lastmod>2010-06-20</lastmod>
 	<changefreq>weekly</changefreq>
 	<priority>1</priority>
 </url>
 <url>
 	<loc>http://www.burndowngenerator.com/instructions</loc>
-	<lastmod>2010-04-20</lastmod>
+	<lastmod>2010-06-2</lastmod>
 	<changefreq>weekly</changefreq>
 	<priority>0.5</priority>
 </url>
 <url>
 	<loc>http://www.burndowngenerator.com/changelog</loc>
-	<lastmod>2010-04-20</lastmod>
+	<lastmod>2010-06-20</lastmod>
 	<changefreq>weekly</changefreq>
 	<priority>0.5</priority>
 </url>
 <url>
 	<loc>http://www.burndowngenerator.com/roadmap</loc>
-	<lastmod>2010-04-20</lastmod>
+	<lastmod>2010-06-20</lastmod>
+	<changefreq>weekly</changefreq>
+	<priority>0.5</priority>
+</url>
+<url>
+	<loc>http://www.burndowngenerator.com/screenshot</loc>
+	<lastmod>2010-06-20</lastmod>
+	<changefreq>weekly</changefreq>
+	<priority>0.5</priority>
+</url>
+<url>
+	<loc>http://www.burndowngenerator.com/comments</loc>
+	<lastmod>2010-06-20</lastmod>
 	<changefreq>weekly</changefreq>
 	<priority>0.5</priority>
 </url>
