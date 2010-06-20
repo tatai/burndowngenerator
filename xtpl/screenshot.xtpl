@@ -2,6 +2,8 @@
 {FILE "header.xtpl"}
 <h2>Screenshots:</h2>
 
+{FILE "menu.xtpl"}
+
 <ul>
 	<li><a href="/screenshots/default.png" class="mb" title="Burndown with default options">Default options</a></li>
 	<li><a href="/screenshots/wo.grid.speed.png" class="mb" title="Burndown with grid and speed hidden">Without grid and speed</a></li>

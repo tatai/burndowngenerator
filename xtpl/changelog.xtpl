@@ -2,6 +2,8 @@
 {FILE "header.xtpl"}
 <h2>Changelog</h2>
 
+{FILE "menu.xtpl"}
+
 <ul id="changelog">
 	<li>v.1.7.0 (2010-06-19)
 	<ul>

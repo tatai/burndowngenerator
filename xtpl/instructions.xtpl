@@ -2,6 +2,8 @@
 {FILE "header.xtpl"}
 <h2>Instructions</h2>
 
+{FILE "menu.xtpl"}
+
 <p>Creating a burndown chart with <a href="/">Yet another burndown online generator</a> is as easy as give values to days that your sprint lasts, points that your team is trying to achieve and a describing title</p>
 
 <p>Only with this values, a new "ready to print" PDF page containing the burndown is created for you just for free</p>

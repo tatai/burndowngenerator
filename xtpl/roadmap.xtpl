@@ -2,6 +2,8 @@
 {FILE "header.xtpl"}
 <h2>Roadmap</h2>
 
+{FILE "menu.xtpl"}
+
 <p>These are some features that <a href="/">Yet another burndown online generator</a> will implement (some day) and reported bugs. New features are not sort by priority, they are just listed.</p>
 
 <p>If you have any suggestion, please <a href="/comments">contact me</a></p>
