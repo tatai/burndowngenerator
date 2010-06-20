@@ -1,8 +1,6 @@
 <!--  BEGIN: main -->
 {FILE "header.xtpl"}
-<h1>Changelog</h1>
-
-<a href="/" class="back">Back to main page</a>
+<h2>Changelog</h2>
 
 <ul id="changelog">
 	<li>v.1.7.0 (2010-06-19)

@@ -1,12 +1,10 @@
 <!--  BEGIN: main -->
 {FILE "header.xtpl"}
-<h1>Roadmap</h1>
-
-<a href="/" class="back">Back to main page</a>
+<h2>Roadmap</h2>
 
 <p>These are some features that <a href="/">Yet another burndown online generator</a> will implement (some day) and reported bugs. New features are not sort by priority, they are just listed.</p>
 
-<p>If you have any suggestion, please contact me via form at <a href="/">main page</a></p>
+<p>If you have any suggestion, please <a href="/comments">contact me</a></p>
 
 <ul id="roadmap">
 	<li>Bugs
@@ -24,7 +22,7 @@
 		<li>Ability to input your daily work done</li>
 		<li>Import/Export preferences</li>
 		<li><strike>Generate burnup</strike> (available since v.1.0.3)</li>
-		<li>Improve design</li>
+		<li><strike>Improve design</strike> (something better now)</li>
 		<li><strike>Refactor how chart is generated</strike> (available since v.1.7.0)</li>
 		<li><strike>Add unit testing</strike> (available since v.1.7.0)</li>
 	</ul>

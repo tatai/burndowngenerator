@@ -44,32 +44,17 @@ class Dispatcher {
 			case 'instructions':
 			case 'changelog':
 			case 'roadmap':
+			case 'comments':
+			case 'screenshot':
 				$action = new SimplePageAction($name);
-				/*$action = array(
-					'program' => 'SimplePageAction',
-					'params' => array('name' => $name)
-				);
-				*/
 				break;
 			case 'index':
 			case 'burndown':
 			case '':
 				$action = new IndexAction($name);
-				/*
-				$action = array(
-					'program' => 'IndexAction',
-					'params' => array('action' => $name)
-				);
-				*/
 				break;
 			case 'comment':
 				$action = new CommentsAction();
-				/*
-				$action = array(
-					'program' => 'CommentsAction',
-					'params' => array()
-				);
-				*/
 				break;
 			default:
 				$action = null;

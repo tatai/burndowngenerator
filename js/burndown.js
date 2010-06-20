@@ -107,7 +107,7 @@ var Burndown = new Class({
 				'text' : 'Your comment has been sent! Thanks!'
 			}).setStyles({
 				'opacity' : 0
-			}).injectTop($('comment_form').getElement('div.fold'));
+			}).injectTop($('comment_form').getElement('div'));
 
 			new Fx.Tween(notice, {
 				'duration' : 'long',

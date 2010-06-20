@@ -1,5 +1,7 @@
 <ul id="menu">
 	<li><a href="/instructions">Instructions</a></li>
+	<li><a href="/screenshot">Screenshots</a></li>
 	<li><a href="/changelog">Changelog</a></li>
 	<li><a href="/roadmap">Roadmap</a></li>
+	<li><a href="/comments">Comments</a></li>
 </ul>

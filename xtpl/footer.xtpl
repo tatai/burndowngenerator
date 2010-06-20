@@ -1,8 +1,3 @@
-<div id="content-footer">
-	<p align="center"><a href="http://www.tatai.es">Visit my blog</a></p>
-	<p class="left">v.1.7.0</p>
-	<p class="right"><a href="http://www.vim.org"><img src="/imgs/vim_created.gif" /></a></p>
-</div>
 </div> <!-- contenido -->
 
 <div id="lateral">
@@ -18,6 +13,22 @@ google_ad_height = 600;
 <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 <!-- END: ads -->
 </div> <!-- lateral -->
+
+<script type="text/javascript">
+window.addEvent('domready', function() {
+	var contenido = document.id('contenido').getCoordinates();
+	document.id('lateral').setStyles({
+		'top' : contenido.top,
+		'left' : contenido.left + contenido.width
+	});
+});
+</script>
+
+<div id="content-footer">
+	<p class="left version">v.1.7.0</p>
+	<p class="right"><a href="http://www.vim.org"><img src="/imgs/vim_created.gif" /></a></p>
+	<p align="center"><a href="http://www.tatai.es">Visit my blog</a></p>
+</div> <!-- content-footer -->
 
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

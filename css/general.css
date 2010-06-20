@@ -1,26 +1,45 @@
-body {font-family:Arial,Helvetica,sans-serif;}
+body {font-family:Arial,Helvetica,sans-serif;background:#EBEBEB;}
 img {border:0;}
 
 label {width:6em;float:left;}
 input, textarea, select {border:1px solid #aaa;background-color:#eee;}
 fieldset {border:1px solid #aaa;}
+a img {border:none;}
+a, a:hover, a:visited {color:#00f; text-decoration:none;}	
+:focus {outline:0;}
+
+h1 {background:#8aabf5;text-align:center;border:2px solid #3c69cf;padding:0.3em 0;-moz-border-radius:15px;-webkit-border-radius:15px;-webkit-box-shadow: 3px 3px 5px #333;-moz-box-shadow: 3px 3px 5px #333;box-shadow: 3px 3px 5px #333;}
+h1 a, h1 a:hover, h1 a:visited {color:#000; text-decoration:none;}
+h2 {font-size:1.2em;}
 
 .left {float:left;}
 .right {float:right;}
+.column {width:48%;}
 
 .error {color: #f00;margin-left:1em;display:block;}
 .notice {color: #00f;}
 
-#burndown_form {margin-top: 3em;}
-#comment_form {margin-top: 3em;}
+div#contenido {width:40em;margin:0 auto;background:#fff;padding:1em;-webkit-box-shadow: 3px 3px 5px #333;-moz-box-shadow: 3px 3px 5px #333;box-shadow: 3px 3px 5px #333;margin-bottom:1em;}
+div#lateral {margin-left:15px;width:130px;position:absolute;}
 
+#burndown_form {margin-top: 1em;clear:both;}
+#comment_form {margin-top: 3em;clear:both;}
+
+#menu {margin:0;}
 #menu li {float:left;list-style:none;margin:0 1em 1em 1em;}
 .limpiar {clear:both;}
 
-div#contenido {width:40em;float:left;}
-div#lateral {margin-left:30px;width:130px;float:left;}
+fieldset {padding-top:1em;margin:0 1em 1em 1em;border:2px solid #3c69cf;-webkit-box-shadow: 3px 3px 5px #333;-moz-box-shadow: 3px 3px 5px #333;box-shadow: 3px 3px 5px #333;}
+fieldset p{margin:0.5em 0;padding:0;} 
+p.create-burndown {text-align:center;}
+p.create-burndown input {border:3px solid #3c69cf;padding:1em 1.3em;font-size:1.2em;-moz-border-radius:15px;-webkit-border-radius:15px;cursor:pointer;}
 
 div.fold div {height:3em;}
+
+#content-footer {width:100%;float:left;background-color:#fff;border-top:2px solid #aaa;}
+.version {font-size:1.2em;margin-left:1em;}
+
+.more-options div.option {width:48%;float:left;height:2.5em;}
 
 /* iPhone selectors */
 .iPhoneCheckContainer{ position:relative; width:85px; height:27px; cursor:pointer; overflow:hidden;  }

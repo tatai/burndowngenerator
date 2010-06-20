@@ -1,0 +1,23 @@
+<!--  BEGIN: main -->
+{FILE "header.xtpl"}
+<h2>Send your comments!</h2>
+
+{FILE "menu.xtpl"}
+
+<form action="/comment" id="comment_form">
+<fieldset>
+<legend>Suggestions? Comments? Bugs?</legend>
+<div>
+<p>Don't hesitate, do it!</p>
+<p><label for="INFO_name">Your name: </label><input type="text" name="INFO[name]" id="INFO_name" size="25" /></p>
+<p><label for="INFO_addr">Your mail: </label><input type="text" name="INFO[mail]" id="INFO_mail" size="25" /></p>
+<p><textarea name="INFO[comment]" id="INFO_comment" cols="60" rows="8"></textarea></p>
+<p><input type="submit" value="Send!" class="submit-comment" /></p>
+</div>
+</fieldset>
+</form>
+
+<a href="/">Back to main page</a>
+
+{FILE "footer.xtpl"}
+<!--  END: main -->
