@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-include(dirname(__FILE__) . '/../pdf/class.ezpdf.php');
+include(dirname(__FILE__) . '/../../pdf/class.ezpdf.php');
 
 class MetricsPdf extends Cezpdf implements IPdf {
 	protected $_ratio = null;
