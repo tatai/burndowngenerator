@@ -18,7 +18,7 @@
  */
 class ClassLoader {
 	
-	private $_classes = null;
+	protected $_classes = null;
 
 	public function __construct() {
 	}
@@ -61,7 +61,7 @@ class ClassLoader {
 	private function _addFile($path, $file) {
 		if($this->_checkIsClass($file)) {
 			if(isset($this->_classes[$file])) {
-				print 'Warning: repeated file ' . $file . '<br />';
+				print 'Warning: repeated file ' . $file . "<br />\n";
 			}
 			else {
 				$this->_classes[$file] = $path . '/' . $file;
@@ -71,7 +71,7 @@ class ClassLoader {
 	}
 
 	private function _checkIsClass($file) {
-		return !(preg_match('/\.class\.php$/', $file) === false);
+		return preg_match('/\.class\.php$/', $file);
 	}
 
 	public function includeClass($classname) {
