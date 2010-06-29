@@ -153,7 +153,7 @@ class Burndown {
 	}
 
 	private function _log() {
-		$fd = fopen(dirname(__FILE__) . '/../../log.burndown.txt', 'a');
+		$fd = fopen(dirname(__FILE__) . '/../../../log.burndown.txt', 'a');
 		$data = array(
 			$_SERVER['REMOTE_ADDR'], 
 			date('Y-m-d H:i:s'), 
